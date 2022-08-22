@@ -20,7 +20,7 @@ const App = () => {
         { id: 3, title: "No", isDone: false }
     ]
 
-    const [filterValue, setFilterValue] = useState('all');
+    /*const [filterValue, setFilterValue] = useState('all');
 
     let filteredTasks = tasks1;
 
@@ -32,9 +32,8 @@ const App = () => {
     }
 
     const filterTasks = (filterVal: FilterType) => {
-        /*console.log(filterVal)*/
         setFilterValue(filterVal);
-    }
+    }*/
 
     const removeTask = (taskId:number) => {
         let filteredTasks1 = tasks1.filter(task=>task.id !== taskId);
