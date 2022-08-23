@@ -11,7 +11,8 @@ const App = () => {
     const [tasks1,setTasks1] = useState([
         { id: 1, title: "HTML&CSS", isDone: true },
         { id: 2, title: "JS", isDone: true },
-        { id: 3, title: "ReactJS", isDone: false }
+        { id: 3, title: "ReactJS", isDone: false },
+        { id: 4, title: "ReactNavive", isDone: false }
     ])
     /* let tasks2 = [
         { id: 1, title: "Hello world", isDone: true },
@@ -19,6 +20,11 @@ const App = () => {
         { id: 3, title: "Yo", isDone: false },
         { id: 3, title: "No", isDone: false }
     ] */
+
+    const removeTask = (taskId:number) => {
+        let filteredTasks1 = tasks1.filter(task=>task.id !== taskId);
+        setTasks1(filteredTasks1);
+    }
 
     const [filterValue, setFilterValue] = useState('all');
 
@@ -33,16 +39,14 @@ const App = () => {
 
     const filterTasks = (filterVal: FilterType) => {
         setFilterValue(filterVal);
-    }
-
-    const removeTask = (taskId:number) => {
-        let filteredTasks1 = tasks1.filter(task=>task.id !== taskId);
-        setTasks1(filteredTasks1);
-    }
+    }    
 
     return (
         <div className="App">
-            <Todolist title={title1} tasks={filteredTasks} removeTask={removeTask} filterTasks={filterTasks}/>
+            <Todolist title={title1}
+            tasks={filteredTasks}
+            removeTask={removeTask}
+            filterTasks={filterTasks}/>
             {/*<Todolist title={title2} tasks={tasks2} />*/}
         </div>
     );
