@@ -21,32 +21,31 @@ const App = () => {
         { id: 3, title: "No", isDone: false }
     ] */
 
-    const removeTask = (taskId:number) => {
-        let filteredTasks1 = tasks1.filter(task=>task.id !== taskId);
-        setTasks1(filteredTasks1);
+    const removeTask = (taskId: number) => {
+        let removedTask = tasks1.filter(elem=>elem.id !== taskId);
+        setTasks1(removedTask);
     }
 
-    const [filterValue, setFilterValue] = useState('all');
-
+    const [filter, setFilter] = useState<FilterType>('all')
     let filteredTasks = tasks1;
 
-    if (filterValue === 'active') {
-        filteredTasks = tasks1.filter((element) => !element.isDone);
+    if (filter === 'active') {
+        filteredTasks = filteredTasks.filter(elem=>!elem.isDone)
     }
-    if (filterValue === 'completed') {
-        filteredTasks = tasks1.filter((element) => element.isDone);
+    if (filter === 'completed') {
+        filteredTasks = filteredTasks.filter(elem=>elem.isDone)
     }
 
-    const filterTasks = (filterVal: FilterType) => {
-        setFilterValue(filterVal);
-    }    
+    const filterTask = (filterValue: FilterType) => {
+        setFilter(filterValue);
+    }
 
     return (
         <div className="App">
             <Todolist title={title1}
             tasks={filteredTasks}
             removeTask={removeTask}
-            filterTasks={filterTasks}/>
+            filterTask={filterTask}/>
             {/*<Todolist title={title2} tasks={tasks2} />*/}
         </div>
     );
