@@ -6,9 +6,9 @@ import {Button} from "./Button";
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
-    addTask:(titleInput:string) => void
     removeTask: (taskId: number)=>void
     filterTask: (filterValue: FilterType)=>void
+    addTask: (titleInput:string) => void
 }
 
 type TaskType = {
@@ -20,7 +20,6 @@ type TaskType = {
 export const Todolist = (props: TodolistPropsType) => {
 
     const [inputValue, setInputValue] = useState('')
-    //console.log(inputValue)
 
     const callBackButtonHandler = () => {
         props.addTask(inputValue)

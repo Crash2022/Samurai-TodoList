@@ -26,11 +26,6 @@ const App = () => {
         setTasks1(removedTask);
     }
 
-    const addTask = (titleInput:string) => {
-        const newTask = {id:8,title:titleInput,isDone:false};
-        setTasks1(tasks => [...tasks,newTask]);
-    }
-
     const [filter, setFilter] = useState<FilterType>('all')
     let filteredTasks = tasks1;
 
@@ -47,13 +42,18 @@ const App = () => {
 
     /*------------------------------------------------*/
 
+    const addTask = (titleInput:string) => {
+        const newTask = {id:5, title:titleInput, isDone:false}
+        setTasks1(tasks => [...tasks, newTask])
+    }
+
     return (
         <div className="App">
             <Todolist title={title1}
-            addTask={addTask}
             tasks={filteredTasks}
             removeTask={removeTask}
-            filterTask={filterTask} />
+            filterTask={filterTask}
+            addTask={addTask} />
 
             {/*<Todolist title={title2} tasks={tasks2} />*/}
         </div>
