@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {FilterType} from "./App";
-/*import {FilterType} from "./App";*/
+import {Input} from "./Input";
+import {Button} from "./Button";
 
 type TodolistPropsType = {
     title: string
@@ -20,8 +21,8 @@ export const Todolist = (props: TodolistPropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <Input />
+                <Button />
             </div>
             <ul>
                 {props.tasks.map((task, index)=> {

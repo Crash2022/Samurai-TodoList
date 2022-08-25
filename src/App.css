@@ -6,3 +6,7 @@
 .App > div {
   margin-right: 50px;
 }
+
+button {
+  margin: 3px;
+}

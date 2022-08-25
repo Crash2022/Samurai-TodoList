@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 
@@ -40,12 +40,15 @@ const App = () => {
         setFilter(filterValue);
     }
 
+    /*------------------------------------------------*/
+
     return (
         <div className="App">
             <Todolist title={title1}
             tasks={filteredTasks}
             removeTask={removeTask}
-            filterTask={filterTask}/>
+            filterTask={filterTask} />
+
             {/*<Todolist title={title2} tasks={tasks2} />*/}
         </div>
     );
