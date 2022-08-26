@@ -6,13 +6,13 @@ import {Button} from "./Button";
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: number)=>void
+    removeTask: (taskId: string)=>void
     filterTask: (filterValue: FilterType)=>void
     addTask: (titleInput:string) => void
 }
 
 type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -30,13 +30,13 @@ export const Todolist = (props: TodolistPropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <Input inputValue={inputValue} setInputValue={setInputValue}/>
+                <Input inputValue={inputValue} setInputValue={setInputValue} keyEnter={callBackButtonHandler}/>
                 <Button name={"+"} callBack={callBackButtonHandler}/>
             </div>
             <ul>
-                {props.tasks.map((task, index)=> {
+                {props.tasks.map((task)=> {
                     return (
-                        <li key={index}>
+                        <li key={task.id}>
                             <input type="checkbox" checked={task.isDone} onChange={() => {}}/>
                             <span>{task.title}</span>
                             <button onClick={()=> {props.removeTask(task.id)}}>X</button>
