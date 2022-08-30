@@ -1,8 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
-import { v1 } from 'uuid';
+import {v1} from 'uuid';
 import './App.css';
-import {Todolist} from './Todolist';
-import {v1} from "uuid";
+import {Todolist} from './components/Todolist';
 
 export type FilterType = 'all' | 'active' | 'completed'
 
@@ -14,11 +13,8 @@ const App = () => {
         { id: v1(), title: "HTML&CSS", isDone: true },
         { id: v1(), title: "JS", isDone: true },
         { id: v1(), title: "ReactJS", isDone: false },
-<<<<<<< HEAD
         { id: v1(), title: "React Native", isDone: false }
-=======
-        { id: v1(), title: "ReactNavive", isDone: false }
->>>>>>> e6b84df863bb50ff35b5af8d16d0527b1d7a27c4
+
     ])
     /* let tasks2 = [
         { id: 1, title: "Hello world", isDone: true },
@@ -49,15 +45,8 @@ const App = () => {
     /*------------------------------------------------*/
 
     const addTask = (titleInput:string) => {
-<<<<<<< HEAD
         const newTask = {id:v1(), title:titleInput, isDone:false}
         setTasks1(tasks => [newTask, ...tasks])
-=======
-        let newTask = {id: v1(), title: titleInput, isDone: false}
-        let newTasks = [newTask, ...tasks1]
-        setTasks1(newTasks)
-        //setTasks1(tasks => [...tasks, newTask])
->>>>>>> e6b84df863bb50ff35b5af8d16d0527b1d7a27c4
     }
 
     return (
