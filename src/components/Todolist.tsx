@@ -28,7 +28,7 @@ export const Todolist = (props: TodolistPropsType) => {
             props.addTask(inputValue)
             setInputValue('')
         } else {
-            setError('Поле обязательно для заполнения!');
+            setError('Чтобы добавить задачу, необходимо заполнить поле!');
         }
     }
 

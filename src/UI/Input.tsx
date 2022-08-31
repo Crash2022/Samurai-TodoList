@@ -13,7 +13,7 @@ export const Input = (props: InputPropsType) => {
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         //props.setInputValue(event.currentTarget.value)
         let trimName = event.currentTarget.value.trim()
-        if(trimName) {
+        if (trimName) {
             props.setInputValue(trimName);
             props.error && props.setError('');
         } else {
