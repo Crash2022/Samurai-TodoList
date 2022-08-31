@@ -20,11 +20,16 @@ type TaskType = {
 
 export const Todolist = (props: TodolistPropsType) => {
 
-   const [inputValue, setInputValue] = useState('')
+    const [inputValue, setInputValue] = useState<string>('')
+    const [error, setError] = useState<string>('')
 
     const callBackButtonHandler = () => {
-        props.addTask(inputValue)
-        setInputValue('')
+        if (inputValue.length > 0) {
+            props.addTask(inputValue)
+            setInputValue('')
+        } else {
+            setError('Поле обязательно для заполнения!');
+        }
     }
 
     const onClickChangeFilter = (value: FilterType) => {
@@ -38,10 +43,13 @@ export const Todolist = (props: TodolistPropsType) => {
     return (
         <div>
             <h3>{props.title}</h3>
+            <p style={{color: "red"}}><span>{error}</span></p>
             <div>
                 <Input inputValue={inputValue}
                        setInputValue={setInputValue}
-                       onKeyPress={callBackButtonHandler}/>
+                       onKeyPress={callBackButtonHandler}
+                       error={error}
+                       setError={setError}/>
                 <Button
                     name={"+"}
                     callBack={callBackButtonHandler} />
