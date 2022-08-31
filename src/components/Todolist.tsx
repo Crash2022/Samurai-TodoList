@@ -39,8 +39,12 @@ export const Todolist = (props: TodolistPropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <Input inputValue={inputValue} setInputValue={setInputValue} />
-                <Button name={"+"} callBack={callBackButtonHandler} />
+                <Input inputValue={inputValue}
+                       setInputValue={setInputValue}
+                       onKeyPress={callBackButtonHandler}/>
+                <Button
+                    name={"+"}
+                    callBack={callBackButtonHandler} />
             </div>
             <ul>
                 {props.tasks.map((task)=> {
