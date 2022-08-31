@@ -24,7 +24,7 @@ export const Todolist = (props: TodolistPropsType) => {
     const [error, setError] = useState<string>('')
 
     const callBackButtonHandler = () => {
-        if (inputValue.length > 0) {
+        if (inputValue) {
             props.addTask(inputValue)
             setInputValue('')
         } else {

@@ -18,7 +18,7 @@ export const Input = (props: InputPropsType) => {
             props.error && props.setError('');
         } else {
             props.inputValue && props.setError('')
-            props.setError('Поле обязательно для заполнения!');
+            props.setError('Поле должно начинаться без пробела!');
         }
     }
     const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
