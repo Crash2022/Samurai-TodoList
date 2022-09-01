@@ -57,7 +57,7 @@ export const Todolist = (props: TodolistPropsType) => {
         <div>
             <h3>{props.title}</h3>
             <p className={styles.spanError}><span>{error}</span></p>
-            <div>
+            <div style={{marginBottom: "15px"}}>
                 <Input inputValue={inputValue}
                        setInputValue={setInputValue}
                        onKeyPress={callBackButtonHandler}
@@ -66,6 +66,18 @@ export const Todolist = (props: TodolistPropsType) => {
                 <Button
                     name={"+"}
                     callBack={callBackButtonHandler} />
+            </div>
+            <div>
+                <button onClick={()=>onClickChangeFilter('all')}
+                        className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All</button>
+                <button onClick={()=>onClickChangeFilter('completed')}
+                        className={props.filter === 'completed' ? styles.filterCompleted : styles.filterNone}>Completed</button>
+                <button onClick={()=>onClickChangeFilter('active')}
+                        className={props.filter === 'active' ? styles.filterActive : styles.filterNone}>Active</button>
+
+                {/*<button onClick={onClickChangeAllFilter}>All</button>
+                <button onClick={onClickChangeCompletedFilter}>Completed</button>
+                <button onClick={onClickChangeActiveFilter}>Active</button>*/}
             </div>
             <ul>
                 {props.tasks.map((task)=> {
@@ -85,18 +97,6 @@ export const Todolist = (props: TodolistPropsType) => {
                     );
                 })}
             </ul>
-            <div>
-                <button onClick={()=>onClickChangeFilter('all')}
-                        className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All</button>
-                <button onClick={()=>onClickChangeFilter('completed')}
-                        className={props.filter === 'completed' ? styles.filterCompleted : styles.filterNone}>Completed</button>
-                <button onClick={()=>onClickChangeFilter('active')}
-                        className={props.filter === 'active' ? styles.filterActive : styles.filterNone}>Active</button>
-
-                {/*<button onClick={onClickChangeAllFilter}>All</button>
-                <button onClick={onClickChangeCompletedFilter}>Completed</button>
-                <button onClick={onClickChangeActiveFilter}>Active</button>*/}
-            </div>
         </div>
     );
 }
