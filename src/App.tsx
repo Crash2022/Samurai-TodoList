@@ -1,7 +1,7 @@
-import React, {ChangeEvent, useState} from 'react';
-import {v1} from 'uuid';
-import './App.css';
-import {Todolist} from './components/Todolist';
+import React, {ChangeEvent, useState} from 'react'
+import {v1} from 'uuid'
+import './App.css'
+import {Todolist} from './components/Todolist'
 
 export type FilterType = 'all' | 'active' | 'completed'
 
@@ -45,8 +45,16 @@ const App = () => {
     /*------------------------------------------------*/
 
     const addTask = (titleInput:string) => {
-        const newTask = {id:v1(), title:titleInput, isDone:false}
-        setTasks1(tasks => [newTask, ...tasks])
+        const newTask = {id:v1(), title:titleInput, isDone:false};
+        setTasks1(tasks => [newTask, ...tasks]);
+    }
+
+    /*------------------------------------------------*/
+
+    const changeCheckbox = (taskId: string, isDone: boolean) => {
+        let task = tasks1.find( t => t.id === taskId);
+        if (task) { task.isDone = isDone; }
+        setTasks1([...tasks1]);
     }
 
     return (
@@ -55,7 +63,9 @@ const App = () => {
             tasks={filteredTasks}
             removeTask={removeTask}
             filterTask={filterTask}
-            addTask={addTask} />
+            addTask={addTask}
+            changeCheckbox={changeCheckbox}
+            filter={filter}/>
 
             {/*<Todolist title={title2} tasks={tasks2} />*/}
         </div>

@@ -1,0 +1,33 @@
+.inputClass {
+    margin-right: 5px;
+    border: 1px solid black;
+}
+.inputError {
+    margin-right: 5px;
+    border: 2px solid red;
+}
+.spanError {
+    color: red;
+}
+
+.filterAll {
+    background-color: gray;
+    color: white;
+    padding: 5px;
+}
+.filterActive {
+    background-color: red;
+    color: white;
+    padding: 5px;
+}
+.filterCompleted {
+    background-color: darkorange;
+    color: white;
+    padding: 5px;
+}
+.filterNone {
+    padding: 5px;
+}
+.isDoneTask {
+    opacity: 0.5;
+}
