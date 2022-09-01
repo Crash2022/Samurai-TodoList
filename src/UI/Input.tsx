@@ -24,9 +24,9 @@ export const Input = (props: InputPropsType) => {
 
     return (
             <input value={props.inputValue}
-                  onChange={onChangeInputHandler}
-                  onKeyDown={onKeyDownHandler}
-                  className={inputClass}
+                   onChange={onChangeInputHandler}
+                   onKeyDown={onKeyDownHandler}
+                   className={inputClass}
             />
     );
 }
