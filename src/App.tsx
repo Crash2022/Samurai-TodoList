@@ -46,7 +46,7 @@ const App = () => {
 
     const addTask = (titleInput:string) => {
         const newTask = {id:v1(), title:titleInput, isDone:false};
-        setTasks1(tasks => [newTask, ...tasks]);
+        setTasks1( [newTask, ...tasks1]);
     }
 
     /*------------------------------------------------*/

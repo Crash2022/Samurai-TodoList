@@ -26,27 +26,19 @@ export const Todolist = (props: TodolistPropsType) => {
     const [inputValue, setInputValue] = useState<string>('')
     const [error, setError] = useState<string>('')
 
+    // const inputValueHandler = (event: ChangeEvent<HTMLInputElement>)=> {
+    //     setInputValue(event.currentTarget.value)
+    // }
+
     const callBackButtonHandler = () => {
-        /*3 разных способа*/
-        /*if (inputValue) {
-            props.addTask(inputValue)
+
+        const trimValue = inputValue.trim()
+
+        if (trimValue) {
+            props.addTask(trimValue)
             setInputValue('')
         } else {
             setError('Поле обязательно для заполнения!');
-        }*/
-
-        /*if (inputValue.trim() !== '') {
-            props.addTask(inputValue);
-            setInputValue('');
-        } else {
-            setError('Поле обязательно для заполнения!');
-        }*/
-
-        if (inputValue.trim() === '') {
-            return setError('Поле обязательно для заполнения!');
-        } else {
-            props.addTask(inputValue);
-            setInputValue('');
         }
     }
 
@@ -68,9 +60,6 @@ export const Todolist = (props: TodolistPropsType) => {
             <div>
                 <Input inputValue={inputValue}
                        setInputValue={setInputValue}
-
-                       /*callback={onKeyDownHandler}*/
-
                        onKeyPress={callBackButtonHandler}
                        error={error}
                        setError={setError}/>
