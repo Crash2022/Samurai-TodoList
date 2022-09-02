@@ -6,7 +6,7 @@ import {Todolist} from './components/Todolist'
 export type FilterType = 'all' | 'active' | 'completed'
 
 const App = () => {
-    const title1 = "What 2022-2023!";
+    const title1 = "What 2022-2023";
     //const title2 = "What 2023";
 
     const [tasks1,setTasks1] = useState([
