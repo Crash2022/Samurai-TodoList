@@ -3,6 +3,8 @@ import {v1} from 'uuid'
 import './App.css'
 import {Todolist} from './components/Todolist'
 
+/*https://samuraitodo.herokuapp.com/*/
+
 export type FilterType = 'all' | 'active' | 'completed'
 
 const App = () => {
