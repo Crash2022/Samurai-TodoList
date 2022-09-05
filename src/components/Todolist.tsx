@@ -53,6 +53,10 @@ export const Todolist = (props: TodolistPropsType) => {
         return event.key === "Enter" ? callBackButtonHandler() : ''
     }*/
 
+    const changeCheckboxHandler = (tID: string, event: ChangeEvent<HTMLInputElement>) => {
+        props.changeCheckbox(tID, event.currentTarget.checked);
+    }
+
     return (
         <div>
             <h3>{props.title}</h3>
@@ -82,17 +86,17 @@ export const Todolist = (props: TodolistPropsType) => {
             <ul>
                 {props.tasks.map((task)=> {
 
-                    const changeCheckboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
+                    /*const changeCheckboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
                         props.changeCheckbox(task.id, event.currentTarget.checked);
-                    }
+                    }*/
 
                     return (
                         <li key={v1()} className={task.isDone ? styles.isDoneTask : ''}>
                             <input type="checkbox"
                                    checked={task.isDone}
-                                   onChange={changeCheckboxHandler}/>
+                                   onChange={ (event: ChangeEvent<HTMLInputElement>)=> changeCheckboxHandler(task.id, event) }/>
                             <span>{task.title}</span>
-                            <button onClick={()=> {removeTaskHandler(task.id)}}>X</button>
+                            <button onClick={ ()=> {removeTaskHandler(task.id)} }>X</button>
                         </li>
                     );
                 })}
