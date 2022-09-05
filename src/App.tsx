@@ -54,9 +54,14 @@ const App = () => {
     /*------------------------------------------------*/
 
     const changeCheckbox = (taskId: string, isDone: boolean) => {
+
+        // Простой способ
         let task = tasks1.find( t => t.id === taskId);
         if (task) { task.isDone = isDone; }
         setTasks1([...tasks1]);
+        // Сложный способ из четверга
+        // (taskId: string, newIsDoneValue: boolean)
+        //setTasks1(tasks1.map(el=>el.id===taskId ? {...el, isDone: newIsDoneValue} :el))
     }
 
     return (
