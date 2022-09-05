@@ -24,7 +24,7 @@ type TaskType = {
 export const Todolist = (props: TodolistPropsType) => {
 
     const [inputValue, setInputValue] = useState<string>('')
-    const [error, setError] = useState<string>('')
+    const [error, setError] = useState<string | null>(null)
 
     // const inputValueHandler = (event: ChangeEvent<HTMLInputElement>)=> {
     //     setInputValue(event.currentTarget.value)
@@ -56,8 +56,7 @@ export const Todolist = (props: TodolistPropsType) => {
     return (
         <div>
             <h3>{props.title}</h3>
-            <p className={styles.spanError}><span>{error}</span></p>
-            <div style={{marginBottom: "15px"}}>
+            <div>
                 <Input inputValue={inputValue}
                        setInputValue={setInputValue}
                        onKeyPress={callBackButtonHandler}
@@ -67,6 +66,7 @@ export const Todolist = (props: TodolistPropsType) => {
                     name={"+"}
                     callBack={callBackButtonHandler} />
             </div>
+            <div className={styles.spanError}><span>{error}</span></div>
             <div>
                 <button onClick={()=>onClickChangeFilter('all')}
                         className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All</button>

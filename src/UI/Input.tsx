@@ -4,7 +4,7 @@ import styles from "../components/Todolist.module.css";
 export type InputPropsType = {
     inputValue: string
     setInputValue: (value: string)=> void
-    error: string
+    error: string | null
     setError: (errorTitle: string) => void
     onKeyPress: () => void
 }
