@@ -6,12 +6,13 @@ import {v1} from "uuid"
 import styles from './Todolist.module.css'
 
 type TodolistPropsType = {
+    id: string
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: string)=>void
-    filterTask: (filterValue: FilterType)=>void
-    addTask: (titleInput:string) => void
-    changeCheckbox: (taskId: string, isDone: boolean) => void
+    removeTask: (taskId: string, todolistId: string)=>void
+    filterTask: (filterValue: FilterType, todolistId: string)=>void
+    addTask: (titleInput:string, todolistId: string) => void
+    changeCheckbox: (taskId: string, isDone: boolean, todolistId: string) => void
     filter: string
 }
 
@@ -35,7 +36,7 @@ export const Todolist = (props: TodolistPropsType) => {
         const trimValue = inputValue.trim()
 
         if (trimValue) {
-            props.addTask(trimValue)
+            props.addTask(trimValue, props.id)
             setInputValue('')
         } else {
             setError('Поле обязательно для заполнения!');
@@ -43,10 +44,10 @@ export const Todolist = (props: TodolistPropsType) => {
     }
 
     const onClickChangeFilter = (value: FilterType) => {
-        props.filterTask(value)
+        props.filterTask(value, props.id)
     }
     const removeTaskHandler = (taskId: string) => {
-        props.removeTask(taskId)
+        props.removeTask(taskId, props.id)
     }
 
     /*const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -54,7 +55,7 @@ export const Todolist = (props: TodolistPropsType) => {
     }*/
 
     const changeCheckboxHandler = (tID: string, eventValue: boolean) => {
-        props.changeCheckbox(tID, eventValue);
+        props.changeCheckbox(tID, eventValue, props.id);
     }
 
     return (
@@ -78,10 +79,6 @@ export const Todolist = (props: TodolistPropsType) => {
                         className={props.filter === 'completed' ? styles.filterCompleted : styles.filterNone}>Completed</button>
                 <button onClick={()=>onClickChangeFilter('active')}
                         className={props.filter === 'active' ? styles.filterActive : styles.filterNone}>Active</button>
-
-                {/*<button onClick={onClickChangeAllFilter}>All</button>
-                <button onClick={onClickChangeCompletedFilter}>Completed</button>
-                <button onClick={onClickChangeActiveFilter}>Active</button>*/}
             </div>
             <ul>
                 {props.tasks.map((task)=> {
