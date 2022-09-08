@@ -59,6 +59,14 @@ const App = () => {
         setTasks({...tasksObj});
     }
 
+    const removeTodoList = (todoListId: string) => {
+        let deletedList = todolists.filter(t => t.id !== todoListId);
+        setTodolists(deletedList);
+        
+        delete tasksObj[todoListId];
+        setTasks({...tasksObj});
+    }
+
     /*------------------------------------------------*/
 
     const filterTask = (filterValue: FilterType, todolistId: string) => {
@@ -123,6 +131,7 @@ const App = () => {
                             addTask={addTask}
                             changeCheckbox={changeCheckbox}
                             filter={todo.filter}
+                            removeTodoList={removeTodoList}
                         />
                     )
                 })
