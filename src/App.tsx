@@ -120,14 +120,14 @@ const App = () => {
     /*------------------------------------------------*/
 
     // Можно фильтр вынести в отдельную функцию и воспользоваться ей в map
-    /*    const getTasksForTodoList = (todolist: TodoListType) => {
-            switch (todolist.filter) {
+    /*    const getTasksForTodoList = (filter: FilterType, tasks: Array<TaskType>) => {
+            switch (filter) {
                 case "active":
-                    return tasks[todolist.id].filter(t => !t.isDone)
+                    return tasks.filter(t => !t.isDone)
                 case "completed":
-                    return tasks[todolist.id].filter(t => t.isDone)
+                    return tasks.filter(t => t.isDone)
                 default:
-                    return tasks[todolist]
+                    return tasks
             }
         }*/
 
@@ -141,7 +141,7 @@ const App = () => {
                 {
                     todolists.map(todo => {
 
-                        //const tasks = getTasksForTodoList(todo.filter);
+                        //const tasks = getTasksForTodoList(todo.filter, tasks[todo.id]);
 
                         let filteredTasks = tasksObj[todo.id];
 

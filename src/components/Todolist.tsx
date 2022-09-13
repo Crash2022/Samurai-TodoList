@@ -28,10 +28,6 @@ export const Todolist = (props: TodolistPropsType) => {
     const [inputValue, setInputValue] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
 
-    // const inputValueHandler = (event: ChangeEvent<HTMLInputElement>)=> {
-    //     setInputValue(event.currentTarget.value)
-    // }
-
     const callBackButtonHandler = () => {
 
         const trimValue = inputValue.trim()
@@ -50,10 +46,6 @@ export const Todolist = (props: TodolistPropsType) => {
     const removeTaskHandler = (taskId: string) => {
         props.removeTask(taskId, props.id)
     }
-
-    /*const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        return event.key === "Enter" ? callBackButtonHandler() : ''
-    }*/
 
     const changeCheckboxHandler = (tID: string, eventValue: boolean) => {
         props.changeCheckbox(tID, eventValue, props.id);
@@ -87,10 +79,6 @@ export const Todolist = (props: TodolistPropsType) => {
             </div>
             <ul>
                 {props.tasks.map((task)=> {
-
-                    /*const changeCheckboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
-                        props.changeCheckbox(task.id, event.currentTarget.checked);
-                    }*/
 
                     return (
                         <li key={v1()} className={task.isDone ? styles.isDoneTask : ''}>
