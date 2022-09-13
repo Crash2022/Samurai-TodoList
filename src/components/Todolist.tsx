@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
+import React, {useState} from 'react'
 import {FilterType} from "../App"
 import {Input} from "../UI/Input"
 import {Button} from "../UI/Button"

@@ -32,3 +32,9 @@
 .isDoneTask {
     opacity: 0.5;
 }
+.noTasks {
+    color: red;
+    font-size: 50px;
+    text-align: center;
+    margin-top: 50px;
+}
