@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {v1} from 'uuid'
 import './App.css'
-import {Todolist} from './components/Todolist'
+import {TaskType, Todolist} from './components/Todolist'
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -11,12 +11,6 @@ export type TodoListType = {
     id: string
     title: string
     filter: FilterType
-}
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
 }
 
 export type TaskListType = {

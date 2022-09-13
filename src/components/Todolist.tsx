@@ -5,7 +5,7 @@ import {Button} from "../UI/Button"
 import {v1} from "uuid"
 import styles from './Todolist.module.css'
 
-type TodolistPropsType = {
+export type TodolistPropsType = {
     id: string
     title: string
     tasks: Array<TaskType>
@@ -17,7 +17,7 @@ type TodolistPropsType = {
     removeTodoList: (todoListId: string) => void
 }
 
-type TaskType = {
+export type TaskType = {
     id: string
     title: string
     isDone: boolean
