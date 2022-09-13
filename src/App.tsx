@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {useState} from 'react'
 import {v1} from 'uuid'
 import './App.css'
 import {Todolist} from './components/Todolist'
@@ -11,6 +11,16 @@ export type TodoListType = {
     id: string
     title: string
     filter: FilterType
+}
+
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+
+export type TaskListType = {
+    [todolistId: string]: Array<TaskType>
 }
 
 const App = () => {
@@ -39,15 +49,18 @@ const App = () => {
         { id: todolistId2, title: 'What to buy', filter: 'completed'}
     ])
 
-    let [tasksObj, setTasks] = useState({
+    let [tasksObj, setTasks] = useState<TaskListType>({
         [todolistId1]: [
             { id: v1(), title: "HTML&CSS", isDone: true },
             { id: v1(), title: "JS", isDone: true },
             { id: v1(), title: "ReactJS", isDone: false },
-            { id: v1(), title: "React Native", isDone: false }],
+            { id: v1(), title: "React Native", isDone: false }
+        ],
         [todolistId2]: [
-            { id: v1(), title: "Hello world", isDone: true },
-            { id: v1(), title: "I am Happy", isDone: false }]
+            { id: v1(), title: "Notebook", isDone: true },
+            { id: v1(), title: "Bread", isDone: false },
+            { id: v1(), title: "Bike", isDone: false },
+        ]
     })
 
     /*------------------------------------------------*/
@@ -62,7 +75,7 @@ const App = () => {
     const removeTodoList = (todoListId: string) => {
         let deletedList = todolists.filter(t => t.id !== todoListId);
         setTodolists(deletedList);
-        
+
         delete tasksObj[todoListId];
         setTasks({...tasksObj});
     }
