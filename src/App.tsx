@@ -64,6 +64,9 @@ const App = () => {
         let removedTask = tasks.filter(t => t.id !== taskId);
         tasksObj[todolistId] = removedTask;
         setTasks({...tasksObj});
+
+        // Способ в одну строчку
+        // setTasks( {...tasksObj, [todolistId]: tasksObj[todolistId].filter(t => t.id !== taskId)} );
     }
 
     const removeTodoList = (todoListId: string) => {
@@ -106,9 +109,9 @@ const App = () => {
             setTasks({...tasksObj});
         }
 
-        // Сложный способ из четверга
+        // Сложный способ из "четверга"
         // (taskId: string, newIsDoneValue: boolean)
-        //setTasks1(tasks1.map(el=>el.id===taskId ? {...el, isDone: newIsDoneValue} :el))
+        // setTasks1(tasks1.map(el=>el.id===taskId ? {...el, isDone: newIsDoneValue} :el))
     }
 
     /*------------------------------------------------*/
