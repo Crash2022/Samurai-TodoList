@@ -104,18 +104,16 @@ const App = () => {
 
     /*------------------------------------------------*/
 
-    const changeCheckbox = (taskId: string, isDone: boolean, todolistId: string) => {
+    const changeCheckbox = (todolistId: string, taskId: string, newIsDone: boolean) => {
 
-        let tasks = tasksObj[todolistId];
+        /*let tasks = tasksObj[todolistId];
         let task = tasks.find(t => t.id === taskId);
         if (task) {
             task.isDone = isDone;
             setTasks({...tasksObj});
-        }
+        }*/
 
-        // Сложный способ из "четверга"
-        // (taskId: string, newIsDoneValue: boolean)
-        // setTasks1(tasks1.map(el=>el.id===taskId ? {...el, isDone: newIsDoneValue} :el))
+        setTasks( {...tasksObj, [todolistId]: tasksObj[todolistId].map(el=>el.id === taskId ? {...el, isDone: newIsDone} : el)} )
     }
 
     /*------------------------------------------------*/
@@ -156,7 +154,7 @@ const App = () => {
                         return (
                             <Todolist
                                 key={todo.id}
-                                id={todo.id}
+                                todolistId={todo.id}
                                 title={todo.title}
                                 tasks={filteredTasks}
                                 removeTask={removeTask}

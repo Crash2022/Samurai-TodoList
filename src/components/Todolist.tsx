@@ -6,15 +6,15 @@ import {v1} from "uuid"
 import styles from './Todolist.module.css'
 
 export type TodolistPropsType = {
-    id: string
+    todolistId: string
     title: string
     tasks: Array<TaskType>
     removeTask: (taskId: string, todolistId: string)=>void
     filterTask: (filterValue: FilterType, todolistId: string)=>void
     addTask: (titleInput:string, todolistId: string) => void
-    changeCheckbox: (taskId: string, isDone: boolean, todolistId: string) => void
-    filter: string
+    changeCheckbox: (todolistId: string, taskId: string, isDone: boolean) => void
     removeTodoList: (todoListId: string) => void
+    filter: string
 }
 
 export type TaskType = {
@@ -33,7 +33,7 @@ export const Todolist = (props: TodolistPropsType) => {
         const trimValue = inputValue.trim()
 
         if (trimValue) {
-            props.addTask(trimValue, props.id)
+            props.addTask(trimValue, props.todolistId)
             setInputValue('')
         } else {
             setError('Поле обязательно для заполнения!');
@@ -41,18 +41,18 @@ export const Todolist = (props: TodolistPropsType) => {
     }
 
     const onClickChangeFilter = (value: FilterType) => {
-        props.filterTask(value, props.id)
+        props.filterTask(value, props.todolistId)
     }
     const removeTaskHandler = (taskId: string) => {
-        props.removeTask(taskId, props.id)
+        props.removeTask(taskId, props.todolistId)
     }
 
-    const changeCheckboxHandler = (tID: string, eventValue: boolean) => {
-        props.changeCheckbox(tID, eventValue, props.id);
+    const changeCheckboxHandler = (taskID: string, eventValue: boolean) => {
+        props.changeCheckbox(props.todolistId, taskID, eventValue);
     }
 
     const onClickHandlerRemoveTodoList = () => {
-        props.removeTodoList(props.id)
+        props.removeTodoList(props.todolistId)
     }
 
     return (
