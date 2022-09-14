@@ -63,13 +63,12 @@ const App = () => {
     /*------------------------------------------------*/
 
     const removeTask = (taskId: string, todolistId: string) => {
-        let tasks = tasksObj[todolistId];
+        /*let tasks = tasksObj[todolistId];
         let removedTask = tasks.filter(t => t.id !== taskId);
         tasksObj[todolistId] = removedTask;
-        setTasks({...tasksObj});
+        setTasks({...tasksObj});*/
 
-        // Способ в одну строчку
-        // setTasks( {...tasksObj, [todolistId]: tasksObj[todolistId].filter(t => t.id !== taskId)} );
+        setTasks( {...tasksObj, [todolistId]: tasksObj[todolistId].filter(t => t.id !== taskId)} );
     }
 
     const removeTodoList = (todoListId: string) => {
@@ -93,18 +92,20 @@ const App = () => {
     /*------------------------------------------------*/
 
     const addTask = (titleInput: string, todolistId: string) => {
-        let newTask = {id: v1(), title: titleInput, isDone: false};
+        /*let newTask = {id: v1(), title: titleInput, isDone: false};
         let tasks = tasksObj[todolistId];
         let newTasks = [newTask, ...tasks];
         tasksObj[todolistId] = newTasks;
-        setTasks({...tasksObj});
+        setTasks({...tasksObj});*/
+
+        let newTask = {id: v1(), title: titleInput, isDone: false};
+        setTasks( {...tasksObj, [todolistId]: [newTask, ...tasksObj[todolistId]]} );
     }
 
     /*------------------------------------------------*/
 
     const changeCheckbox = (taskId: string, isDone: boolean, todolistId: string) => {
 
-        // Простой способ
         let tasks = tasksObj[todolistId];
         let task = tasks.find(t => t.id === taskId);
         if (task) {
