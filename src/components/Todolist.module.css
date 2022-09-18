@@ -1,3 +1,17 @@
+.todolistMain {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+.todolistMain > div {
+    width: 300px;
+}
+
+.todolistHeader {
+    text-align: center;
+    margin-top: 30px;
+}
+
 .inputClass {
     margin-right: 5px;
     border: 1px solid black;
@@ -37,4 +51,8 @@
     font-size: 50px;
     text-align: center;
     margin-top: 50px;
+}
+
+button {
+    margin: 3px;
 }

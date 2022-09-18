@@ -1,9 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {FilterType} from "../App"
-import {Input} from "../UI/Input"
-import {Button} from "../UI/Button"
 import {v1} from "uuid"
 import styles from './Todolist.module.css'
+import {AddItemForm} from "../UI/AddItemForm";
 
 export type TodolistPropsType = {
     todolistId: string
@@ -25,10 +24,12 @@ export type TaskType = {
 
 export const Todolist = (props: TodolistPropsType) => {
 
-    const [inputValue, setInputValue] = useState<string>('')
-    const [error, setError] = useState<string | null>(null)
+    //const [inputValue, setInputValue] = useState<string>('')
+    //const [error, setError] = useState<string | null>(null)
 
-    const callBackButtonHandler = () => {
+    //const MESSAGE_INPUT_VALUE_REQUIRED = 'Поле обязательно для заполнения!';
+
+    /*const callBackButtonHandler = () => {
 
         const trimValue = inputValue.trim()
 
@@ -36,9 +37,9 @@ export const Todolist = (props: TodolistPropsType) => {
             props.addTask(trimValue, props.todolistId)
             setInputValue('')
         } else {
-            setError('Поле обязательно для заполнения!');
+            setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);
         }
-    }
+    }*/
 
     const onClickChangeFilter = (value: FilterType) => {
         props.filterTask(props.todolistId, value)
@@ -58,7 +59,12 @@ export const Todolist = (props: TodolistPropsType) => {
     return (
         <div>
             <h3>{props.title}<button onClick={onClickHandlerRemoveTodoList}>X</button></h3>
-            <div>
+
+            <AddItemForm todolistId={props.todolistId}
+                         addTask={props.addTask}
+            />
+
+            {/*<div>
                 <Input inputValue={inputValue}
                        setInputValue={setInputValue}
                        onKeyPress={callBackButtonHandler}
@@ -67,8 +73,10 @@ export const Todolist = (props: TodolistPropsType) => {
                 <Button
                     name={"+"}
                     callBack={callBackButtonHandler} />
-            </div>
-            <div className={styles.spanError}><span>{error}</span></div>
+            </div>*/}
+
+            {/*<div className={styles.spanError}><span>{error}</span></div>*/}
+
             <div>
                 <button onClick={()=>onClickChangeFilter('all')}
                         className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All</button>

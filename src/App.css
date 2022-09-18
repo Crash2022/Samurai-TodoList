@@ -1,13 +1,4 @@
 .App {
-  padding: 30px;
-  display: flex;
-}
-
-.App > div {
-  /*margin-right: 50px;*/
-  width: 300px;
-}
-
-button {
-  margin: 3px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
