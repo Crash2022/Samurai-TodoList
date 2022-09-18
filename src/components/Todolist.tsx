@@ -69,7 +69,7 @@ export const Todolist = (props: TodolistPropsType) => {
         props.changeTaskTitle(props.todolistId, taskID, inputValue);
     }
 
-    const onChangeTodolistTitleInput = (todolistId: string, newTitleValue: string) => {
+    const onChangeTodolistTitleInput = (newTitleValue: string) => {
         props.changeTodolistTitle(props.todolistId, newTitleValue);
     }
 
@@ -78,7 +78,7 @@ export const Todolist = (props: TodolistPropsType) => {
             <h3>
                 {/*{props.title}*/}
                 <EditInputItem title={props.title}
-                               onChangeInput={(newInputValue) => onChangeTodolistTitleInput(props.todolistId, newInputValue)}
+                               onChangeInput={onChangeTodolistTitleInput}
                 />
                 <button onClick={onClickHandlerRemoveTodoList}>X</button>
             </h3>
