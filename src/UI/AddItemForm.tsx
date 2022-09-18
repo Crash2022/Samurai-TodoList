@@ -4,8 +4,7 @@ import {Button} from "./Button";
 import styles from "../components/Todolist.module.css";
 
 export type AddItemFormPropsType = {
-    todolistId: string
-    addTask: (titleInput:string, todolistId: string) => void
+    addItem: (titleInput:string) => void
 }
 
 export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
@@ -20,7 +19,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
         const trimValue = inputValue.trim()
 
         if (trimValue) {
-            props.addTask(trimValue, props.todolistId)
+            props.addItem(trimValue)
             setInputValue('')
         } else {
             setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);

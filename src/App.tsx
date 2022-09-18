@@ -42,7 +42,7 @@ const App = () => {
 
     const [todolists, setTodolists] = useState<Array<TodoListType>>([
         {id: todolistId1, title: 'Выучить', filter: 'all'},
-        {id: todolistId2, title: 'Купить', filter: 'active'}
+        {id: todolistId2, title: 'Купить', filter: 'all'}
     ])
 
     const [tasksObj, setTasks] = useState<TaskListType>({
@@ -139,6 +139,12 @@ const App = () => {
 
     /*------------------------------------------------*/
 
+    const addNewTodoList = (titleInput:string) => {
+        let newTodoList: TodoListType = {id: v1(), title: titleInput, filter: 'all'};
+        setTodolists([...todolists, newTodoList]);
+        setTasks({...tasksObj, [newTodoList.id]: []});
+    }
+
     return (
 
         todolists.length !== 0 ?
@@ -149,8 +155,7 @@ const App = () => {
                         Добавить новый список
                     </div>
                     <div>
-                        <AddItemForm todolistId={"id"}
-                                     addTask={() => {}}
+                        <AddItemForm addItem={addNewTodoList}
                         />
                     </div>
                 </div>
