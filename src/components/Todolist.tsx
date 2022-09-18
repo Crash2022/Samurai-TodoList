@@ -15,6 +15,7 @@ export type TodolistPropsType = {
     changeCheckbox: (todolistId: string, taskId: string, isDone: boolean) => void
     changeTaskTitle: (todolistId: string, taskId: string, newInputValue: string) => void
     removeTodoList: (todoListId: string) => void
+    changeTodolistTitle: (todolistId: string, newTitleValue: string) => void
     filter: string
 }
 
@@ -64,13 +65,21 @@ export const Todolist = (props: TodolistPropsType) => {
         props.addTask(titleInput, props.todolistId);
     }
 
-    const onChangeInput = (taskID: string, value: string) => {
-        props.changeTaskTitle(props.todolistId, taskID, value);
+    const onChangeInput = (taskID: string, inputValue: string) => {
+        props.changeTaskTitle(props.todolistId, taskID, inputValue);
+    }
+
+    const onChangeTodolistTitleInput = (todolistId: string, newTitleValue: string) => {
+        props.changeTodolistTitle(props.todolistId, newTitleValue);
     }
 
     return (
         <div>
-            <h3>{props.title}
+            <h3>
+                {/*{props.title}*/}
+                <EditInputItem title={props.title}
+                               onChangeInput={(newInputValue) => onChangeTodolistTitleInput(props.todolistId, newInputValue)}
+                />
                 <button onClick={onClickHandlerRemoveTodoList}>X</button>
             </h3>
 
