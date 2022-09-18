@@ -3,6 +3,7 @@ import {FilterType} from "../App"
 import {v1} from "uuid"
 import styles from './Todolist.module.css'
 import {AddItemForm} from "../UI/AddItemForm";
+import {EditInputItem} from "../UI/EditInputItem";
 
 export type TodolistPropsType = {
     todolistId: string
@@ -12,6 +13,7 @@ export type TodolistPropsType = {
     filterTask: (todolistId: string, filterValue: FilterType) => void
     addTask: (titleInput: string, todolistId: string) => void
     changeCheckbox: (todolistId: string, taskId: string, isDone: boolean) => void
+    changeTaskTitle: (todolistId: string, taskId: string, newInputValue: string) => void
     removeTodoList: (todoListId: string) => void
     filter: string
 }
@@ -41,6 +43,8 @@ export const Todolist = (props: TodolistPropsType) => {
         }
     }*/
 
+    const MESSAGE_TASKS_END = 'Задания выполнены';
+
     const onClickChangeFilter = (value: FilterType) => {
         props.filterTask(props.todolistId, value)
     }
@@ -58,6 +62,10 @@ export const Todolist = (props: TodolistPropsType) => {
 
     const addTask = (titleInput: string) => {
         props.addTask(titleInput, props.todolistId);
+    }
+
+    const onChangeInput = (taskID: string, value: string) => {
+        props.changeTaskTitle(props.todolistId, taskID, value);
     }
 
     return (
@@ -101,7 +109,10 @@ export const Todolist = (props: TodolistPropsType) => {
                                 <input type="checkbox"
                                        checked={task.isDone}
                                        onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>
-                                <span>{task.title}</span>
+                                {/*<span>{task.title}</span>*/}
+                                <EditInputItem title={task.title}
+                                               onChangeInput={(newInputValue) => onChangeInput(task.id, newInputValue)}
+                                />
                                 <button onClick={() => {
                                     removeTaskHandler(task.id)
                                 }}>X
@@ -113,7 +124,7 @@ export const Todolist = (props: TodolistPropsType) => {
 
                 {
                     props.tasks.length === 0
-                        ? <div className={styles.noTasks}>Задания выполнены</div>
+                        ? <div className={styles.noTasks}>{MESSAGE_TASKS_END}</div>
                         : ''
                 }
 

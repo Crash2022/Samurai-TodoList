@@ -59,7 +59,7 @@ const App = () => {
         ]
     })
 
-    const MESSAGE_TASKS_END = 'Задачи закончились!';
+    const MESSAGE_TASKS_END = 'Списки задач закончились!';
     const [todoEnd, setTodoEnd] = useState<string>(`${MESSAGE_TASKS_END}`);
 
     /*------------------------------------------------*/
@@ -106,6 +106,13 @@ const App = () => {
         setTasks({...tasksObj, [todolistId]: [newTask, ...tasksObj[todolistId]]});
     }
 
+    const changeTaskTitle = (todolistId: string, taskId: string, newInputValue: string) => {
+        setTasks({
+            ...tasksObj,
+            [todolistId]: tasksObj[todolistId].map(el => el.id === taskId ? {...el, title: newInputValue} : el)
+        })
+    }
+
     /*------------------------------------------------*/
 
     const changeCheckbox = (todolistId: string, taskId: string, newIsDone: boolean) => {
@@ -144,6 +151,8 @@ const App = () => {
         setTodolists([...todolists, newTodoList]);
         setTasks({...tasksObj, [newTodoList.id]: []});
     }
+
+    /*------------------------------------------------*/
 
     return (
 
@@ -184,6 +193,7 @@ const App = () => {
                                     filterTask={filterTask}
                                     addTask={addTask}
                                     changeCheckbox={changeCheckbox}
+                                    changeTaskTitle={changeTaskTitle}
                                     filter={todo.filter}
                                     removeTodoList={removeTodoList}
                                 />
