@@ -8,9 +8,9 @@ export type TodolistPropsType = {
     todolistId: string
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: string, todolistId: string)=>void
-    filterTask: (todolistId: string, filterValue: FilterType)=>void
-    addTask: (titleInput:string, todolistId: string) => void
+    removeTask: (taskId: string, todolistId: string) => void
+    filterTask: (todolistId: string, filterValue: FilterType) => void
+    addTask: (titleInput: string, todolistId: string) => void
     changeCheckbox: (todolistId: string, taskId: string, isDone: boolean) => void
     removeTodoList: (todoListId: string) => void
     filter: string
@@ -56,15 +56,17 @@ export const Todolist = (props: TodolistPropsType) => {
         props.removeTodoList(props.todolistId)
     }
 
-    const addTask = (titleInput:string) => {
+    const addTask = (titleInput: string) => {
         props.addTask(titleInput, props.todolistId);
     }
 
     return (
         <div>
-            <h3>{props.title}<button onClick={onClickHandlerRemoveTodoList}>X</button></h3>
+            <h3>{props.title}
+                <button onClick={onClickHandlerRemoveTodoList}>X</button>
+            </h3>
 
-            <AddItemForm addItem={addTask} />
+            <AddItemForm addItem={addTask}/>
 
             {/*<div>
                 <Input inputValue={inputValue}
@@ -80,26 +82,41 @@ export const Todolist = (props: TodolistPropsType) => {
             {/*<div className={styles.spanError}><span>{error}</span></div>*/}
 
             <div>
-                <button onClick={()=>onClickChangeFilter('all')}
-                        className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All</button>
-                <button onClick={()=>onClickChangeFilter('completed')}
-                        className={props.filter === 'completed' ? styles.filterCompleted : styles.filterNone}>Completed</button>
-                <button onClick={()=>onClickChangeFilter('active')}
-                        className={props.filter === 'active' ? styles.filterActive : styles.filterNone}>Active</button>
+                <button onClick={() => onClickChangeFilter('all')}
+                        className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All
+                </button>
+                <button onClick={() => onClickChangeFilter('completed')}
+                        className={props.filter === 'completed' ? styles.filterCompleted : styles.filterNone}>Completed
+                </button>
+                <button onClick={() => onClickChangeFilter('active')}
+                        className={props.filter === 'active' ? styles.filterActive : styles.filterNone}>Active
+                </button>
             </div>
             <ul>
-                {props.tasks.map((task)=> {
+                {
+                    props.tasks.map((task) => {
 
-                    return (
-                        <li key={v1()} className={task.isDone ? styles.isDoneTask : ''}>
-                            <input type="checkbox"
-                                   checked={task.isDone}
-                                   onChange={ (event)=> changeCheckboxHandler(task.id, event.currentTarget.checked) }/>
-                            <span>{task.title}</span>
-                            <button onClick={ ()=> {removeTaskHandler(task.id)} }>X</button>
-                        </li>
-                    );
-                })}
+                        return (
+                            <li key={v1()} className={task.isDone ? styles.isDoneTask : ''}>
+                                <input type="checkbox"
+                                       checked={task.isDone}
+                                       onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>
+                                <span>{task.title}</span>
+                                <button onClick={() => {
+                                    removeTaskHandler(task.id)
+                                }}>X
+                                </button>
+                            </li>
+                        );
+                    })
+                }
+
+                {
+                    props.tasks.length === 0
+                        ? <div className={styles.noTasks}>Задания выполнены</div>
+                        : ''
+                }
+
             </ul>
         </div>
     );

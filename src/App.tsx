@@ -193,7 +193,7 @@ const App = () => {
                 </div>
             </div>
 
-            : <div className={styles.noTasks}>{todoEnd}</div>
+            : <div className={styles.noTasksList}>{todoEnd}</div>
     );
 }
 

@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     padding: 30px;
+    flex-wrap: wrap;
 }
 .todolistMain > div {
     width: 300px;
@@ -46,13 +47,21 @@
 .isDoneTask {
     opacity: 0.5;
 }
-.noTasks {
+.noTasksList {
     color: red;
     font-size: 50px;
     text-align: center;
     margin-top: 50px;
 }
+.noTasks {
+    font-size: 16px;
+    font-weight: bold;
+    color: orange;
+}
 
+ul {
+    /*list-style-position: inside;*/
+}
 button {
     margin: 3px;
 }
