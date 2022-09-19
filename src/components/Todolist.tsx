@@ -4,6 +4,8 @@ import {v1} from "uuid"
 import styles from './Todolist.module.css'
 import {AddItemForm} from "../UI/AddItemForm";
 import {EditInputItem} from "../UI/EditInputItem";
+import {IconButton} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 
 export type TodolistPropsType = {
     todolistId: string
@@ -80,7 +82,10 @@ export const Todolist = (props: TodolistPropsType) => {
                 <EditInputItem title={props.title}
                                onChangeInput={onChangeTodolistTitleInput}
                 />
-                <button onClick={onClickHandlerRemoveTodoList}>X</button>
+                {/*<button onClick={onClickHandlerRemoveTodoList}>X</button>*/}
+                <IconButton onClick={onClickHandlerRemoveTodoList}>
+                    <Delete />
+                </IconButton>
             </h3>
 
             <AddItemForm addItem={addTask}/>
@@ -122,10 +127,13 @@ export const Todolist = (props: TodolistPropsType) => {
                                 <EditInputItem title={task.title}
                                                onChangeInput={(newInputValue) => onChangeInput(task.id, newInputValue)}
                                 />
-                                <button onClick={() => {
+                                {/*<button onClick={() => {
                                     removeTaskHandler(task.id)
                                 }}>X
-                                </button>
+                                </button>*/}
+                                <IconButton onClick={()=>removeTaskHandler(task.id)}>
+                                    <Delete />
+                                </IconButton>
                             </li>
                         );
                     })
