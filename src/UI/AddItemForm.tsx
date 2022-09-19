@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Input} from "./Input";
-import {Button} from "./Button";
+//import {Button} from "./Button";
 import styles from "../components/Todolist.module.css";
+import {Button} from "@material-ui/core";
 
 export type AddItemFormPropsType = {
     addItem: (titleInput:string) => void
@@ -33,9 +34,16 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
                    onKeyPress={callBackButtonHandler}
                    error={error}
                    setError={setError}/>
-            <Button
+            {/*<Button
                 name={"+"}
-                callBack={callBackButtonHandler} />
+                callBack={callBackButtonHandler} />*/}
+            <Button onClick={callBackButtonHandler}
+                    variant={'contained'}
+                    color={'primary'}
+                    size={'small'}
+            >
+                +
+            </Button>
             <div className={styles.spanError}><span>{error}</span></div>
         </div>
     );
