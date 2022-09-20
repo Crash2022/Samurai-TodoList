@@ -33,7 +33,8 @@ export const EditInputItem: React.FC<EditItemPropsType> = (props) => {
                      autoFocus
                      onBlur={onClickNotEditSpanHandler}
                      onChange={onChangeInputHandler}
-                     onKeyDown={enterChangeTitle}/>
+                     onKeyDown={enterChangeTitle}
+              />
             : <span onDoubleClick={onClickEditSpanHandler}>{props.title}</span>
     );
 }
