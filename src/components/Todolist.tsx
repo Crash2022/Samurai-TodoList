@@ -4,7 +4,7 @@ import {v1} from "uuid"
 import styles from './Todolist.module.css'
 import {AddItemForm} from "../UI/AddItemForm";
 import {EditInputItem} from "../UI/EditInputItem";
-import {Button, IconButton} from "@material-ui/core";
+import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 
 export type TodolistPropsType = {
@@ -134,9 +134,11 @@ export const Todolist = (props: TodolistPropsType) => {
 
                         return (
                             <li key={v1()} className={task.isDone ? styles.isDoneTask : ''}>
-                                <input type="checkbox"
+                                {/*<input type="checkbox"
                                        checked={task.isDone}
-                                       onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>
+                                       onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>*/}
+                                <Checkbox checked={task.isDone}
+                                         onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>
                                 {/*<span>{task.title}</span>*/}
                                 <EditInputItem title={task.title}
                                                onChangeInput={(newInputValue) => onChangeInput(task.id, newInputValue)}

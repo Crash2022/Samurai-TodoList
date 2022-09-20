@@ -2,7 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 //import {Input} from "./Input";
 //import {Button} from "./Button";
 import styles from "../components/Todolist.module.css";
-import {Button, TextField} from "@material-ui/core";
+import {Button, IconButton, TextField} from "@material-ui/core";
+import {AddBox} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
     addItem: (titleInput: string) => void
@@ -54,13 +55,13 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
             {/*<Button
                 name={"+"}
                 callBack={callBackButtonHandler} />*/}
-            <Button onClick={callBackButtonHandler}
-                    variant={'contained'}
+            <IconButton onClick={callBackButtonHandler}
+                    //variant={'contained'}
                     color={'primary'}
                     size={'small'}
             >
-                +
-            </Button>
+                <AddBox />
+            </IconButton >
             {/*<div className={styles.spanError}><span>{error}</span></div>*/}
         </div>
     );
