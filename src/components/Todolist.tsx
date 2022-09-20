@@ -67,11 +67,11 @@ export const Todolist = (props: TodolistPropsType) => {
         props.addTask(titleInput, props.todolistId);
     }
 
-    const onChangeInput = (taskID: string, inputValue: string) => {
+    const changeTaskTitle = (taskID: string, inputValue: string) => {
         props.changeTaskTitle(props.todolistId, taskID, inputValue);
     }
 
-    const onChangeTodolistTitleInput = (newTitleValue: string) => {
+    const changeTodolistTitle = (newTitleValue: string) => {
         props.changeTodolistTitle(props.todolistId, newTitleValue);
     }
 
@@ -80,7 +80,7 @@ export const Todolist = (props: TodolistPropsType) => {
             <h3>
                 {/*{props.title}*/}
                 <EditInputItem title={props.title}
-                               onChangeInput={onChangeTodolistTitleInput}
+                               onChangeInput={changeTodolistTitle}
                 />
                 {/*<button onClick={onClickHandlerRemoveTodoList}>X</button>*/}
                 <IconButton onClick={onClickHandlerRemoveTodoList}>
@@ -141,7 +141,7 @@ export const Todolist = (props: TodolistPropsType) => {
                                          onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>
                                 {/*<span>{task.title}</span>*/}
                                 <EditInputItem title={task.title}
-                                               onChangeInput={(newInputValue) => onChangeInput(task.id, newInputValue)}
+                                               onChangeInput={(newInputValue) => changeTaskTitle(task.id, newInputValue)}
                                 />
                                 {/*<button onClick={() => {
                                     removeTaskHandler(task.id)
