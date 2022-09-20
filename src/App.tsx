@@ -201,13 +201,13 @@ const App = () => {
                                                     todolistId={todo.id}
                                                     title={todo.title}
                                                     tasks={filteredTasks}
+                                                    addTask={addTask}
                                                     removeTask={removeTask}
                                                     filterTask={filterTask}
-                                                    addTask={addTask}
-                                                    changeCheckbox={changeCheckbox}
-                                                    changeTaskTitle={changeTaskTitle}
                                                     filter={todo.filter}
+                                                    changeCheckbox={changeCheckbox}
                                                     removeTodoList={removeTodoList}
+                                                    changeTaskTitle={changeTaskTitle}
                                                     changeTodolistTitle={changeTodolistTitle}
                                                 />
                                             </Paper>
