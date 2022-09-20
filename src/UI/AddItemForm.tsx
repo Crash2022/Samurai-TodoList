@@ -32,24 +32,24 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
     }
 
     const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key !== 'Enter') {
-            return
-        }
         setError('');
-        callBackButtonHandler();
+        return event.key === 'Enter' ? callBackButtonHandler() : '';
     }
 
     return (
-        <div>
+        <div className={styles.inputBox}>
             {/*<Input inputValue={inputValue}
                    setInputValue={setInputValue}
                    onKeyPress={callBackButtonHandler}
                    error={error}
                    setError={setError}/>*/}
             <TextField value={inputValue}
+                       variant={'outlined'}
+                       label={'Введите текст'}
                        onChange={onChangeInputHandler}
                        onKeyDown={onKeyDownHandler}
-                       className={error ? 'error' : ''}
+                       error={!!error}
+                       helperText={error}
             />
             {/*<Button
                 name={"+"}
@@ -61,7 +61,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
             >
                 +
             </Button>
-            <div className={styles.spanError}><span>{error}</span></div>
+            {/*<div className={styles.spanError}><span>{error}</span></div>*/}
         </div>
     );
 }

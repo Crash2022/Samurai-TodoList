@@ -5,7 +5,7 @@
     flex-wrap: wrap;
 }
 .todolistMain > div {
-    width: 300px;
+    width: 350px;
 }
 
 .todolistHeader {
@@ -64,4 +64,11 @@ ul {
 }
 button {
     margin: 3px;
+}
+
+.inputBox {
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
