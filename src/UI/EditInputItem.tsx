@@ -8,15 +8,15 @@ export type EditItemPropsType = {
 export const EditInputItem: React.FC<EditItemPropsType> = (props) => {
 
     const [editMode, setEditMode] = useState<boolean>(false);
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState<string>('');
 
     const onClickEditSpanHandler = () => {
         setEditMode(true);
         setTitle(props.title);
     }
     const onClickNotEditSpanHandler = () => {
-        setEditMode(false);
         props.onChangeInput(title);
+        setEditMode(false);
     }
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
