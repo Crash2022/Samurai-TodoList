@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {Input} from "./Input";
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+//import {Input} from "./Input";
 //import {Button} from "./Button";
 import styles from "../components/Todolist.module.css";
-import {Button} from "@material-ui/core";
+import {Button, TextField} from "@material-ui/core";
 
 export type AddItemFormPropsType = {
-    addItem: (titleInput:string) => void
+    addItem: (titleInput: string) => void
 }
 
 export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
@@ -27,13 +27,30 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
         }
     }
 
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.currentTarget.value)
+    }
+
+    const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key !== 'Enter') {
+            return
+        }
+        setError('');
+        callBackButtonHandler();
+    }
+
     return (
         <div>
-            <Input inputValue={inputValue}
+            {/*<Input inputValue={inputValue}
                    setInputValue={setInputValue}
                    onKeyPress={callBackButtonHandler}
                    error={error}
-                   setError={setError}/>
+                   setError={setError}/>*/}
+            <TextField value={inputValue}
+                       onChange={onChangeInputHandler}
+                       onKeyDown={onKeyDownHandler}
+                       className={error ? 'error' : ''}
+            />
             {/*<Button
                 name={"+"}
                 callBack={callBackButtonHandler} />*/}
