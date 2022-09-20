@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 
 export type EditItemPropsType = {
     title: string
@@ -11,11 +11,11 @@ export const EditInputItem: React.FC<EditItemPropsType> = (props) => {
     const [title, setTitle] = useState('');
 
     const onClickEditSpanHandler = () => {
-        setEditMode(!editMode);
+        setEditMode(true);
         setTitle(props.title);
     }
     const onClickNotEditSpanHandler = () => {
-        setEditMode(!editMode);
+        setEditMode(false);
         props.onChangeInput(title);
     }
 
@@ -23,12 +23,17 @@ export const EditInputItem: React.FC<EditItemPropsType> = (props) => {
         setTitle(event.currentTarget.value);
     }
 
+    const enterChangeTitle = (event: KeyboardEvent<HTMLInputElement>) => {
+        return event.key === 'Enter' ? onClickNotEditSpanHandler() : '' ;
+    }
+
     return (
             editMode
             ? <input value={title}
                      autoFocus
                      onBlur={onClickNotEditSpanHandler}
-                     onChange={onChangeInputHandler}/>
+                     onChange={onChangeInputHandler}
+                     onKeyDown={enterChangeTitle}/>
             : <span onDoubleClick={onClickEditSpanHandler}>{props.title}</span>
     );
 }
