@@ -4,7 +4,7 @@ import {v1} from "uuid"
 import styles from './Todolist.module.css'
 import {AddItemForm} from "../UI/AddItemForm";
 import {EditInputItem} from "../UI/EditInputItem";
-import {IconButton} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 
 export type TodolistPropsType = {
@@ -103,7 +103,7 @@ export const Todolist = (props: TodolistPropsType) => {
 
             {/*<div className={styles.spanError}><span>{error}</span></div>*/}
 
-            <div>
+            {/*<div>
                 <button onClick={() => onClickChangeFilter('all')}
                         className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All
                 </button>
@@ -113,6 +113,20 @@ export const Todolist = (props: TodolistPropsType) => {
                 <button onClick={() => onClickChangeFilter('active')}
                         className={props.filter === 'active' ? styles.filterActive : styles.filterNone}>Active
                 </button>
+            </div>*/}
+
+            <div>
+                <Button onClick={() => onClickChangeFilter('all')}
+                        variant={props.filter === 'all' ? 'contained' : 'text'}>All
+                </Button>
+                <Button onClick={() => onClickChangeFilter('completed')}
+                        variant={props.filter === 'completed' ? 'contained' : 'text'}
+                color={'primary'}>Completed
+                </Button>
+                <Button onClick={() => onClickChangeFilter('active')}
+                        variant={props.filter === 'active' ? 'contained' : 'text'}
+                        color={'secondary'}>Active
+                </Button>
             </div>
             <ul>
                 {
