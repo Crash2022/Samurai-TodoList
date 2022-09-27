@@ -8,21 +8,21 @@ type ActionTypes =
     ChangeTodolistFilterActionType;
 
 export type RemoveTodolistActionType = {
-    type: 'REMOVE-TODOLIST',
+    type: 'REMOVE-TODOLIST'
     id: string
 }
 export type AddTodolistActionType = {
-    type: 'ADD-NEW-TODOLIST',
+    type: 'ADD-NEW-TODOLIST'
     title: string
 }
 export type ChangeTodolistTitleActionType = {
-    type: 'CHANGE-TODOLIST-TITLE',
-    id: string,
+    type: 'CHANGE-TODOLIST-TITLE'
+    id: string
     title: string
 }
 export type ChangeTodolistFilterActionType = {
-    type: 'CHANGE-TODOLIST-FILTER',
-    id: string,
+    type: 'CHANGE-TODOLIST-FILTER'
+    id: string
     filter: FilterType
 }
 
