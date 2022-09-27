@@ -84,7 +84,7 @@ export const Todolist = (props: TodolistPropsType) => {
                                onChangeInput={changeTodolistTitle}
                 />
                 {/*<button onClick={onClickHandlerRemoveTodoList}>X</button>*/}
-                <IconButton onClick={RemoveTodoList}>
+                <IconButton onClick={RemoveTodoList} color={'secondary'}>
                     <Delete />
                 </IconButton>
             </h3>
