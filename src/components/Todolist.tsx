@@ -56,9 +56,9 @@ export const Todolist = (props: TodolistPropsType) => {
         props.removeTask(taskId, props.todolistId)
     }
 
-    const changeTaskTitle = (taskID: string, inputValue: string) => {
+    /*const changeTaskTitle = (taskID: string, inputValue: string) => {
         props.changeTaskTitle(props.todolistId, taskID, inputValue);
-    }
+    }*/
 
     const changeCheckboxHandler = (taskID: string, eventValue: boolean) => {
         props.changeCheckbox(props.todolistId, taskID, eventValue);
@@ -116,7 +116,7 @@ export const Todolist = (props: TodolistPropsType) => {
                 </button>
             </div>*/}
 
-            <div>
+            <div style={{margin: '10px'}}>
                 <Button onClick={() => onClickChangeFilter('all')}
                         variant={props.filter === 'all' ? 'contained' : 'text'}>All
                 </Button>
