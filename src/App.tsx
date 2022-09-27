@@ -1,9 +1,10 @@
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core'
+//import Typography from '@material-ui/core/Typography'
 import React, {useState} from 'react'
 import {v1} from 'uuid'
 import './App.css'
 import {TaskType, Todolist} from './components/Todolist'
-import styles from './components/Todolist.module.css'
+//import styles from './components/Todolist.module.css'
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
 
@@ -156,7 +157,7 @@ const App = () => {
                             <Menu/>
                         </IconButton>
                         <Typography variant="h6">
-                            News
+                            TodoLists
                         </Typography>
                         <Button color="inherit">Login</Button>
                     </Toolbar>
@@ -165,7 +166,7 @@ const App = () => {
 
             <Container fixed>
                 {/*<div className={styles.todolistHeader}>*/}
-                    <Grid container style={{padding: '20px'}} direction={'column'}>
+                    <Grid container style={{padding: '20px', textAlign: 'center'}} direction={'column'}>
                         <Grid item style={{padding: '10px'}}>
                             Добавить новый список
                         </Grid>
@@ -178,7 +179,7 @@ const App = () => {
 
                         /*<div className="App">*/
                         /*<div className={styles.todolistMain}>*/
-                        <Grid container spacing={5}>
+                        <Grid container spacing={5} justifyContent={'center'}>
                             {
                                 todolists.map(todo => {
 
@@ -194,10 +195,9 @@ const App = () => {
                                     }
 
                                     return (
-                                        <Grid item>
-                                            <Paper style={{padding: '15px'}}>
+                                        <Grid item key={todo.id}>
+                                            <Paper style={{padding: '15px'}} elevation={8}>
                                                 <Todolist
-                                                    key={todo.id}
                                                     todolistId={todo.id}
                                                     title={todo.title}
                                                     tasks={filteredTasks}
