@@ -62,6 +62,9 @@
 ul {
     /*list-style-position: inside;*/
 }
+li {
+    list-style-type: none;
+}
 button {
     margin: 3px;
 }

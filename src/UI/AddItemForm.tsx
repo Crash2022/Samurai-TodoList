@@ -3,7 +3,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 //import {Button} from "./Button";
 import styles from "../components/Todolist.module.css";
 import {Button, IconButton, TextField} from "@material-ui/core";
-import {PostAdd} from "@material-ui/icons";
+import {AddComment} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
     addItem: (titleInput: string) => void
@@ -59,9 +59,9 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
             <IconButton onClick={callBackButtonHandler}
                     //variant={'contained'}
                     color={'primary'}
-                    size={'small'}
+                    size={'medium'}
             >
-                <PostAdd />
+                <AddComment />
             </IconButton >
             {/*<div className={styles.spanError}><span>{error}</span></div>*/}
         </div>
