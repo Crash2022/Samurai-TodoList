@@ -1,7 +1,7 @@
 import {TaskListType} from "../App";
 //import {v1} from "uuid";
 
-type ActionTypes = RemoveTaskActionType;
+type ActionTypes = RemoveTaskActionType
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'

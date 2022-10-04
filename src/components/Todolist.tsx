@@ -64,6 +64,8 @@ export const Todolist = (props: TodolistPropsType) => {
         props.changeCheckbox(props.todolistId, taskID, eventValue);
     }
 
+    /*------------------------------------------------*/
+
     const onClickChangeFilter = (value: FilterType) => {
         props.filterTask(props.todolistId, value)
     }

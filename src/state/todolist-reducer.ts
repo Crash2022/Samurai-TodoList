@@ -5,7 +5,7 @@ type ActionTypes =
     AddTodolistACType |
     RemoveTodolistACType |
     ChangeTodolistTitleACType |
-    ChangeTodolistFilterACType;
+    ChangeTodolistFilterACType
 
 export type AddTodolistActionType = {
     type: 'ADD_NEW_TODOLIST'
