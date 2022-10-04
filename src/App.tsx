@@ -78,20 +78,6 @@ const App = () => {
         })
     }
 
-    /*------------------------------------------------*/
-
-    const filterTask = (todolistId: string, filterValue: FilterType) => {
-        /*let todolist = todolists.find(td => td.id === todolistId);
-        if (todolist) {
-            todolist.filter = filterValue;
-            setTodolists([...todolists]);
-        }*/
-
-        setTodolists(todolists.map(el => el.id === todolistId ? {...el, filter: filterValue} : el))
-    }
-
-    /*------------------------------------------------*/
-
     const changeCheckbox = (todolistId: string, taskId: string, newIsDone: boolean) => {
 
         /*let tasks = tasksObj[todolistId];
@@ -125,6 +111,16 @@ const App = () => {
 
     const changeTodolistTitle = (todolistId: string, newTitleValue: string) => {
         setTodolists(todolists.map(el => el.id === todolistId ? {...el, title: newTitleValue} : el));
+    }
+
+    const filterTask = (todolistId: string, filterValue: FilterType) => {
+        /*let todolist = todolists.find(td => td.id === todolistId);
+        if (todolist) {
+            todolist.filter = filterValue;
+            setTodolists([...todolists]);
+        }*/
+
+        setTodolists(todolists.map(el => el.id === todolistId ? {...el, filter: filterValue} : el))
     }
 
     /*------------------------------------------------*/
