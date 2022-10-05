@@ -1,7 +1,16 @@
 import {TaskListType} from "../App";
 import {v1} from "uuid";
+import {ADD_NEW_TODOLIST, REMOVE_TODOLIST,
+    AddTodolistACType, RemoveTodolistACType}
+    from "./todolist-reducer";
 
-type ActionTypes = RemoveTaskACType | AddTaskACType | ChangeTaskStatusACType | ChangeTaskTitleACType
+type ActionTypes =
+    RemoveTaskACType |
+    AddTaskACType |
+    ChangeTaskStatusACType |
+    ChangeTaskTitleACType |
+    AddTodolistACType |
+    RemoveTodolistACType;
 
 /*export type RemoveTaskActionType = {
     type: 'REMOVE_TASK'
@@ -76,6 +85,12 @@ export const taskReducer = (state: TaskListType, action: ActionTypes): TaskListT
         case CHANGE_TASK_TITLE: {
             return {...state, [action.todolistId]:
                     state[action.todolistId].map( el => el.id === action.taskId ? {...el, title: action.title} : el)};
+        }
+        case ADD_NEW_TODOLIST: {
+            return { ...state, [action.todolistId]: [] };
+        }
+        case REMOVE_TODOLIST: {
+            return {...state, delete: state[action.id]};
         }
         default:
             //throw new Error("I don't know action type!");
