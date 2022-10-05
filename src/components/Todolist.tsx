@@ -145,7 +145,7 @@ export const Todolist = (props: TodolistPropsType) => {
                                        checked={task.isDone}
                                        onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>*/}
                                 <Checkbox checked={task.isDone}
-                                         onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}
+                                          onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}
                                 />
                                 {/*<span>{task.title}</span>*/}
                                 <EditInputItem title={task.title}
