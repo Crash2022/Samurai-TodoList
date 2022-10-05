@@ -48,12 +48,12 @@ export const Todolist = (props: TodolistPropsType) => {
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
 
-    const addTask = (titleInput: string) => {
+    const addTaskHandler = (titleInput: string) => {
         props.addTask(titleInput, props.todolistId);
     }
 
     const removeTaskHandler = (taskId: string) => {
-        props.removeTask(taskId, props.todolistId)
+        props.removeTask(taskId, props.todolistId);
     }
 
     /*const changeTaskTitle = (taskID: string, inputValue: string) => {
@@ -70,7 +70,7 @@ export const Todolist = (props: TodolistPropsType) => {
         props.filterTask(props.todolistId, value)
     }
 
-    const RemoveTodoList = () => {
+    const removeTodoList = () => {
         props.removeTodoList(props.todolistId);
     }
 
@@ -86,12 +86,12 @@ export const Todolist = (props: TodolistPropsType) => {
                                onChangeInput={changeTodolistTitle}
                 />
                 {/*<button onClick={onClickHandlerRemoveTodoList}>X</button>*/}
-                <IconButton onClick={RemoveTodoList} color={'secondary'}>
+                <IconButton onClick={removeTodoList} color={'secondary'}>
                     <Delete />
                 </IconButton>
             </h3>
 
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTaskHandler}/>
 
             {/*<div>
                 <Input inputValue={inputValue}
