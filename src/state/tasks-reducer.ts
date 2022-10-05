@@ -2,7 +2,7 @@ import {TaskListType} from "../App";
 import {v1} from "uuid";
 import {ADD_NEW_TODOLIST, REMOVE_TODOLIST,
     AddTodolistACType, RemoveTodolistACType}
-    from "./todolist-reducer";
+    from "./todolists-reducer";
 
 type ActionTypes =
     RemoveTaskACType |
@@ -69,7 +69,7 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
     title
 } as const)
 
-export const taskReducer = (state: TaskListType, action: ActionTypes): TaskListType => {
+export const tasksReducer = (state: TaskListType, action: ActionTypes): TaskListType => {
     switch (action.type) {
         case REMOVE_TASK: {
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
@@ -90,7 +90,9 @@ export const taskReducer = (state: TaskListType, action: ActionTypes): TaskListT
             return { ...state, [action.todolistId]: [] };
         }
         case REMOVE_TODOLIST: {
-            return {...state, delete: state[action.id]};
+            const stateCopy = {...state};
+            delete stateCopy[action.id];
+            return stateCopy;
         }
         default:
             //throw new Error("I don't know action type!");
