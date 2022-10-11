@@ -27,6 +27,13 @@ type ActionTypes =
 //     filter: FilterType
 // }
 
+export const REMOVE_TODOLIST = 'REMOVE_TODOLIST'
+export type RemoveTodolistACType = ReturnType<typeof removeTodolistAC>
+export const removeTodolistAC = (todolistId: string) => ({
+    type: REMOVE_TODOLIST,
+    id: todolistId
+} as const)
+
 export const ADD_NEW_TODOLIST = 'ADD_NEW_TODOLIST'
 export type AddTodolistACType = ReturnType<typeof addTodolistAC>
 export const addTodolistAC = (title: string) => ({
@@ -35,38 +42,29 @@ export const addTodolistAC = (title: string) => ({
     todolistId: v1()
 } as const)
 
-export const REMOVE_TODOLIST = 'REMOVE_TODOLIST'
-export type RemoveTodolistACType = ReturnType<typeof removeTodolistAC>
-export const removeTodolistAC = (todolistId: string) => ({
-    type: REMOVE_TODOLIST,
-    id: todolistId
-} as const)
-
 export const CHANGE_TODOLIST_TITLE = 'CHANGE_TODOLIST_TITLE'
 export type ChangeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>
 export const changeTodolistTitleAC = (id: string, title: string) => ({
     type: CHANGE_TODOLIST_TITLE,
-    id: id,
-    title
+    id, title
 } as const)
 
 export const CHANGE_TODOLIST_FILTER = 'CHANGE_TODOLIST_FILTER'
 export type ChangeTodolistFilterACType = ReturnType<typeof changeTodolistFilterAC>
 export const changeTodolistFilterAC = (id: string, filter: FilterType) => ({
     type: CHANGE_TODOLIST_FILTER,
-    id: id,
-    filter
+    id, filter
 } as const)
 
 /*-----------------------------------------------------------------------------------*/
 
 export const todolistsReducer = (state: Array<TodoListType>, action: ActionTypes): Array<TodoListType> => {
     switch (action.type) {
-        case ADD_NEW_TODOLIST: {
-            return [{id: action.todolistId, title: action.title, filter: 'all'}, ...state];
-        }
         case REMOVE_TODOLIST: {
             return state.filter(t => t.id !== action.id);
+        }
+        case ADD_NEW_TODOLIST: {
+            return [{id: action.todolistId, title: action.title, filter: 'all' as FilterType}, ...state];
         }
         case CHANGE_TODOLIST_TITLE: {
             return state.map(el => el.id === action.id ? {...el, title: action.title} : el);

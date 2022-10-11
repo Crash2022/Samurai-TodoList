@@ -22,7 +22,7 @@ export type TaskListType = {
     [todolistId: string]: Array<TaskType>
 }
 
-const App = () => {
+export const App = () => {
 
     let todolistId1 = v1();
     let todolistId2 = v1();
@@ -51,7 +51,7 @@ const App = () => {
 
     /*------------------------------------------------*/
 
-    const addTask = (titleInput: string, todolistId: string) => {
+    const addTask = (todolistId: string, titleInput: string) => {
         /*let newTask = {id: v1(), title: titleInput, isDone: false};
         let tasks = tasksObj[todolistId];
         let newTasks = [newTask, ...tasks];
@@ -62,7 +62,7 @@ const App = () => {
         setTasks({...tasksObj, [todolistId]: [newTask, ...tasksObj[todolistId]]});
     }
 
-    const removeTask = (taskId: string, todolistId: string) => {
+    const removeTask = (todolistId: string, taskId: string) => {
         /*let tasks = tasksObj[todolistId];
         let removedTask = tasks.filter(t => t.id !== taskId);
         tasksObj[todolistId] = removedTask;
@@ -78,7 +78,7 @@ const App = () => {
         })
     }
 
-    const changeCheckbox = (todolistId: string, taskId: string, newIsDone: boolean) => {
+    const changeStatus = (todolistId: string, taskId: string, newIsDone: boolean) => {
 
         /*let tasks = tasksObj[todolistId];
         let task = tasks.find(t => t.id === taskId);
@@ -201,7 +201,7 @@ const App = () => {
                                                     removeTask={removeTask}
                                                     filterTask={filterTask}
                                                     filter={todo.filter}
-                                                    changeCheckbox={changeCheckbox}
+                                                    changeStatus={changeStatus}
                                                     removeTodoList={removeTodoList}
                                                     changeTaskTitle={changeTaskTitle}
                                                     changeTodolistTitle={changeTodolistTitle}
@@ -221,5 +221,3 @@ const App = () => {
         </div>
     );
 }
-
-export default App;

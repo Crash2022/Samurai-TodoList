@@ -45,10 +45,10 @@ export const removeTaskAC = (todolistId: string, taskId: string) => ({
 
 export const ADD_TASK = 'ADD_TASK'
 export type AddTaskACType = ReturnType<typeof addTaskAC>
-export const addTaskAC = (todolistId: string, title: string) => ({
+export const addTaskAC = (todolistId: string, titleInput: string) => ({
     type: ADD_TASK,
     todolistId,
-    title
+    titleInput
 } as const)
 
 export const CHANGE_TASK_STATUS = 'CHANGE_TASK_STATUS'
@@ -75,7 +75,7 @@ export const tasksReducer = (state: TaskListType, action: ActionTypes): TaskList
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
         }
         case ADD_TASK: {
-            const newTask = {id: v1(), title: action.title, isDone: false};
+            const newTask = {id: v1(), title: action.titleInput, isDone: false};
             return {...state, [action.todolistId]: [newTask,...state[action.todolistId]]};
         }
         case CHANGE_TASK_STATUS: {
@@ -86,13 +86,13 @@ export const tasksReducer = (state: TaskListType, action: ActionTypes): TaskList
             return {...state, [action.todolistId]:
                     state[action.todolistId].map( el => el.id === action.taskId ? {...el, title: action.title} : el)};
         }
-        case ADD_NEW_TODOLIST: {
-            return { ...state, [action.todolistId]: [] };
-        }
         case REMOVE_TODOLIST: {
             const stateCopy = {...state};
             delete stateCopy[action.id];
             return stateCopy;
+        }
+        case ADD_NEW_TODOLIST: {
+            return { ...state, [action.todolistId]: [] };
         }
         default:
             //throw new Error("I don't know action type!");

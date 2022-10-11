@@ -12,10 +12,10 @@ export type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
     filter: string
-    addTask: (titleInput: string, todolistId: string) => void
-    removeTask: (taskId: string, todolistId: string) => void
+    addTask: (todolistId: string, titleInput: string) => void
+    removeTask: (todolistId: string, taskId: string) => void
     filterTask: (todolistId: string, filterValue: FilterType) => void
-    changeCheckbox: (todolistId: string, taskId: string, isDone: boolean) => void
+    changeStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     removeTodoList: (todoListId: string) => void
     changeTaskTitle: (todolistId: string, taskId: string, newInputValue: string) => void
     changeTodolistTitle: (todolistId: string, newTitleValue: string) => void
@@ -48,20 +48,20 @@ export const Todolist = (props: TodolistPropsType) => {
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
 
-    const addTaskHandler = (titleInput: string) => {
-        props.addTask(titleInput, props.todolistId);
+    const addTaskHandler = (title: string) => {
+        props.addTask(props.todolistId, title);
     }
 
     const removeTaskHandler = (taskId: string) => {
-        props.removeTask(taskId, props.todolistId);
+        props.removeTask(props.todolistId, taskId);
     }
 
     /*const changeTaskTitle = (taskID: string, inputValue: string) => {
         props.changeTaskTitle(props.todolistId, taskID, inputValue);
     }*/
 
-    const changeCheckboxHandler = (taskID: string, eventValue: boolean) => {
-        props.changeCheckbox(props.todolistId, taskID, eventValue);
+    const changeStatusHandler = (taskID: string, eventValue: boolean) => {
+        props.changeStatus(props.todolistId, taskID, eventValue);
     }
 
     /*------------------------------------------------*/
@@ -145,7 +145,7 @@ export const Todolist = (props: TodolistPropsType) => {
                                        checked={task.isDone}
                                        onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>*/}
                                 <Checkbox checked={task.isDone}
-                                          onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}
+                                          onChange={(event) => changeStatusHandler(task.id, event.currentTarget.checked)}
                                 />
                                 {/*<span>{task.title}</span>*/}
                                 <EditInputItem title={task.title}
@@ -168,7 +168,6 @@ export const Todolist = (props: TodolistPropsType) => {
                         ? <div className={styles.noTasks}>{MESSAGE_TASKS_END}</div>
                         : ''
                 }
-
             </ul>
         </div>
     );

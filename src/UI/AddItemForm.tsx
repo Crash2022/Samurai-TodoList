@@ -1,12 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 //import {Input} from "./Input";
 //import {Button} from "./Button";
-import styles from "../components/Todolist.module.css";
+//import styles from "../components/Todolist.module.css";
 import {Button, IconButton, TextField} from "@material-ui/core";
 import {AddComment} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
-    addItem: (titleInput: string) => void
+    addItem: (title: string) => void
 }
 
 export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
