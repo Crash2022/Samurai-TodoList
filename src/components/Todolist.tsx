@@ -6,6 +6,7 @@ import {AddItemForm} from "../UI/AddItemForm";
 import {EditInputItem} from "../UI/EditInputItem";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {TaskType} from "../AppWithRedux";
 
 export type TodolistPropsType = {
     todolistId: string
@@ -19,12 +20,6 @@ export type TodolistPropsType = {
     removeTodoList: (todoListId: string) => void
     changeTaskTitle: (todolistId: string, taskId: string, newInputValue: string) => void
     changeTodolistTitle: (todolistId: string, newTitleValue: string) => void
-}
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
 }
 
 export const Todolist = (props: TodolistPropsType) => {

@@ -3,7 +3,7 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import React, {useState} from 'react'
 import {v1} from 'uuid'
 import './App.css'
-import {TaskType, Todolist} from './components/Todolist'
+import {Todolist} from './components/Todolist'
 //import styles from './components/Todolist.module.css'
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
@@ -12,14 +12,20 @@ import {Menu} from "@material-ui/icons";
 
 export type FilterType = 'all' | 'active' | 'completed'
 
+export type TaskListType = {
+    [todolistId: string]: Array<TaskType>
+}
+
 export type TodoListType = {
     id: string
     title: string
     filter: FilterType
 }
 
-export type TaskListType = {
-    [todolistId: string]: Array<TaskType>
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
 }
 
 export const App = () => {

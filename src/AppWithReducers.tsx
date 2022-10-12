@@ -3,7 +3,7 @@ import {AppBar, Button, Container, Grid, IconButton,
 import React, {useReducer, useState} from 'react'
 import {v1} from 'uuid'
 import './App.css'
-import {TaskType, Todolist} from './components/Todolist'
+import {Todolist} from './components/Todolist'
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
 import {
@@ -20,14 +20,20 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC,
 
 export type FilterType = 'all' | 'active' | 'completed'
 
+export type TaskListType = {
+    [todolistId: string]: Array<TaskType>
+}
+
 export type TodoListType = {
     id: string
     title: string
     filter: FilterType
 }
 
-export type TaskListType = {
-    [todolistId: string]: Array<TaskType>
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
 }
 
 export const AppWithReducers = () => {
