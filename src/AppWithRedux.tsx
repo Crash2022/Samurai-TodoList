@@ -1,15 +1,12 @@
 import {AppBar, Button, Container, Grid, IconButton,
-    Paper, Toolbar, Typography} from '@material-ui/core'
-import React, {useState} from 'react'
-import './App.css'
-import {Todolist} from './components/Todolist'
+    Paper, Toolbar, Typography} from '@material-ui/core';
+import React, {useState} from 'react';
+import './App.css';
+import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
-import {
-    addTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC} from "./state/todolists-reducer";
+import {addTodolistAC,changeTodolistFilterAC,
+    changeTodolistTitleAC, removeTodolistAC} from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC,
     removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
