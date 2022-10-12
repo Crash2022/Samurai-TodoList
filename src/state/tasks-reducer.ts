@@ -103,6 +103,8 @@ export const tasksReducer = (state: TaskListType = initialState, action: ActionT
                     state[action.todolistId].map( el => el.id === action.taskId ? {...el, title: action.title} : el)};
         }
         case REMOVE_TODOLIST: {
+            // const {[action.todolistId]: [], ...rest} = {...state} //другой способ через деструктуризацию
+
             const stateCopy = {...state};
             delete stateCopy[action.id];
             return stateCopy;
