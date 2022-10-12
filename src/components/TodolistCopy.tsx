@@ -27,7 +27,24 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const Todolist = (props: TodolistPropsType) => {
+export const TodolistCopy = (props: TodolistPropsType) => {
+
+    //const [inputValue, setInputValue] = useState<string>('')
+    //const [error, setError] = useState<string | null>(null)
+
+    //const MESSAGE_INPUT_VALUE_REQUIRED = 'Поле обязательно для заполнения!';
+
+    /*const callBackButtonHandler = () => {
+
+        const trimValue = inputValue.trim()
+
+        if (trimValue) {
+            props.addTask(trimValue, props.todolistId)
+            setInputValue('')
+        } else {
+            setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);
+        }
+    }*/
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
 
@@ -38,6 +55,10 @@ export const Todolist = (props: TodolistPropsType) => {
     const removeTaskHandler = (taskId: string) => {
         props.removeTask(props.todolistId, taskId);
     }
+
+    /*const changeTaskTitle = (taskID: string, inputValue: string) => {
+        props.changeTaskTitle(props.todolistId, taskID, inputValue);
+    }*/
 
     const changeStatusHandler = (taskID: string, eventValue: boolean) => {
         props.changeStatus(props.todolistId, taskID, eventValue);
@@ -60,15 +81,42 @@ export const Todolist = (props: TodolistPropsType) => {
     return (
         <div>
             <h3>
+                {/*{props.title}*/}
                 <EditInputItem title={props.title}
                                onChangeInput={changeTodolistTitle}
                 />
+                {/*<button onClick={onClickHandlerRemoveTodoList}>X</button>*/}
                 <IconButton onClick={removeTodoList} color={'secondary'}>
                     <Delete />
                 </IconButton>
             </h3>
 
             <AddItemForm addItem={addTaskHandler}/>
+
+            {/*<div>
+                <Input inputValue={inputValue}
+                       setInputValue={setInputValue}
+                       onKeyPress={callBackButtonHandler}
+                       error={error}
+                       setError={setError}/>
+                <Button
+                    name={"+"}
+                    callBack={callBackButtonHandler} />
+            </div>*/}
+
+            {/*<div className={styles.spanError}><span>{error}</span></div>*/}
+
+            {/*<div>
+                <button onClick={() => onClickChangeFilter('all')}
+                        className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All
+                </button>
+                <button onClick={() => onClickChangeFilter('completed')}
+                        className={props.filter === 'completed' ? styles.filterCompleted : styles.filterNone}>Completed
+                </button>
+                <button onClick={() => onClickChangeFilter('active')}
+                        className={props.filter === 'active' ? styles.filterActive : styles.filterNone}>Active
+                </button>
+            </div>*/}
 
             <div style={{margin: '10px'}}>
                 <Button onClick={() => onClickChangeFilter('all')}
@@ -93,12 +141,20 @@ export const Todolist = (props: TodolistPropsType) => {
 
                         return (
                             <li key={v1()} className={task.isDone ? styles.isDoneTask : ''}>
+                                {/*<input type="checkbox"
+                                       checked={task.isDone}
+                                       onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>*/}
                                 <Checkbox checked={task.isDone}
                                           onChange={(event) => changeStatusHandler(task.id, event.currentTarget.checked)}
                                 />
+                                {/*<span>{task.title}</span>*/}
                                 <EditInputItem title={task.title}
                                                onChangeInput={changeTaskTitleHandler}
                                 />
+                                {/*<button onClick={() => {
+                                    removeTaskHandler(task.id)
+                                }}>X
+                                </button>*/}
                                 <IconButton onClick={() => removeTaskHandler(task.id)}>
                                     <Delete />
                                 </IconButton>
