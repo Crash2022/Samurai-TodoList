@@ -1,3 +1,6 @@
+import React from 'react'
+
+/*
 import {AppBar, Button, Container, Grid, IconButton,
     Paper, Toolbar, Typography} from '@material-ui/core'
 import React, {useReducer, useState} from 'react'
@@ -16,7 +19,7 @@ import {
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC,
     tasksReducer} from "./state/tasks-reducer";
 
-/*https://samuraitodo.herokuapp.com/*/
+/!*https://samuraitodo.herokuapp.com/!*!/
 
 export type FilterType = 'all' | 'active' | 'completed'
 
@@ -63,7 +66,7 @@ export const AppWithReducers = () => {
     const MESSAGE_TASKS_END = 'Списки задач закончились!';
     const [todoEnd, setTodoEnd] = useState<string>(`${MESSAGE_TASKS_END}`);
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     const removeTask = (todolistId: string, taskId: string) => {
         //const action = removeTaskAC(taskId, todolistId);
@@ -84,7 +87,7 @@ export const AppWithReducers = () => {
         dispatchToTasksReducer(changeTaskStatusAC(todolistId, taskId, newIsDone));
     }
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     const removeTodoList = (todoListId: string) => {
         dispatchToTodolistsReducer(removeTodolistAC(todoListId));
@@ -105,10 +108,10 @@ export const AppWithReducers = () => {
         dispatchToTodolistsReducer(changeTodolistFilterAC(todolistId, filterValue));
     }
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     // Можно фильтр вынести в отдельную функцию и воспользоваться ей в map
-    /*    const getTasksForTodoList = (filter: FilterType, tasks: Array<TaskType>) => {
+    /!*    const getTasksForTodoList = (filter: FilterType, tasks: Array<TaskType>) => {
             switch (filter) {
                 case "active":
                     return tasks.filter(t => !t.isDone)
@@ -117,9 +120,9 @@ export const AppWithReducers = () => {
                 default:
                     return tasks
             }
-        }*/
+        }*!/
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     return (
         <div className="App">
@@ -197,4 +200,4 @@ export const AppWithReducers = () => {
 
         </div>
     );
-}
+}*/

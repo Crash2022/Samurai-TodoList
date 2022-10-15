@@ -1,4 +1,7 @@
 import React from 'react'
+
+/*
+import React from 'react'
 import {FilterType} from "../App"
 import {v1} from "uuid"
 import styles from './Todolist.module.css'
@@ -34,7 +37,7 @@ export const TodolistCopy = (props: TodolistPropsType) => {
 
     //const MESSAGE_INPUT_VALUE_REQUIRED = 'Поле обязательно для заполнения!';
 
-    /*const callBackButtonHandler = () => {
+    /!*const callBackButtonHandler = () => {
 
         const trimValue = inputValue.trim()
 
@@ -44,7 +47,7 @@ export const TodolistCopy = (props: TodolistPropsType) => {
         } else {
             setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);
         }
-    }*/
+    }*!/
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
 
@@ -56,15 +59,15 @@ export const TodolistCopy = (props: TodolistPropsType) => {
         props.removeTask(props.todolistId, taskId);
     }
 
-    /*const changeTaskTitle = (taskID: string, inputValue: string) => {
+    /!*const changeTaskTitle = (taskID: string, inputValue: string) => {
         props.changeTaskTitle(props.todolistId, taskID, inputValue);
-    }*/
+    }*!/
 
     const changeStatusHandler = (taskID: string, eventValue: boolean) => {
         props.changeStatus(props.todolistId, taskID, eventValue);
     }
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     const onClickChangeFilter = (value: FilterType) => {
         props.filterTask(props.todolistId, value)
@@ -81,11 +84,11 @@ export const TodolistCopy = (props: TodolistPropsType) => {
     return (
         <div>
             <h3>
-                {/*{props.title}*/}
+                {/!*{props.title}*!/}
                 <EditInputItem title={props.title}
                                onChangeInput={changeTodolistTitle}
                 />
-                {/*<button onClick={onClickHandlerRemoveTodoList}>X</button>*/}
+                {/!*<button onClick={onClickHandlerRemoveTodoList}>X</button>*!/}
                 <IconButton onClick={removeTodoList} color={'secondary'}>
                     <Delete />
                 </IconButton>
@@ -93,7 +96,7 @@ export const TodolistCopy = (props: TodolistPropsType) => {
 
             <AddItemForm addItem={addTaskHandler}/>
 
-            {/*<div>
+            {/!*<div>
                 <Input inputValue={inputValue}
                        setInputValue={setInputValue}
                        onKeyPress={callBackButtonHandler}
@@ -102,11 +105,11 @@ export const TodolistCopy = (props: TodolistPropsType) => {
                 <Button
                     name={"+"}
                     callBack={callBackButtonHandler} />
-            </div>*/}
+            </div>*!/}
 
-            {/*<div className={styles.spanError}><span>{error}</span></div>*/}
+            {/!*<div className={styles.spanError}><span>{error}</span></div>*!/}
 
-            {/*<div>
+            {/!*<div>
                 <button onClick={() => onClickChangeFilter('all')}
                         className={props.filter === 'all' ? styles.filterAll : styles.filterNone}>All
                 </button>
@@ -116,7 +119,7 @@ export const TodolistCopy = (props: TodolistPropsType) => {
                 <button onClick={() => onClickChangeFilter('active')}
                         className={props.filter === 'active' ? styles.filterActive : styles.filterNone}>Active
                 </button>
-            </div>*/}
+            </div>*!/}
 
             <div style={{margin: '10px'}}>
                 <Button onClick={() => onClickChangeFilter('all')}
@@ -141,20 +144,20 @@ export const TodolistCopy = (props: TodolistPropsType) => {
 
                         return (
                             <li key={v1()} className={task.isDone ? styles.isDoneTask : ''}>
-                                {/*<input type="checkbox"
+                                {/!*<input type="checkbox"
                                        checked={task.isDone}
-                                       onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>*/}
+                                       onChange={(event) => changeCheckboxHandler(task.id, event.currentTarget.checked)}/>*!/}
                                 <Checkbox checked={task.isDone}
                                           onChange={(event) => changeStatusHandler(task.id, event.currentTarget.checked)}
                                 />
-                                {/*<span>{task.title}</span>*/}
+                                {/!*<span>{task.title}</span>*!/}
                                 <EditInputItem title={task.title}
                                                onChangeInput={changeTaskTitleHandler}
                                 />
-                                {/*<button onClick={() => {
+                                {/!*<button onClick={() => {
                                     removeTaskHandler(task.id)
                                 }}>X
-                                </button>*/}
+                                </button>*!/}
                                 <IconButton onClick={() => removeTaskHandler(task.id)}>
                                     <Delete />
                                 </IconButton>
@@ -172,3 +175,4 @@ export const TodolistCopy = (props: TodolistPropsType) => {
         </div>
     );
 }
+*/

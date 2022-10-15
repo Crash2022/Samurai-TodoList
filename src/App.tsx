@@ -1,3 +1,6 @@
+import React from 'react'
+
+/*
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core'
 //import Typography from '@material-ui/core/Typography'
 import React, {useState} from 'react'
@@ -8,7 +11,7 @@ import {Todolist} from './components/Todolist'
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
 
-/*https://samuraitodo.herokuapp.com/*/
+/!*https://samuraitodo.herokuapp.com/!*!/
 
 export type FilterType = 'all' | 'active' | 'completed'
 
@@ -55,24 +58,24 @@ export const App = () => {
     const MESSAGE_TASKS_END = 'Списки задач закончились!';
     const [todoEnd, setTodoEnd] = useState<string>(`${MESSAGE_TASKS_END}`);
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     const addTask = (todolistId: string, titleInput: string) => {
-        /*let newTask = {id: v1(), title: titleInput, isDone: false};
+        /!*let newTask = {id: v1(), title: titleInput, isDone: false};
         let tasks = tasksObj[todolistId];
         let newTasks = [newTask, ...tasks];
         tasksObj[todolistId] = newTasks;
-        setTasks({...tasksObj});*/
+        setTasks({...tasksObj});*!/
 
         let newTask = {id: v1(), title: titleInput, isDone: false};
         setTasks({...tasksObj, [todolistId]: [newTask, ...tasksObj[todolistId]]});
     }
 
     const removeTask = (todolistId: string, taskId: string) => {
-        /*let tasks = tasksObj[todolistId];
+        /!*let tasks = tasksObj[todolistId];
         let removedTask = tasks.filter(t => t.id !== taskId);
         tasksObj[todolistId] = removedTask;
-        setTasks({...tasksObj});*/
+        setTasks({...tasksObj});*!/
 
         setTasks({...tasksObj, [todolistId]: tasksObj[todolistId].filter(t => t.id !== taskId)});
     }
@@ -86,12 +89,12 @@ export const App = () => {
 
     const changeStatus = (todolistId: string, taskId: string, newIsDone: boolean) => {
 
-        /*let tasks = tasksObj[todolistId];
+        /!*let tasks = tasksObj[todolistId];
         let task = tasks.find(t => t.id === taskId);
         if (task) {
             task.isDone = isDone;
             setTasks({...tasksObj});
-        }*/
+        }*!/
 
         setTasks({
             ...tasksObj,
@@ -99,7 +102,7 @@ export const App = () => {
         })
     }
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     const addNewTodoList = (titleInput: string) => {
         let newTodoList: TodoListType = {id: v1(), title: titleInput, filter: 'all'};
@@ -120,19 +123,19 @@ export const App = () => {
     }
 
     const filterTask = (todolistId: string, filterValue: FilterType) => {
-        /*let todolist = todolists.find(td => td.id === todolistId);
+        /!*let todolist = todolists.find(td => td.id === todolistId);
         if (todolist) {
             todolist.filter = filterValue;
             setTodolists([...todolists]);
-        }*/
+        }*!/
 
         setTodolists(todolists.map(el => el.id === todolistId ? {...el, filter: filterValue} : el))
     }
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     // Можно фильтр вынести в отдельную функцию и воспользоваться ей в map
-    /*    const getTasksForTodoList = (filter: FilterType, tasks: Array<TaskType>) => {
+    /!*    const getTasksForTodoList = (filter: FilterType, tasks: Array<TaskType>) => {
             switch (filter) {
                 case "active":
                     return tasks.filter(t => !t.isDone)
@@ -141,9 +144,9 @@ export const App = () => {
                 default:
                     return tasks
             }
-        }*/
+        }*!/
 
-    /*------------------------------------------------*/
+    /!*------------------------------------------------*!/
 
     return (
         <div className="App">
@@ -167,7 +170,7 @@ export const App = () => {
             </div>
 
             <Container fixed>
-                {/*<div className={styles.todolistHeader}>*/}
+                {/!*<div className={styles.todolistHeader}>*!/}
                     <Grid container style={{padding: '20px', textAlign: 'center'}} direction={'column'}>
                         <Grid item style={{padding: '10px'}}>
                             Добавить новый список
@@ -179,8 +182,8 @@ export const App = () => {
                 {
                     todolists.length !== 0 ?
 
-                        /*<div className="App">*/
-                        /*<div className={styles.todolistMain}>*/
+                        /!*<div className="App">*!/
+                        /!*<div className={styles.todolistMain}>*!/
                         <Grid container spacing={5} justifyContent={'center'}>
                             {
                                 todolists.map(todo => {
@@ -218,12 +221,12 @@ export const App = () => {
                                 })
                             }
                         </Grid>
-                        /*</div>*/
-                        /*: <div className={styles.noTasksList}>{todoEnd}</div>*/
+                        /!*</div>*!/
+                        /!*: <div className={styles.noTasksList}>{todoEnd}</div>*!/
                         : <div>{todoEnd}</div>
                 }
             </Container>
 
         </div>
     );
-}
+}*/

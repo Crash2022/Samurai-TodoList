@@ -6,7 +6,7 @@ import {Button, IconButton, TextField} from "@material-ui/core";
 import {AddComment} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    addItem: (titleInput: string) => void
 }
 
 export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
@@ -21,8 +21,8 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
         const trimValue = inputValue.trim()
 
         if (trimValue) {
-            props.addItem(trimValue)
-            setInputValue('')
+            props.addItem(trimValue);
+            setInputValue('');
         } else {
             setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);
         }
