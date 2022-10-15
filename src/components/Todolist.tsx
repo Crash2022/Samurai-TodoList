@@ -35,10 +35,6 @@ export const Todolist = (props: TodolistPropsType) => {
 
     /*------------------------------------------------*/
 
-    const onClickChangeFilter = (value: FilterType) => {
-        props.filterTasks(props.todolistId, value)
-    }
-
     let filteredTasks = tasksObj;
 
     if (props.filter === 'active') {
@@ -46,6 +42,10 @@ export const Todolist = (props: TodolistPropsType) => {
     }
     if (props.filter === 'completed') {
         filteredTasks = filteredTasks.filter(f => f.isDone);
+    }
+
+    const onClickChangeFilter = (value: FilterType) => {
+        props.filterTasks(props.todolistId, value)
     }
 
     return (

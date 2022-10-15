@@ -41,12 +41,12 @@ export const AppWithRedux = () => {
     /*------------------------------------------------*/
 
     const removeTodoList = (todolistId: string) => {
-        dispatch(removeTodolistAC(todolistId));
+        const action = removeTodolistAC(todolistId); // памятка про экшн
+        dispatch(action);
     }
 
     const addNewTodoList = (title: string) => {
-        const action = addTodolistAC(title);
-        dispatch(action);
+        dispatch(addTodolistAC(title));
     }
 
     const changeTodolistTitle = (todolistId: string, newTitleValue: string) => {
@@ -118,8 +118,8 @@ export const AppWithRedux = () => {
                                                 <Todolist
                                                     todolistId={todo.id}
                                                     title={todo.title}
-                                                    filterTasks={filterTasks}
                                                     filter={todo.filter}
+                                                    filterTasks={filterTasks}
                                                     removeTodoList={removeTodoList}
                                                     changeTodolistTitle={changeTodolistTitle}
                                                 />
