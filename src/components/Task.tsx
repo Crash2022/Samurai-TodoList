@@ -19,7 +19,6 @@ export const Task = React.memo((props: TaskPropsType) => {
     console.log('task')
 
     const dispatch = useDispatch();
-    //const tasksObj = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.todolistId]);
 
     const removeTaskHandler = useCallback(() => {
         dispatch(removeTaskAC(props.todolistId, props.task.id));

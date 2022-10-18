@@ -35,8 +35,7 @@ export const AppWithRedux = React.memo(() => {
 
     console.log('app')
 
-    const MESSAGE_TASKS_END = 'Список задач пуст!';
-    const [todoEnd, setTodoEnd] = useState<string>(`${MESSAGE_TASKS_END}`);
+    const MESSAGE_TODOS_END = 'Список задач пуст!';
 
     const dispatch = useDispatch();
     const todolists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todolists);
@@ -132,7 +131,7 @@ export const AppWithRedux = React.memo(() => {
                                 })
                             }
                         </Grid>
-                        : <div className={styles.todoEnd}>{todoEnd}</div>
+                        : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
                 }
             </Container>
 
