@@ -1,7 +1,4 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-//import {Input} from "./Input";
-//import {Button} from "./Button";
-//import styles from "../components/Todolist.module.css";
 import {IconButton, TextField} from "@material-ui/core";
 import {AddComment} from "@material-ui/icons";
 
@@ -42,32 +39,21 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     }
 
     return (
-        /*<div className={styles.inputBox}>*/
         <div>
-            {/*<Input inputValue={inputValue}
-                   setInputValue={setInputValue}
-                   onKeyPress={callBackButtonHandler}
-                   error={error}
-                   setError={setError}/>*/}
-            <TextField value={inputValue}
-                       variant={'outlined'}
-                       label={'Введите текст'}
+            <TextField variant="outlined"
+                       label="Введите текст"
                        onChange={onChangeInputHandler}
                        onKeyDown={onKeyDownHandler}
+                       value={inputValue}
                        error={!!error}
                        helperText={error}
             />
-            {/*<Button
-                name={"+"}
-                callBack={callBackButtonHandler} />*/}
             <IconButton onClick={callBackButtonHandler}
-                    //variant={'contained'}
-                    color={'primary'}
-                    size={'medium'}
+                        color="primary"
+                        size="medium"
             >
                 <AddComment />
             </IconButton >
-            {/*<div className={styles.spanError}><span>{error}</span></div>*/}
         </div>
     );
 })

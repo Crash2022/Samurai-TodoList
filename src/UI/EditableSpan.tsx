@@ -32,15 +32,9 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
 
     return (
             editMode
-            ? /*<input value={title}
-                     autoFocus
-                     onBlur={onClickNotEditSpanHandler}
-                     onChange={onChangeInputHandler}
-                     onKeyDown={enterChangeTitle}
-              />*/
-              <TextField
-                  label={'Измените текст'}
-                  variant={'standard'}
+            ? <TextField
+                  label="Измените текст"
+                  variant="standard"
                   autoFocus
                   value={title}
                   onChange={onChangeInputHandler}

@@ -61,20 +61,6 @@ export const AppWithRedux = React.memo(() => {
 
     /*------------------------------------------------*/
 
-    // Можно фильтр вынести в отдельную функцию и воспользоваться ей в map
-    /*    const getTasksForTodoList = (filter: FilterType, tasks: Array<TaskType>) => {
-            switch (filter) {
-                case "active":
-                    return tasks.filter(t => !t.isDone)
-                case "completed":
-                    return tasks.filter(t => t.isDone)
-                default:
-                    return tasks
-            }
-        }*/
-
-    /*------------------------------------------------*/
-
     return (
         <div className="App">
 
@@ -111,9 +97,6 @@ export const AppWithRedux = React.memo(() => {
                         <Grid container spacing={5} justifyContent={'center'}>
                             {
                                 todolists.map(todo => {
-
-                                    //const tasks = getTasksForTodoList(todo.filter, tasks[todo.id]);
-
                                     return (
                                         <Grid item key={todo.id}>
                                             <Paper style={{padding: '15px'}} elevation={8}>

@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react'
 import {FilterType} from "../AppWithRedux"
-//import {v1} from "uuid"
 import styles from './Todolist.module.css'
 import {AddItemForm} from "../UI/AddItemForm";
 import {EditableSpan} from "../UI/EditableSpan";
@@ -61,7 +60,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                 <EditableSpan title={props.title}
                               onChangeInput={onChangeTodolistTitle}
                 />
-                <IconButton onClick={() => props.removeTodoList(props.todolistId)} color={'secondary'}>
+                <IconButton onClick={() => props.removeTodoList(props.todolistId)} color="secondary">
                     <Delete />
                 </IconButton>
             </h3>
