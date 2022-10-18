@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useCallback} from 'react'
 import {v1} from "uuid"
 import styles from './Todolist.module.css'
-import {EditInputItem} from "../UI/EditInputItem";
+import {EditableSpan} from "../UI/EditableSpan";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {TaskType} from "../AppWithRedux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 //import {AppRootStateType} from "../state/store";
 
 export type TaskPropsType = {
@@ -39,8 +39,8 @@ export const Task = React.memo((props: TaskPropsType) => {
             <Checkbox checked={props.task.isDone}
                       onChange={changeStatusHandler}
             />
-            <EditInputItem title={props.task.title}
-                           onChangeInput={changeTaskTitleHandler}
+            <EditableSpan title={props.task.title}
+                          onChangeInput={changeTaskTitleHandler}
             />
             <IconButton onClick={removeTaskHandler}>
                 <Delete/>

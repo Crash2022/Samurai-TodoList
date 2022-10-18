@@ -35,7 +35,7 @@ export const AppWithRedux = React.memo(() => {
 
     console.log('app')
 
-    const MESSAGE_TASKS_END = 'Списки задач закончились!';
+    const MESSAGE_TASKS_END = 'Список задач пуст!';
     const [todoEnd, setTodoEnd] = useState<string>(`${MESSAGE_TASKS_END}`);
 
     const dispatch = useDispatch();
@@ -52,8 +52,8 @@ export const AppWithRedux = React.memo(() => {
         dispatch(addTodolistAC(title));
     },[dispatch])
 
-    const changeTodolistTitle = useCallback((todolistId: string, newTitleValue: string) => {
-        dispatch(changeTodolistTitleAC(todolistId, newTitleValue));
+    const changeTodolistTitle = useCallback((todolistId: string, newInputValue: string) => {
+        dispatch(changeTodolistTitleAC(todolistId, newInputValue));
     },[dispatch])
 
     const filterTasks = useCallback((todolistId: string, filterValue: FilterType) => {
