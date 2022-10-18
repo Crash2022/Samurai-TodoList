@@ -7,7 +7,6 @@ import {Delete} from "@material-ui/icons";
 import {TaskType} from "../AppWithRedux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
 import {useDispatch} from "react-redux";
-//import {AppRootStateType} from "../state/store";
 
 export type TaskPropsType = {
     todolistId: string

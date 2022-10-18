@@ -54,13 +54,17 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         props.changeTodolistTitle(props.todolistId, newInputValue);
     },[props.todolistId])
 
+    const onClickRemoveTodolist = useCallback(() => {
+        props.removeTodoList(props.todolistId);
+    },[props.todolistId])
+
     return (
         <div>
             <h3>
                 <EditableSpan title={props.title}
                               onChangeInput={onChangeTodolistTitle}
                 />
-                <IconButton onClick={() => props.removeTodoList(props.todolistId)} color="secondary">
+                <IconButton onClick={onClickRemoveTodolist} color="secondary">
                     <Delete />
                 </IconButton>
             </h3>
