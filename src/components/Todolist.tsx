@@ -10,6 +10,7 @@ import {TaskType} from "../AppWithRedux";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
+import {Task} from "./Task";
 
 export type TodolistPropsType = {
     todolistId: string
@@ -56,7 +57,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                 <EditInputItem title={props.title}
                                onChangeInput={()=>props.changeTodolistTitle(props.todolistId, props.title)}
                 />
-                <IconButton onClick={()=>props.removeTodoList(props.todolistId)} color={'secondary'}>
+                <IconButton onClick={() => props.removeTodoList(props.todolistId)} color={'secondary'}>
                     <Delete />
                 </IconButton>
             </h3>
@@ -78,7 +79,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
             </div>
             <ul>
                 {
-                    filteredTasks.map( task => {
+                    filteredTasks.map( task => <Task key={task.id} todolistId={props.todolistId} task={task}/> /*{
 
                         const removeTaskHandler = () => {
                             dispatch(removeTaskAC(props.todolistId, task.id));
@@ -106,7 +107,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                                 </IconButton>
                             </li>
                         );
-                    })
+                    }*/)
                 }
 
                 {
