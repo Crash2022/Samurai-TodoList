@@ -5,7 +5,9 @@ export type EditItemPropsType = {
     onChangeInput: (newInputValue: string) => void
 }
 
-export const EditInputItem: React.FC<EditItemPropsType> = (props) => {
+export const EditInputItem = React.memo((props: EditItemPropsType) => {
+
+    console.log('editable span')
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [title, setTitle] = useState<string>('');
@@ -37,4 +39,4 @@ export const EditInputItem: React.FC<EditItemPropsType> = (props) => {
               />
             : <span onDoubleClick={onClickEditSpanHandler}>{props.title}</span>
     );
-}
+})

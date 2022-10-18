@@ -75,3 +75,10 @@ button {
     justify-content: center;
     align-items: center;
 }
+
+.todoEnd {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: orange;
+}

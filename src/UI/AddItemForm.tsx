@@ -2,14 +2,16 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 //import {Input} from "./Input";
 //import {Button} from "./Button";
 //import styles from "../components/Todolist.module.css";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddComment} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
     addItem: (titleInput: string) => void
 }
 
-export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+
+    console.log('add item form')
 
     const [inputValue, setInputValue] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
@@ -33,7 +35,9 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
     }
 
     const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        setError('');
+        if (error !== null) {
+            setError('');
+        }
         return event.key === 'Enter' ? callBackButtonHandler() : '';
     }
 
@@ -66,4 +70,4 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = (props) => {
             {/*<div className={styles.spanError}><span>{error}</span></div>*/}
         </div>
     );
-}
+})

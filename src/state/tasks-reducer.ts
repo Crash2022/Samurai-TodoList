@@ -43,7 +43,7 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
 
 /*-----------------------------------------------------------------------------------*/
 
-const initialState: TaskListType = {
+/*const initialState: TaskListType = {
     [todolistId1]: [
         {id: v1(), title: "HTML&CSS", isDone: true},
         {id: v1(), title: "JS", isDone: true},
@@ -55,7 +55,9 @@ const initialState: TaskListType = {
         {id: v1(), title: "Bread", isDone: false},
         {id: v1(), title: "Bike", isDone: false},
     ]
-}
+}*/
+
+const initialState: TaskListType = { };
 
 export const tasksReducer = (state: TaskListType = initialState, action: ActionTypes): TaskListType => {
     switch (action.type) {

@@ -1,6 +1,6 @@
 import {AppBar, Button, Container, Grid, IconButton,
     Paper, Toolbar, Typography} from '@material-ui/core';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
@@ -9,6 +9,7 @@ import {addTodolistAC,changeTodolistFilterAC,
     changeTodolistTitleAC, removeTodolistAC} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+import styles from './components/Todolist.module.css'
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -30,7 +31,9 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const AppWithRedux = () => {
+export const AppWithRedux = React.memo(() => {
+
+    console.log('app')
 
     const MESSAGE_TASKS_END = 'Списки задач закончились!';
     const [todoEnd, setTodoEnd] = useState<string>(`${MESSAGE_TASKS_END}`);
@@ -40,22 +43,22 @@ export const AppWithRedux = () => {
 
     /*------------------------------------------------*/
 
-    const removeTodoList = (todolistId: string) => {
+    const removeTodoList = useCallback((todolistId: string) => {
         const action = removeTodolistAC(todolistId); // памятка про экшн
         dispatch(action);
-    }
+    },[dispatch])
 
-    const addNewTodoList = (title: string) => {
+    const addNewTodoList = useCallback((title: string) => {
         dispatch(addTodolistAC(title));
-    }
+    },[dispatch])
 
-    const changeTodolistTitle = (todolistId: string, newTitleValue: string) => {
+    const changeTodolistTitle = useCallback((todolistId: string, newTitleValue: string) => {
         dispatch(changeTodolistTitleAC(todolistId, newTitleValue));
-    }
+    },[dispatch])
 
-    const filterTasks = (todolistId: string, filterValue: FilterType) => {
+    const filterTasks = useCallback((todolistId: string, filterValue: FilterType) => {
         dispatch(changeTodolistFilterAC(todolistId, filterValue));
-    }
+    },[dispatch])
 
     /*------------------------------------------------*/
 
@@ -129,10 +132,10 @@ export const AppWithRedux = () => {
                                 })
                             }
                         </Grid>
-                        : <div>{todoEnd}</div>
+                        : <div className={styles.todoEnd}>{todoEnd}</div>
                 }
             </Container>
 
         </div>
     );
-}
+})

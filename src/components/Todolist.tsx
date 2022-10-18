@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react'
+import React, {ChangeEvent, useCallback} from 'react'
 import {FilterType} from "../AppWithRedux"
 import {v1} from "uuid"
 import styles from './Todolist.module.css'
@@ -20,7 +20,9 @@ export type TodolistPropsType = {
     changeTodolistTitle: (todolistId: string, newTitleValue: string) => void
 }
 
-export const Todolist = (props: TodolistPropsType) => {
+export const Todolist = React.memo((props: TodolistPropsType) => {
+
+    console.log('todolist')
 
     const dispatch = useDispatch();
     const tasksObj = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.todolistId]);
@@ -29,9 +31,9 @@ export const Todolist = (props: TodolistPropsType) => {
 
     /*------------------------------------------------*/
 
-    const addTaskHandler = (titleInput: string) => {
+    const addTaskHandler = useCallback((titleInput: string) => {
         dispatch(addTaskAC(props.todolistId, titleInput));
-    }
+    },[props.todolistId])
 
     /*------------------------------------------------*/
 
@@ -44,9 +46,9 @@ export const Todolist = (props: TodolistPropsType) => {
         filteredTasks = filteredTasks.filter(f => f.isDone);
     }
 
-    const onClickChangeFilter = (value: FilterType) => {
-        props.filterTasks(props.todolistId, value)
-    }
+    const onClickChangeFilter = useCallback((value: FilterType) => {
+        props.filterTasks(props.todolistId, value);
+    },[props.filterTasks, props.todolistId])
 
     return (
         <div>
@@ -115,4 +117,4 @@ export const Todolist = (props: TodolistPropsType) => {
             </ul>
         </div>
     );
-}
+})
