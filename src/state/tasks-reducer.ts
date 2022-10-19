@@ -43,6 +43,9 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
 
 /*-----------------------------------------------------------------------------------*/
 
+// иной метод типизации initialState
+// type StateType = typeof initialState
+
 /*const initialState: TaskListType = {
     [todolistId1]: [
         {id: v1(), title: "HTML&CSS", isDone: true},
