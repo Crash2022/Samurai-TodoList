@@ -90,8 +90,9 @@ export const AppWithReducers = () => {
     /!*------------------------------------------------*!/
 
     const removeTodoList = (todoListId: string) => {
-        dispatchToTodolistsReducer(removeTodolistAC(todoListId));
-        dispatchToTasksReducer(removeTodolistAC(todoListId));
+        let action = removeTodolistAC(todoListId);
+        dispatchToTodolistsReducer(action);
+        dispatchToTasksReducer(action);
     }
 
     const addNewTodoList = (title: string) => {
