@@ -1,6 +1,6 @@
 import {AppBar, Button, Container, Grid, IconButton,
     Paper, Toolbar, Typography} from '@material-ui/core';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
@@ -42,22 +42,22 @@ export const AppWithRedux = React.memo(() => {
 
     /*------------------------------------------------*/
 
-    const removeTodoList = useCallback((todolistId: string) => {
-        const action = removeTodolistAC(todolistId); // памятка про экшн
-        dispatch(action);
-    },[dispatch])
-
     const addNewTodoList = useCallback((title: string) => {
         dispatch(addTodolistAC(title));
     },[dispatch])
 
-    const changeTodolistTitle = useCallback((todolistId: string, newInputValue: string) => {
-        dispatch(changeTodolistTitleAC(todolistId, newInputValue));
-    },[dispatch])
+    // const removeTodoList = useCallback((todolistId: string) => {
+    //     const action = removeTodolistAC(todolistId); // памятка про экшн
+    //     dispatch(action);
+    // },[dispatch])
 
-    const filterTasks = useCallback((todolistId: string, filterValue: FilterType) => {
-        dispatch(changeTodolistFilterAC(todolistId, filterValue));
-    },[dispatch])
+    // const changeTodolistTitle = useCallback((todolistId: string, newInputValue: string) => {
+    //     dispatch(changeTodolistTitleAC(todolistId, newInputValue));
+    // },[dispatch])
+
+    // const filterTasks = useCallback((todolistId: string, filterValue: FilterType) => {
+    //     dispatch(changeTodolistFilterAC(todolistId, filterValue));
+    // },[dispatch])
 
     /*------------------------------------------------*/
 
@@ -104,9 +104,9 @@ export const AppWithRedux = React.memo(() => {
                                                     todolistId={todo.id}
                                                     title={todo.title}
                                                     filter={todo.filter}
-                                                    filterTasks={filterTasks}
-                                                    removeTodoList={removeTodoList}
-                                                    changeTodolistTitle={changeTodolistTitle}
+                                                    //filterTasks={filterTasks}
+                                                    //removeTodoList={removeTodoList}
+                                                    //changeTodolistTitle={changeTodolistTitle}
                                                 />
                                             </Paper>
                                         </Grid>
