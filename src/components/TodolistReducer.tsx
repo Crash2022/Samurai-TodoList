@@ -30,24 +30,7 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const TodolistCopy = (props: TodolistPropsType) => {
-
-    //const [inputValue, setInputValue] = useState<string>('')
-    //const [error, setError] = useState<string | null>(null)
-
-    //const MESSAGE_INPUT_VALUE_REQUIRED = 'Поле обязательно для заполнения!';
-
-    /!*const callBackButtonHandler = () => {
-
-        const trimValue = inputValue.trim()
-
-        if (trimValue) {
-            props.addTask(trimValue, props.todolistId)
-            setInputValue('')
-        } else {
-            setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);
-        }
-    }*!/
+export const TodolistReducer = (props: TodolistPropsType) => {
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
 
@@ -58,10 +41,6 @@ export const TodolistCopy = (props: TodolistPropsType) => {
     const removeTaskHandler = (taskId: string) => {
         props.removeTask(props.todolistId, taskId);
     }
-
-    /!*const changeTaskTitle = (taskID: string, inputValue: string) => {
-        props.changeTaskTitle(props.todolistId, taskID, inputValue);
-    }*!/
 
     const changeStatusHandler = (taskID: string, eventValue: boolean) => {
         props.changeStatus(props.todolistId, taskID, eventValue);
