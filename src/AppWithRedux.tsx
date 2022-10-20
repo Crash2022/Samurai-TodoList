@@ -5,8 +5,7 @@ import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
-import {addTodolistAC,changeTodolistFilterAC,
-    changeTodolistTitleAC, removeTodolistAC} from "./state/todolists-reducer";
+import {addTodolistAC} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import styles from './components/Todolist.module.css'
@@ -45,19 +44,6 @@ export const AppWithRedux = React.memo(() => {
     const addNewTodoList = useCallback((title: string) => {
         dispatch(addTodolistAC(title));
     },[dispatch])
-
-    // const removeTodoList = useCallback((todolistId: string) => {
-    //     const action = removeTodolistAC(todolistId); // памятка про экшн
-    //     dispatch(action);
-    // },[dispatch])
-
-    // const changeTodolistTitle = useCallback((todolistId: string, newInputValue: string) => {
-    //     dispatch(changeTodolistTitleAC(todolistId, newInputValue));
-    // },[dispatch])
-
-    // const filterTasks = useCallback((todolistId: string, filterValue: FilterType) => {
-    //     dispatch(changeTodolistFilterAC(todolistId, filterValue));
-    // },[dispatch])
 
     /*------------------------------------------------*/
 
@@ -104,9 +90,6 @@ export const AppWithRedux = React.memo(() => {
                                                     todolistId={todo.id}
                                                     title={todo.title}
                                                     filter={todo.filter}
-                                                    //filterTasks={filterTasks}
-                                                    //removeTodoList={removeTodoList}
-                                                    //changeTodolistTitle={changeTodolistTitle}
                                                 />
                                             </Paper>
                                         </Grid>

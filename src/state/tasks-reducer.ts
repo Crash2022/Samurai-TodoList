@@ -1,7 +1,7 @@
 import {TaskListType} from "../AppWithRedux";
 import {v1} from "uuid";
 import {AddTodolistACType, RemoveTodolistACType,
-    todolistId1, todolistId2} from "./todolists-reducer";
+    /*todolistId1, todolistId2*/} from "./todolists-reducer";
 
 type ActionTypes =
     RemoveTaskACType |
@@ -81,7 +81,6 @@ export const tasksReducer = (state: TaskListType = initialState, action: ActionT
         }
         case 'REMOVE_TODOLIST': {
             // const {[action.todolistId]: [], ...rest} = {...state} //другой способ через деструктуризацию
-
             const stateCopy = {...state};
             delete stateCopy[action.id];
             return stateCopy;
