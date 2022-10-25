@@ -57,6 +57,7 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
         {id: v1(), title: "Notebook", isDone: true},
         {id: v1(), title: "Bread", isDone: false},
         {id: v1(), title: "Bike", isDone: false},
+        {id: v1(), title: "Mango", isDone: true}
     ]
 }*/
 
