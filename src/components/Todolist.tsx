@@ -65,7 +65,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
             <AddItemForm addItem={addTaskHandler}/>
 
             <div style={{margin: '10px'}}>
-                {/*<ButtonExample todolistId={props.todolistId} buttonTitle={'all'}/>*/}
+                {/*<ButtonExample todolistId={props.todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
                 <Button onClick={() => dispatch(changeTodolistFilterAC(props.todolistId, 'all'))}
                         variant={props.filter === 'all' ? 'contained' : 'text'}>All
                 </Button>
@@ -100,15 +100,17 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     );
 })
 
+// Чтобы реализовать useMemo для Material UI
+
 // type ButtonPropsType = {
 //     todolistId: string
 //     buttonTitle: FilterType
 //     filter: string
 //     //color: 'primary' | 'inherit' | 'secondary'
 // }
-
-// const ButtonExample = React.memo((props: ButtonPropsType) => {
 //
+// const ButtonExample = React.memo((props: ButtonPropsType) => {
+//     console.log('buttonExample')
 //     const dispatch = useDispatch();
 //
 //     return (
