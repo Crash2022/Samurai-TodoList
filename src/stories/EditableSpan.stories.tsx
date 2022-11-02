@@ -10,7 +10,7 @@ export default {
 
 const callback = action('Title was changed inside EditableSpan');
 
-export const EditableSpanBaseExample = (props: any) => {
+export const EditableSpanExample = (props: any) => {
     return (
         <EditableSpan title={'Click to change this title'} onChangeInput={callback}/>
     );

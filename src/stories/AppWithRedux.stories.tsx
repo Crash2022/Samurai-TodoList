@@ -9,7 +9,7 @@ export default {
     decorators: [ReduxStoreProviderDecorator]
 } as ComponentMeta<typeof AppWithRedux>;
 
-export const AppWithReduxBaseExample = () => {
+export const AppWithReduxExample = () => {
     return (
             <AppWithRedux/>
     );

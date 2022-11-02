@@ -10,7 +10,7 @@ export default {
 
 const callback = action('Button ADD was pressed inside AddItemForm');
 
-export const TaskBaseExample = (props: any) => {
+export const AddItemFormExample = (props: any) => {
     return (
         <AddItemForm addItem={callback}/>
     );
