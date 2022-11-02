@@ -1,7 +1,3 @@
-// storybook.test.js
-// import initStoryshots from '@storybook/addon-storyshots';
-// initStoryshots();
-
 describe('addItemForm', () => {
     it('base example looks correct', async () => {
         // APIs from jest-puppeteer
