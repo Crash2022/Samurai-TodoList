@@ -3,6 +3,9 @@ import {ComponentMeta, ComponentStory} from "@storybook/react";
 import {Task} from "../components/Task";
 import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 import {action} from "@storybook/addon-actions";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../state/store";
+import {TaskType} from "../AppWithRedux";
 
 export default {
     title: 'Task StoryComponent',
@@ -11,20 +14,21 @@ export default {
 } as ComponentMeta<typeof Task>;
 
 // короткая запись
-// export const TaskExample = () => {
-//     return (
-//         <>
-//             <Task todolistId={'todolistId1'}
-//                   task={ {id: '1', title: "HTML&CSS", isDone: true} }
-//             />
-//             <Task todolistId={'todolistId2'}
-//                   task={ {id: '2', title: "React", isDone: false} }
-//             />
-//         </>
-//     );
-// }
+/*export const TaskExample = () => {
+    return (
+        <>
+            <Task todolistId={'todolistId1'}
+                  task={ {id: '1', title: "HTML&CSS", isDone: true} }
+            />
+            <Task todolistId={'todolistId2'}
+                  task={ {id: '2', title: "React", isDone: false} }
+            />
+        </>
+    );
+}*/
 
 // подробная запись
+/*
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />
 
@@ -40,4 +44,25 @@ export const TaskIsNotDoneStory = Template.bind({})
 TaskIsNotDoneStory.args = {
     todolistId: 'todolistId2',
     task: {id: '2', title: "React", isDone: false}
+}*/
+
+// способ с использованием useSelector
+const TaskWithRedux = () => {
+
+    const task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0]);
+
+    return (
+        <>
+            <Task todolistId={'todolistId1'}
+                  task={task}
+            />
+        </>
+    );
 }
+
+const Template: ComponentStory<typeof TaskWithRedux> = (args) => <TaskWithRedux/>
+export const TaskStoryWithRedux = Template.bind({})
+
+
+
+
