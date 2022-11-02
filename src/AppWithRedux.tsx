@@ -9,6 +9,7 @@ import {addTodolistAC} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import styles from './components/Todolist.module.css'
+//import {todolistsReducer} from './components/index'
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -38,6 +39,9 @@ export const AppWithRedux = React.memo(() => {
 
     const dispatch = useDispatch();
     const todolists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todolists);
+
+    // версия с импортом из другого файла
+    //const todolists = useSelector<AppRootStateType, Array<TodoListType>>(todolistsReducer);
 
     /*------------------------------------------------*/
 

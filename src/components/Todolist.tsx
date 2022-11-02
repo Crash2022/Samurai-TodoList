@@ -4,7 +4,7 @@ import {AddItemForm} from "../UI/AddItemForm";
 import {EditableSpan} from "../UI/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {TaskType} from "../AppWithRedux";
+import {FilterType, TaskType} from "../AppWithRedux";
 import {addTaskAC} from "../state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
@@ -65,6 +65,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
             <AddItemForm addItem={addTaskHandler}/>
 
             <div style={{margin: '10px'}}>
+                {/*<ButtonExample todolistId={props.todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
                 <Button onClick={() => dispatch(changeTodolistFilterAC(props.todolistId, 'all'))}
                         variant={props.filter === 'all' ? 'contained' : 'text'}>All
                 </Button>
@@ -98,3 +99,24 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
         </div>
     );
 })
+
+// Чтобы реализовать useMemo для Material UI
+
+// type ButtonPropsType = {
+//     todolistId: string
+//     buttonTitle: FilterType
+//     filter: string
+//     //color: 'primary' | 'inherit' | 'secondary'
+// }
+//
+// const ButtonExample = React.memo((props: ButtonPropsType) => {
+//     console.log('buttonExample')
+//     const dispatch = useDispatch();
+//
+//     return (
+//         <Button onClick={() => dispatch(changeTodolistFilterAC(props.todolistId, 'all'))}
+//                 variant={props.buttonTitle === props.filter ? 'contained' : 'text'}>
+//         {props.buttonTitle}
+//         </Button>
+//     )
+// })
