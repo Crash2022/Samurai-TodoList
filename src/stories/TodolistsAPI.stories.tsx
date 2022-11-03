@@ -80,7 +80,7 @@ export const UpdateTodolist = () => {
     return (
         <>
             <span>Todolist ID: <input type="text" value={todolistId} onChange={(e)=>{setTodolistId(e.currentTarget.value)}}/></span>
-            <span> Todolist update title: <input type="text" value={newTitle} onChange={(e)=>{setNewTitle(e.currentTarget.value)}}/></span>
+            <span> Todolist Update Title: <input type="text" value={newTitle} onChange={(e)=>{setNewTitle(e.currentTarget.value)}}/></span>
             <span><button onClick={updateTodolist}>Update Todolist</button></span>
             {/*<div>{JSON.stringify(state)}</div>*/}
         </>
@@ -161,7 +161,7 @@ export const UpdateTask = () => {
     //const newTitle = 'UPDATED task title'
 
     const updateTask = () => {
-        todolistsAPI.updateTask(todolistId, taskId, newTitle)
+        todolistsAPI.updateTask(todolistId, taskId, {title: newTitle})
             .then(response => setState(response.data))
     }
 
@@ -169,7 +169,7 @@ export const UpdateTask = () => {
         <>
             <span>Todolist ID: <input type="text" value={todolistId} onChange={(e)=>{setTodolistId(e.currentTarget.value)}}/></span>
             <span> Task ID: <input type="text" value={taskId} onChange={(e)=>{setTaskId(e.currentTarget.value)}}/></span>
-            <span> Task update title: <input type="text" value={newTitle} onChange={(e)=>{setNewTitle(e.currentTarget.value)}}/></span>
+            <span> Update Task Title: <input type="text" value={newTitle} onChange={(e)=>{setNewTitle(e.currentTarget.value)}}/></span>
             <span><button onClick={updateTask}>Update Task</button></span>
             {/*<div>{JSON.stringify(state)}</div>*/}
         </>

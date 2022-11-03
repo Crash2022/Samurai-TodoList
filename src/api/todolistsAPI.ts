@@ -54,12 +54,12 @@ export type TaskAPIType = {
 }
 
 export type TaskUpdateAPIType = {
-    description: string
-    title: string
-    isDone: number
-    priority: number
-    startDate: string
-    deadline: string
+    description?: string
+    title?: string
+    isDone?: number
+    priority?: number
+    startDate?: string
+    deadline?: string
 }
 
 export const todolistsAPI = {
@@ -114,10 +114,10 @@ export const todolistsAPI = {
                 .then(response => response.data)
         )
     },
-    updateTask(todolistId: string, taskId: string, newTitle: string) {
+    updateTask(todolistId: string, taskId: string, model: TaskUpdateAPIType) {
         return (
             instance
-                .put<TodolistsResponseType<{ item: TaskUpdateAPIType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: newTitle}, {})
+                .put<TodolistsResponseType<{ item: TaskUpdateAPIType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {...model}, {})
                 .then(response => response.data)
         )
     }
