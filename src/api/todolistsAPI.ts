@@ -82,7 +82,6 @@ export const todolistsAPI = {
                 .then(response => response.data)
         )
     },
-
     getTasks(todolistId: string) {
         return (
             instance
