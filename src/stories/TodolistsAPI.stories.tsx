@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 //import {ComponentMeta} from "@storybook/react";
 import axios from "axios";
+import {todolistsAPI} from "../api/todolistsAPI";
 //import {Task} from "../components/Task";
 //import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 
 export default {
-    title: 'Todolists API StoryComponent',
+    title: 'Todolists API Story',
     //component: TodolistsAPI,
     //decorators: [ReduxStoreProviderDecorator]
 } //as ComponentMeta<typeof TodolistsAPI>;
@@ -22,7 +23,7 @@ export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
 
     useEffect( ()=> {
-        axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings)
+        todolistsAPI.getTodolists()
             .then(response => setState(response.data))
     }, [])
 
@@ -34,9 +35,10 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
 
     const [state, setState] = useState<any>(null)
+    const title = 'NEW todolist';
 
     useEffect( ()=> {
-        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title: 'new todolist'}, settings)
+        todolistsAPI.createTodolist(title)
             .then(response => setState(response.data))
     }, [])
 
@@ -48,9 +50,10 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
 
     const [state, setState] = useState<any>(null)
+    const todolistId = '012bd263-8bab-4015-9e08-0f50a1a237b2';
 
     useEffect( ()=> {
-        axios.delete('https://social-network.samuraijs.com/api/1.1/todo-lists/012bd263-8bab-4015-9e08-0f50a1a237b2', settings)
+        todolistsAPI.deleteTodolist(todolistId)
             .then(response => setState(response.data))
     }, [])
 
@@ -62,9 +65,10 @@ export const DeleteTodolist = () => {
 export const UpdateTodolist = () => {
 
     const [state, setState] = useState<any>(null)
+    const newTitle = 'UPDATED todolist title'
 
     useEffect( ()=> {
-        axios.put('https://social-network.samuraijs.com/api/1.1/todo-lists/9d0b5bc3-9ec2-4208-b117-b09a9d056e8c', {title: 'updated title'},settings)
+        todolistsAPI.updateTodolist(newTitle)
             .then(response => setState(response.data))
     }, [])
 
