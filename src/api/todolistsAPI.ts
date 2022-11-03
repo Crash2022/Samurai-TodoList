@@ -28,10 +28,10 @@ export const todolistsAPI = {
                 .then(response => response.data)
         )
     },
-    updateTodolist(newTitle: string) {
+    updateTodolist(todolistId: string, newTitle: string) {
         return (
             instance
-                .put('https://social-network.samuraijs.com/api/1.1/todo-lists/9d0b5bc3-9ec2-4208-b117-b09a9d056e8c', {title: newTitle},{})
+                .put(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, {title: newTitle},{})
                 .then(response => response.data)
         )
     }

@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
-//import {ComponentMeta} from "@storybook/react";
-import axios from "axios";
 import {todolistsAPI} from "../api/todolistsAPI";
-//import {Task} from "../components/Task";
 //import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 
 export default {
@@ -50,7 +47,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
 
     const [state, setState] = useState<any>(null)
-    const todolistId = '012bd263-8bab-4015-9e08-0f50a1a237b2';
+    const todolistId = '3f28d2b3-3d31-465f-896e-0721bbb507f3';
 
     useEffect( ()=> {
         todolistsAPI.deleteTodolist(todolistId)
@@ -66,9 +63,10 @@ export const UpdateTodolist = () => {
 
     const [state, setState] = useState<any>(null)
     const newTitle = 'UPDATED todolist title'
+    const todolistId = 'b2a611f6-50fe-40b3-9d87-d6f169e02f47';
 
     useEffect( ()=> {
-        todolistsAPI.updateTodolist(newTitle)
+        todolistsAPI.updateTodolist(todolistId, newTitle)
             .then(response => setState(response.data))
     }, [])
 
