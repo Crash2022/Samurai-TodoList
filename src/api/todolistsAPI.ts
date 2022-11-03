@@ -1,5 +1,32 @@
 import axios from "axios";
 
+export type TodolistType = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
+}
+
+// более короткая запись типа через infer
+type ResponseType<D> = {
+    resultCode: number
+    messages: Array<string>
+    data: D
+}
+
+// развёрнутая типизация
+// type CreateTodolistResponseType = {
+//     resultCode: number
+//     messages: Array<string>
+//     data: {item: TodolistType}
+// }
+//
+// type DeleteUpdateTodolistResponseType = {
+//     resultCode: number
+//     messages: Array<string>
+//     data: { }
+// }
+
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
@@ -10,28 +37,28 @@ export const todolistsAPI = {
     getTodolists() {
         return (
             instance
-                .get('https://social-network.samuraijs.com/api/1.1/todo-lists', {})
+                .get<Array<TodolistType>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {})
                 .then(response => response.data)
         )
     },
     createTodolist(title: string) {
         return (
             instance
-                .post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title: title}, {})
+                .post<ResponseType<{item: TodolistType}>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title: title}, {})
                 .then(response => response.data)
     )
     },
     deleteTodolist(todolistId: string) {
         return (
             instance
-                .delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, {})
+                .delete<ResponseType<{}>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, {})
                 .then(response => response.data)
         )
     },
     updateTodolist(todolistId: string, newTitle: string) {
         return (
             instance
-                .put(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, {title: newTitle},{})
+                .put<ResponseType<{ D }>>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, {title: newTitle},{})
                 .then(response => response.data)
         )
     }
