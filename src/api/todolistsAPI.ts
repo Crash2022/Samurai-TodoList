@@ -13,22 +13,8 @@ export type TodolistType = {
     order: number
 }
 
-export type TaskAPIType = {
-    description: string
-    title: string
-    completed: boolean
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-
-// более короткая запись типа через infer
-type TodolistsResponseType<D = { }> = {
+// более короткая запись типа через infer?
+type TodolistsResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     data: D
@@ -51,6 +37,29 @@ type TasksResponseType = {
     error: string | null
     items: Array<TaskAPIType>
     totalCount: number
+}
+
+export type TaskAPIType = {
+    description: string
+    title: string
+    completed: boolean // ?
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+}
+
+export type TaskUpdateAPIType = {
+    description: string
+    title: string
+    isDone: number
+    priority: number
+    startDate: string
+    deadline: string
 }
 
 export const todolistsAPI = {
@@ -82,6 +91,8 @@ export const todolistsAPI = {
                 .then(response => response.data)
         )
     },
+
+
     getTasks(todolistId: string) {
         return (
             instance
@@ -92,7 +103,7 @@ export const todolistsAPI = {
     createTask(todolistId: string, newTask: string) {
         return (
             instance
-                .post<TodolistsResponseType<{ item: TodolistType }>>(`todo-lists/${todolistId}/tasks/`, {title: newTask}, {})
+                .post<TodolistsResponseType<{ item: TaskAPIType }>>(`todo-lists/${todolistId}/tasks/`, {title: newTask}, {})
                 .then(response => response.data)
         )
     },
@@ -106,7 +117,7 @@ export const todolistsAPI = {
     updateTask(todolistId: string, taskId: string, newTitle: string) {
         return (
             instance
-                .put<TodolistsResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: newTitle}, {})
+                .put<TodolistsResponseType<{ item: TaskUpdateAPIType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: newTitle}, {})
                 .then(response => response.data)
         )
     }
