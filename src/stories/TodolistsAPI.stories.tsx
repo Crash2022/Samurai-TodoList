@@ -17,6 +17,7 @@ export const GetTodolists = () => {
     useEffect(() => {
         todolistsAPI.getTodolists()
             .then(response => setState(response))
+            .catch(error => console.log(error))
     }, [])
 
     return (
@@ -33,6 +34,7 @@ export const CreateTodolist = () => {
     const createTodolist = () => {
         todolistsAPI.createTodolist(title)
             .then(response => setState(response.data))
+            .catch(error => console.log(error))
     }
 
     return (
@@ -53,6 +55,7 @@ export const DeleteTodolist = () => {
     const deleteTodolist = () => {
         todolistsAPI.deleteTodolist(todolistId)
             .then(response => setState(response.data))
+            .catch(error => console.log(error))
     }
 
     return (
@@ -75,6 +78,7 @@ export const UpdateTodolist = () => {
     const updateTodolist = () => {
         todolistsAPI.updateTodolist(todolistId, newTitle)
             .then(response => setState(response.data))
+            .catch(error => console.log(error))
     }
 
     return (
@@ -97,6 +101,7 @@ export const GetTasks = () => {
     useEffect(() => {
         todolistsAPI.getTasks(todolistId)
             .then(response => setState(response.items))
+            .catch(error => console.log(error))
     }, [])
 
     return (
@@ -112,9 +117,14 @@ export const CreateTask = () => {
     //const todolistId = '58b83589-1691-4b11-bcd5-298270d98392';
     //const title = 'NEW task';
 
-    const createTask = () => {
-        todolistsAPI.createTask(todolistId, title)
-            .then(response => setState(response.data))
+    const createTask = async () => {
+        try {
+            const createdTask = await todolistsAPI.createTask(todolistId, title);
+            setState(createdTask);
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -135,9 +145,14 @@ export const DeleteTask = () => {
     //const todolistId = '58b83589-1691-4b11-bcd5-298270d98392';
     //const taskId = '441efd17-17bd-4db0-80ac-84b136705f17';
 
-    const deleteTask = () => {
-        todolistsAPI.deleteTask(todolistId, taskId)
-            .then(response => setState(response.data))
+    const deleteTask = async () => {
+        try {
+            const deletedTask = todolistsAPI.deleteTask(todolistId, taskId);
+            setState(deletedTask);
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -160,9 +175,14 @@ export const UpdateTask = () => {
     //const taskId = 'c14bedd9-a71a-418e-b078-30b08212b5bb';
     //const newTitle = 'UPDATED task title'
 
-    const updateTask = () => {
-        todolistsAPI.updateTask(todolistId, taskId, {title: newTitle})
-            .then(response => setState(response.data))
+    const updateTask = async () => {
+        try {
+            const updatedTask = todolistsAPI.updateTask(todolistId, taskId, {title: newTitle});
+            setState(updatedTask);
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 
     return (
