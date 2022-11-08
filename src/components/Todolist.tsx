@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
 import {Task} from "./Task";
 import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../state/todolists-reducer";
-import {TaskAPIType} from "../api/todolistsAPI";
+import {TaskAPIType, TaskStatuses} from "../api/todolistsAPI";
 
 export type TodolistPropsType = {
     todolistId: string
@@ -45,10 +45,10 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     let filteredTasks = tasksObj;
 
     if (props.filter === 'active') {
-        filteredTasks = filteredTasks.filter(f => !f.status);
+        filteredTasks = filteredTasks.filter(f => f.status === TaskStatuses.New); // !f.status
     }
     if (props.filter === 'completed') {
-        filteredTasks = filteredTasks.filter(f => f.status);
+        filteredTasks = filteredTasks.filter(f => f.status === TaskStatuses.Completed); // f.status
     }
 
     return (

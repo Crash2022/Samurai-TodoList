@@ -5,7 +5,7 @@ import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 import {action} from "@storybook/addon-actions";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
-import {TaskType} from "../AppWithRedux";
+import {TaskAPIType} from "../api/todolistsAPI";
 
 export default {
     title: 'Task StoryComponent',
@@ -49,7 +49,7 @@ TaskIsNotDoneStory.args = {
 // способ с использованием useSelector
 const TaskWithRedux = () => {
 
-    const task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0]);
+    const task = useSelector<AppRootStateType, TaskAPIType>(state => state.tasks['todolistId1'][0]);
 
     return (
         <>

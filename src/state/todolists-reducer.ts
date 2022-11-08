@@ -14,8 +14,8 @@ export let todolistId2 = v1();
 // type StateType = typeof initialState
 
 const initialState: Array<TodolistDomainType> = [
-    {id: todolistId1, title: 'Выучить', filter: 'all', addedDate: '', order: 0}/*,
-    {id: todolistId2, title: 'Купить', filter: 'all'}*/
+    {id: todolistId1, title: 'Выучить', filter: 'all', addedDate: '', order: 0},
+    {id: todolistId2, title: 'Купить', filter: 'all', addedDate: '', order: 1}
 ]
 
 // const initialState: Array<TodolistDomainType> = [ ];
