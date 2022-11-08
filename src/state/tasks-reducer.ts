@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {AddTodolistACType, RemoveTodolistACType,
+import {AddTodolistACType, RemoveTodolistACType, SetTodolistsACType,
     todolistId1, todolistId2} from "./todolists-reducer";
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 
@@ -10,26 +10,26 @@ export type TasksListType = {
 // иной метод типизации initialState
 // type StateType = typeof initialState
 
-const initialState: TasksListType = {
-    [todolistId1]: [
-        {todoListId: 'todolistId1', id: v1(), title: 'HTML&CSS',
-            status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
-            description: '', addedDate: '', startDate: '', deadline: '', order: 0},
-        {todoListId: 'todolistId1', id: v1(), title: 'React',
-            status: TaskStatuses.New, priority: TaskPriorities.Hi,
-            description: '', addedDate: '', startDate: '', deadline: '', order: 1}
-    ],
-    [todolistId2]: [
-        {todoListId: 'todolistId2', id: v1(), title: 'Notebook',
-            status: TaskStatuses.New, priority: TaskPriorities.Low,
-            description: '', addedDate: '', startDate: '', deadline: '', order: 0},
-        {todoListId: 'todolistId2', id: v1(), title: 'New Bike',
-            status: TaskStatuses.Completed, priority: TaskPriorities.Later,
-            description: '', addedDate: '', startDate: '', deadline: '', order: 1}
-    ]
-}
+// const initialState: TasksListType = {
+//     [todolistId1]: [
+//         {todoListId: 'todolistId1', id: v1(), title: 'HTML&CSS',
+//             status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
+//             description: '', addedDate: '', startDate: '', deadline: '', order: 0},
+//         {todoListId: 'todolistId1', id: v1(), title: 'React',
+//             status: TaskStatuses.New, priority: TaskPriorities.Hi,
+//             description: '', addedDate: '', startDate: '', deadline: '', order: 1}
+//     ],
+//     [todolistId2]: [
+//         {todoListId: 'todolistId2', id: v1(), title: 'Notebook',
+//             status: TaskStatuses.New, priority: TaskPriorities.Low,
+//             description: '', addedDate: '', startDate: '', deadline: '', order: 0},
+//         {todoListId: 'todolistId2', id: v1(), title: 'New Bike',
+//             status: TaskStatuses.Completed, priority: TaskPriorities.Later,
+//             description: '', addedDate: '', startDate: '', deadline: '', order: 1}
+//     ]
+// }
 
-// const initialState: TasksListType = { };
+const initialState: TasksListType = { };
 
 export const tasksReducer = (state: TasksListType = initialState, action: ActionTypes): TasksListType => {
     switch (action.type) {
@@ -59,6 +59,13 @@ export const tasksReducer = (state: TasksListType = initialState, action: Action
         case 'ADD_NEW_TODOLIST': {
             return { ...state, [action.todolistId]: [] };
         }
+        case 'SET_TODOLISTS': {
+            const copyState = {...state};
+            action.todolists.forEach(tl => {
+                copyState[tl.id] = [];
+            })
+            return copyState;
+        }
         default:
             //throw new Error("I don't know action type!");
             return state;
@@ -73,7 +80,8 @@ type ActionTypes =
     ChangeTaskStatusACType |
     ChangeTaskTitleACType |
     AddTodolistACType |
-    RemoveTodolistACType;
+    RemoveTodolistACType |
+    SetTodolistsACType;
 
 export type RemoveTaskACType = ReturnType<typeof removeTaskAC>
 export const removeTaskAC = (todolistId: string, taskId: string) => ({

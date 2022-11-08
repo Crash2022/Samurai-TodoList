@@ -1,14 +1,15 @@
 import {AppBar, Button, Container, Grid, IconButton,
     Paper, Toolbar, Typography} from '@material-ui/core';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
-import {addTodolistAC, TodolistDomainType} from "./state/todolists-reducer";
+import {addTodolistAC, setTodolistsAC, TodolistDomainType} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import styles from './components/Todolist.module.css'
+import {todolistsAPI} from "./api/todolistsAPI";
 //import {todolistsReducer} from './components/index'
 
 /*https://samuraitodo.herokuapp.com/*/
@@ -48,6 +49,13 @@ export const AppWithRedux = React.memo(() => {
     },[dispatch])
 
     /*------------------------------------------------*/
+
+    useEffect(() => {
+        todolistsAPI.getTodolists()
+            .then(response => {
+                dispatch(setTodolistsAC(response));
+            })
+    },[])
 
     return (
         <div className="App">

@@ -13,12 +13,12 @@ export let todolistId2 = v1();
 // иной метод типизации initialState
 // type StateType = typeof initialState
 
-const initialState: Array<TodolistDomainType> = [
-    {id: todolistId1, title: 'Выучить', filter: 'all', addedDate: '', order: 0},
-    {id: todolistId2, title: 'Купить', filter: 'all', addedDate: '', order: 1}
-]
+// const initialState: Array<TodolistDomainType> = [
+//     {id: todolistId1, title: 'Выучить', filter: 'all', addedDate: '', order: 0},
+//     {id: todolistId2, title: 'Купить', filter: 'all', addedDate: '', order: 1}
+// ]
 
-// const initialState: Array<TodolistDomainType> = [ ];
+const initialState: Array<TodolistDomainType> = [ ];
 
 export const todolistsReducer = (state: Array<TodolistDomainType> = initialState,
                                  action: ActionTypes): Array<TodolistDomainType> => {
@@ -36,6 +36,9 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
         case 'CHANGE_TODOLIST_FILTER': {
             return state.map(el => el.id === action.id ? {...el, filter: action.filter} : el);
         }
+        case 'SET_TODOLISTS': {
+            return action.todolists.map(tl => ({...tl, filter: 'all'}));
+        }
         default:
             //throw new Error("I don't know action type!");
             return state;
@@ -48,7 +51,8 @@ type ActionTypes =
     AddTodolistACType |
     RemoveTodolistACType |
     ChangeTodolistTitleACType |
-    ChangeTodolistFilterACType;
+    ChangeTodolistFilterACType |
+    SetTodolistsACType;
 
 export type RemoveTodolistACType = ReturnType<typeof removeTodolistAC>
 export const removeTodolistAC = (todolistId: string) => ({
@@ -73,4 +77,10 @@ export type ChangeTodolistFilterACType = ReturnType<typeof changeTodolistFilterA
 export const changeTodolistFilterAC = (id: string, filter: FilterType) => ({
     type: 'CHANGE_TODOLIST_FILTER',
     id, filter
+} as const)
+
+export type SetTodolistsACType = ReturnType<typeof setTodolistsAC>
+export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
+    type: 'SET_TODOLISTS',
+    todolists
 } as const)
