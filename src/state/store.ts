@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
 })
 
 // @ts-ignore
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware), composeEnhancers());
+export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware)/*, composeEnhancers()*/);
 //export const store = createStore(rootReducer); // старая версия записи
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;

@@ -6,7 +6,7 @@ import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
 import {addTodolistAC, GetTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppRootStateType, useTypedDispatch} from "./state/store";
 import styles from './components/Todolist.module.css'
 
@@ -49,13 +49,6 @@ export const AppWithRedux = React.memo(() => {
     /*------------------------------------------------*/
 
     useEffect(() => {
-        // todolistsAPI.getTodolists()
-        //     .then(response => {
-        //         dispatch(setTodolistsAC(response));
-        //     })
-
-        //GetTodolistsThunk(dispatch);
-
         dispatch(GetTodolistsTC());
     },[])
 

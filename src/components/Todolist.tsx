@@ -1,14 +1,18 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import styles from './Todolist.module.css'
 import {AddItemForm} from "../UI/AddItemForm";
 import {EditableSpan} from "../UI/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {addTaskAC} from "../state/tasks-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
+import {addTaskAC, GetTasksTC} from "../state/tasks-reducer";
+import { useSelector} from "react-redux";
+import {AppRootStateType, useTypedDispatch} from "../state/store";
 import {Task} from "./Task";
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../state/todolists-reducer";
+import {
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC
+} from "../state/todolists-reducer";
 import {TaskAPIType, TaskStatuses} from "../api/todolistsAPI";
 
 export type TodolistPropsType = {
@@ -21,7 +25,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
 
     console.log('todolist')
 
-    const dispatch = useDispatch();
+    const dispatch = useTypedDispatch();
     const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[props.todolistId]);
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
@@ -50,6 +54,10 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     if (props.filter === 'completed') {
         filteredTasks = filteredTasks.filter(f => f.status === TaskStatuses.Completed); // f.status
     }
+
+    useEffect(() => {
+        dispatch(GetTasksTC(props.todolistId));
+    },[])
 
     return (
         <div>
