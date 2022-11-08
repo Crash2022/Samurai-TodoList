@@ -85,5 +85,11 @@
     "puppeteer": "^19.1.2",
     "start-server-and-test": "^1.14.0",
     "webpack": "^5.74.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": ["<rootDir>/node_modules/(?!axios)/"]
   }
 }
