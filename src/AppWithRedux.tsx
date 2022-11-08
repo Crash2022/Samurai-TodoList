@@ -5,12 +5,10 @@ import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
-import {addTodolistAC, setTodolistsAC, TodolistDomainType} from "./state/todolists-reducer";
+import {addTodolistAC, GetTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
+import {AppRootStateType, useTypedDispatch} from "./state/store";
 import styles from './components/Todolist.module.css'
-import {todolistsAPI} from "./api/todolistsAPI";
-//import {todolistsReducer} from './components/index'
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -36,7 +34,7 @@ export const AppWithRedux = React.memo(() => {
 
     const MESSAGE_TODOS_END = 'Список задач пуст!';
 
-    const dispatch = useDispatch();
+    const dispatch = useTypedDispatch();
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
 
     // версия с импортом из другого файла
@@ -51,10 +49,14 @@ export const AppWithRedux = React.memo(() => {
     /*------------------------------------------------*/
 
     useEffect(() => {
-        todolistsAPI.getTodolists()
-            .then(response => {
-                dispatch(setTodolistsAC(response));
-            })
+        // todolistsAPI.getTodolists()
+        //     .then(response => {
+        //         dispatch(setTodolistsAC(response));
+        //     })
+
+        //GetTodolistsThunk(dispatch);
+
+        dispatch(GetTodolistsTC());
     },[])
 
     return (
