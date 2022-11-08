@@ -4,13 +4,13 @@ import styles from './Todolist.module.css'
 import {EditableSpan} from "../UI/EditableSpan";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {TaskType} from "../AppWithRedux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
 import {useDispatch} from "react-redux";
+import {TaskAPIType} from "../api/todolistsAPI";
 
 export type TaskPropsType = {
     todolistId: string
-    task: TaskType
+    task: TaskAPIType
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
@@ -33,8 +33,8 @@ export const Task = React.memo((props: TaskPropsType) => {
     },[props.todolistId, props.task.id])
 
     return (
-        <li key={v1()} className={props.task.isDone ? styles.isDoneTask : ''}>
-            <Checkbox checked={props.task.isDone}
+        <li key={v1()} className={props.task.status ? styles.isDoneTask : ''}>
+            <Checkbox checked={props.task.status}
                       onChange={changeStatusHandler}
             />
             <EditableSpan title={props.task.title}

@@ -1,7 +1,71 @@
-import {TaskListType} from "../AppWithRedux";
 import {v1} from "uuid";
 import {AddTodolistACType, RemoveTodolistACType,
-    /*todolistId1, todolistId2*/} from "./todolists-reducer";
+    todolistId1, todolistId2} from "./todolists-reducer";
+import {TaskAPIType, TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
+
+export type TasksListType = {
+    [todolistId: string]: Array<TaskAPIType>
+}
+
+// иной метод типизации initialState
+// type StateType = typeof initialState
+
+const initialState: TasksListType = {
+    [todolistId1]: [
+        {todoListId: 'todolistId1', id: v1(), title: 'HTML&CSS',
+            status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
+            description: '', addedDate: '', startDate: '', deadline: '', order: 0},
+        {todoListId: 'todolistId1', id: v1(), title: 'React',
+            status: TaskStatuses.New, priority: TaskPriorities.Hi,
+            description: '', addedDate: '', startDate: '', deadline: '', order: 0}
+    ],
+    [todolistId2]: [
+        {todoListId: 'todolistId2', id: v1(), title: 'Notebook',
+            status: TaskStatuses.New, priority: TaskPriorities.Low,
+            description: '', addedDate: '', startDate: '', deadline: '', order: 0},
+        {todoListId: 'todolistId2', id: v1(), title: 'New Bike',
+            status: TaskStatuses.Completed, priority: TaskPriorities.Later,
+            description: '', addedDate: '', startDate: '', deadline: '', order: 0}
+    ]
+}
+
+// const initialState: TasksListType = { };
+
+export const tasksReducer = (state: TasksListType = initialState, action: ActionTypes): TasksListType => {
+    switch (action.type) {
+        case 'REMOVE_TASK': {
+            return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
+        }
+        case 'ADD_TASK': {
+            const newTask = {todolistId: action.todolistId, id: v1(), title: action.titleInput,
+                status: TaskStatuses.New, priority: TaskPriorities.Low,
+                description: '', addedDate: '', startDate: '', deadline: '', order: 0};
+            return {...state, [action.todolistId]: [newTask,...state[action.todolistId]]};
+        }
+        case 'CHANGE_TASK_STATUS': {
+            return {...state, [action.todolistId]:
+                    state[action.todolistId].map( el => el.id === action.taskId ? {...el, status: action.status} : el)};
+        }
+        case 'CHANGE_TASK_TITLE': {
+            return {...state, [action.todolistId]:
+                    state[action.todolistId].map( el => el.id === action.taskId ? {...el, title: action.title} : el)};
+        }
+        case 'REMOVE_TODOLIST': {
+            // const {[action.todolistId]: [], ...rest} = {...state} //другой способ через деструктуризацию
+            const stateCopy = {...state};
+            delete stateCopy[action.id];
+            return stateCopy;
+        }
+        case 'ADD_NEW_TODOLIST': {
+            return { ...state, [action.todolistId]: [] };
+        }
+        default:
+            //throw new Error("I don't know action type!");
+            return state;
+    }
+}
+
+/*-----------------------------------------------------------------------------------*/
 
 type ActionTypes =
     RemoveTaskACType |
@@ -40,57 +104,3 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
     taskId,
     title
 } as const)
-
-/*-----------------------------------------------------------------------------------*/
-
-// иной метод типизации initialState
-// type StateType = typeof initialState
-
-/*const initialState: TaskListType = {
-    [todolistId1]: [
-        {id: v1(), title: "HTML&CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "ReactJS", isDone: false},
-        {id: v1(), title: "React Native", isDone: false}
-    ],
-    [todolistId2]: [
-        {id: v1(), title: "Notebook", isDone: true},
-        {id: v1(), title: "Bread", isDone: false},
-        {id: v1(), title: "Bike", isDone: false},
-        {id: v1(), title: "Mango", isDone: true}
-    ]
-}*/
-
-const initialState: TaskListType = { };
-
-export const tasksReducer = (state: TaskListType = initialState, action: ActionTypes): TaskListType => {
-    switch (action.type) {
-        case 'REMOVE_TASK': {
-            return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
-        }
-        case 'ADD_TASK': {
-            const newTask = {id: v1(), title: action.titleInput, isDone: false};
-            return {...state, [action.todolistId]: [newTask,...state[action.todolistId]]};
-        }
-        case 'CHANGE_TASK_STATUS': {
-            return {...state, [action.todolistId]:
-                    state[action.todolistId].map( el => el.id === action.taskId ? {...el, isDone: action.isDone} : el)};
-        }
-        case 'CHANGE_TASK_TITLE': {
-            return {...state, [action.todolistId]:
-                    state[action.todolistId].map( el => el.id === action.taskId ? {...el, title: action.title} : el)};
-        }
-        case 'REMOVE_TODOLIST': {
-            // const {[action.todolistId]: [], ...rest} = {...state} //другой способ через деструктуризацию
-            const stateCopy = {...state};
-            delete stateCopy[action.id];
-            return stateCopy;
-        }
-        case 'ADD_NEW_TODOLIST': {
-            return { ...state, [action.todolistId]: [] };
-        }
-        default:
-            //throw new Error("I don't know action type!");
-            return state;
-    }
-}

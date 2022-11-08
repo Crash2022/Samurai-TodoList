@@ -5,7 +5,7 @@ import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
-import {addTodolistAC} from "./state/todolists-reducer";
+import {addTodolistAC, TodolistDomainType} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import styles from './components/Todolist.module.css'
@@ -13,23 +13,21 @@ import styles from './components/Todolist.module.css'
 
 /*https://samuraitodo.herokuapp.com/*/
 
-export type FilterType = 'all' | 'active' | 'completed';
+// export type TasksListType = {
+//     [todolistId: string]: Array<TaskType>
+// }
 
-export type TaskListType = {
-    [todolistId: string]: Array<TaskType>
-}
-
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterType
-}
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+// export type TodoListType = {
+//     id: string
+//     title: string
+//     filter: FilterType
+// }
+//
+// export type TaskType = {
+//     id: string
+//     title: string
+//     isDone: boolean
+// }
 
 export const AppWithRedux = React.memo(() => {
 
@@ -38,7 +36,7 @@ export const AppWithRedux = React.memo(() => {
     const MESSAGE_TODOS_END = 'Список задач пуст!';
 
     const dispatch = useDispatch();
-    const todolists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todolists);
+    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
 
     // версия с импортом из другого файла
     //const todolists = useSelector<AppRootStateType, Array<TodoListType>>(todolistsReducer);
