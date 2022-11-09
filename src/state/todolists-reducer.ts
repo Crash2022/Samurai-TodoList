@@ -131,7 +131,7 @@ export const CreateTodolistTC = (todolist: TodolistDomainType /*title: string*/)
     return (dispatch: Dispatch) => {
         todolistsAPI.createTodolist(todolist.title)
             .then(response => {
-                //dispatch(addTodolistAC(todolist)) // ???
+                //dispatch(addTodolistAC(todolist)) // !!! так лучше не делать
                 dispatch(addTodolistAC(response.data.item))
             })
     }

@@ -4,12 +4,8 @@ import styles from './Todolist.module.css'
 import {EditableSpan} from "../UI/EditableSpan";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {
-    changeTaskStatusAC,
-    changeTaskTitleAC,
-    DeleteTaskTC,
-    removeTaskAC, /*UpdateTaskStatusTC,*/
-    UpdateTaskTitleTC
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC,
+    DeleteTaskTC, UpdateTaskStatusTC, UpdateTaskTitleTC
 } from "../state/tasks-reducer";
 import {TaskAPIType, TaskStatuses} from "../api/todolistsAPI";
 import {useTypedDispatch} from "../state/store";
@@ -33,11 +29,11 @@ export const Task = React.memo((props: TaskPropsType) => {
     //     dispatch(removeTaskAC(props.todolistId, props.task.id));
     // },[props.todolistId, props.task.id])
 
-    /*const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = event.currentTarget.checked;
         dispatch(UpdateTaskStatusTC(props.todolistId, props.task.id,
             newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New));
-    },[props.todolistId, props.task.id])*/
+    },[props.todolistId, props.task.id])
 
     // const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     //     let newIsDoneValue = event.currentTarget.checked;
@@ -56,8 +52,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     return (
         <li key={v1()} className={props.task.status === TaskStatuses.Completed ? styles.isDoneTask : ''}>
             <Checkbox checked={props.task.status === TaskStatuses.Completed}
-                      //onChange={changeStatusHandler}
-                      onChange={()=>{}}
+                      onChange={changeStatusHandler}
             />
             <EditableSpan title={props.task.title}
                           onChangeInput={changeTaskTitleHandler}

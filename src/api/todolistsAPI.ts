@@ -71,7 +71,7 @@ export type TaskUpdateAPIType = {
     description?: string
     title?: string
     status?: TaskStatuses
-    priority?: number
+    priority?: TaskPriorities
     startDate?: string
     deadline?: string
 }
