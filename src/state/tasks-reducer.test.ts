@@ -1,5 +1,4 @@
-import {tasksReducer, createTaskAC, deleteTaskAC,
-    /*changeTaskStatusAC, changeTaskTitleAC,*/ setTasksAC, updateTaskAC,
+import {tasksReducer, createTaskAC, deleteTaskAC, setTasksAC, updateTaskAC,
     TasksListType} from "./tasks-reducer";
 import {createTodolistAC, deleteTodolistAC, setTodolistsAC,
     todolistId1, todolistId2,} from "./todolists-reducer";
@@ -29,14 +28,14 @@ beforeEach(() => {
     })
 })
 
-test('correct task should be removed', () => {
+test('correct task should be deleted', () => {
 
     const action = deleteTaskAC('todolistId2', '1');
     const endState = tasksReducer(startState, action);
 
-    expect(endState['todolistId1'].length).toBe(4);
-    expect(endState['todolistId2'].length).toBe(2);
-    expect(endState['todolistId2'][0].title).toBe('Bread');
+    expect(endState['todolistId1'].length).toBe(2);
+    expect(endState['todolistId2'].length).toBe(1);
+    expect(endState['todolistId2'][0].title).toBe('New Bike');
     expect(endState['todolistId2'].every(task => task.id !== '1')).toBeTruthy();
 });
 
@@ -44,7 +43,7 @@ test('correct task should be added', () => {
 
     // const action = createTaskAC('todolistId1', 'New Task');
     const action = createTaskAC({
-        todoListId: 'todolistId1', id: v1(), title: 'Angular',
+        todoListId: 'todolistId1', id: '3', title: 'Angular',
         status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
     });
@@ -57,20 +56,20 @@ test('correct task should be added', () => {
     expect(endState['todolistId1'][0].id).toBeDefined();
 });
 
-// test('task status should be changed', () => {
-//
-//     const action = updateTaskStatusAC('todolistId1', '1', TaskStatuses.New);
-//     const endState = tasksReducer(startState, action);
-//
-//     expect(endState['todolistId1'].length).toBe(4);
-//     expect(endState['todolistId2'].length).toBe(3);
-//     expect(endState['todolistId1'][0].status).toBe(TaskStatuses.New);
-//     //expect(endState['todolistId1'][0].status).toBeFalsy();
-//     expect(endState['todolistId2'][0].status).toBe(TaskStatuses.Completed);
-//     //expect(endState['todolistId2'][0].status).toBeTruthy();
-// });
+test('task status should be updated', () => {
 
-test('task title should be changed', () => {
+    const action = updateTaskAC('todolistId1', '1', {status: TaskStatuses.New});
+    const endState = tasksReducer(startState, action);
+
+    expect(endState['todolistId1'].length).toBe(2);
+    expect(endState['todolistId2'].length).toBe(2);
+    expect(endState['todolistId1'][0].status).toBe(TaskStatuses.New);
+    //expect(endState['todolistId1'][0].status).toBeFalsy();
+    expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New);
+    //expect(endState['todolistId2'][0].status).toBeTruthy();
+});
+
+test('task title should be updated', () => {
 
     const title = 'New Title';
     // const action = updateTaskTitleAC('todolistId1', '1', newTitle);
