@@ -4,9 +4,7 @@ import styles from './Todolist.module.css'
 import {EditableSpan} from "../UI/EditableSpan";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC,
-    DeleteTaskTC, UpdateTaskStatusTC, UpdateTaskTitleTC
-} from "../state/tasks-reducer";
+import {deleteTaskTC, updateTaskTC} from "../state/tasks-reducer";
 import {TaskAPIType, TaskStatuses} from "../api/todolistsAPI";
 import {useTypedDispatch} from "../state/store";
 
@@ -22,7 +20,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     const dispatch = useTypedDispatch();
 
     const removeTaskHandler = useCallback(() => {
-        dispatch(DeleteTaskTC(props.todolistId, props.task.id));
+        dispatch(deleteTaskTC(props.todolistId, props.task.id));
     },[props.todolistId, props.task.id])
 
     // const removeTaskHandler = useCallback(() => {
@@ -31,8 +29,8 @@ export const Task = React.memo((props: TaskPropsType) => {
 
     const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = event.currentTarget.checked;
-        dispatch(UpdateTaskStatusTC(props.todolistId, props.task.id,
-            newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New));
+        dispatch(updateTaskTC(props.todolistId, props.task.id,
+            {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}));
     },[props.todolistId, props.task.id])
 
     // const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +40,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     // },[props.todolistId, props.task.id])
 
     const changeTaskTitleHandler = useCallback((newInputValue: string) => {
-        dispatch(UpdateTaskTitleTC(props.todolistId, props.task.id, newInputValue));
+        dispatch(updateTaskTC(props.todolistId, props.task.id, {title: newInputValue}));
     },[props.todolistId, props.task.id])
 
     // const changeTaskTitleHandler = useCallback((newInputValue: string) => {

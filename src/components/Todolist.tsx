@@ -4,15 +4,12 @@ import {AddItemForm} from "../UI/AddItemForm";
 import {EditableSpan} from "../UI/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {addTaskAC, CreateTaskTC, GetTasksTC} from "../state/tasks-reducer";
+import {createTaskTC, getTasksTC} from "../state/tasks-reducer";
 import { useSelector} from "react-redux";
 import {AppRootStateType, useTypedDispatch} from "../state/store";
 import {Task} from "./Task";
-import {
-    changeTodolistFilterAC,
-    changeTodolistTitleAC, DeleteTodolistTC,
-    removeTodolistAC, UpdateTodolistTitleTC
-} from "../state/todolists-reducer";
+import {changeTodolistFilterAC, deleteTodolistTC,
+    updateTodolistTitleTC} from "../state/todolists-reducer";
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 import {v1} from "uuid";
 
@@ -34,7 +31,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     /*------------------------------------------------*/
 
     const addTaskHandler = useCallback((titleInput: string) => {
-        dispatch(CreateTaskTC(/*props.todolistId, titleInput)*/ {
+        dispatch(createTaskTC(/*props.todolistId, titleInput)*/ {
             todoListId: props.todolistId, id: v1(), title: titleInput,
             status: TaskStatuses.New, priority: TaskPriorities.Middle,
             description: '', addedDate: '', startDate: '', deadline: '', order: 0
@@ -46,7 +43,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     // },[props.todolistId])
 
     const onChangeTodolistTitle = useCallback((newInputValue: string) => {
-        dispatch(UpdateTodolistTitleTC(props.todolistId, newInputValue));
+        dispatch(updateTodolistTitleTC(props.todolistId, newInputValue));
     },[props.todolistId])
 
     // const onChangeTodolistTitle = useCallback((newInputValue: string) => {
@@ -54,7 +51,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     // },[props.todolistId])
 
     const onClickRemoveTodolist = useCallback(() => {
-        dispatch(DeleteTodolistTC(props.todolistId));
+        dispatch(deleteTodolistTC(props.todolistId));
     },[props.todolistId])
 
     // const onClickRemoveTodolist = useCallback(() => {
@@ -73,7 +70,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     }
 
     useEffect(() => {
-        dispatch(GetTasksTC(props.todolistId));
+        dispatch(getTasksTC(props.todolistId));
     },[])
 
     return (

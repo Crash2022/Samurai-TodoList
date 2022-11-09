@@ -182,13 +182,13 @@ export const UpdateTask = () => {
     //const newTitle = 'UPDATED task title'
 
     const updateTask = async () => {
-        try {
-            const updatedTask = todolistsAPI.updateTask(todolistId, taskId, {title: newTitle});
-            setState(updatedTask);
-        }
-        catch(error) {
-            console.log(error);
-        }
+        // try {
+        //     const updatedTask = todolistsAPI.updateTask(todolistId, taskId, {title: newTitle});
+        //     setState(updatedTask);
+        // }
+        // catch(error) {
+        //     console.log(error);
+        // }
     }
 
     return (

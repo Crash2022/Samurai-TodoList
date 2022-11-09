@@ -109,7 +109,7 @@ export const isLoadingAC = (isLoading: boolean) => ({
 //         })
 // }
 
-export const GetTodolistsTC = () => {
+export const getTodolistsTC = () => {
     return (dispatch: Dispatch) => {
         todolistsAPI.getTodolists()
             .then(response => {
@@ -118,7 +118,7 @@ export const GetTodolistsTC = () => {
     }
 }
 
-export const DeleteTodolistTC = (todolistId: string) => {
+export const deleteTodolistTC = (todolistId: string) => {
     return (dispatch: Dispatch) => {
         todolistsAPI.deleteTodolist(todolistId)
             .then(response => {
@@ -127,7 +127,7 @@ export const DeleteTodolistTC = (todolistId: string) => {
     }
 }
 
-export const CreateTodolistTC = (todolist: TodolistDomainType /*title: string*/) => {
+export const createTodolistTC = (todolist: TodolistDomainType /*title: string*/) => {
     return (dispatch: Dispatch) => {
         todolistsAPI.createTodolist(todolist.title)
             .then(response => {
@@ -137,7 +137,7 @@ export const CreateTodolistTC = (todolist: TodolistDomainType /*title: string*/)
     }
 }
 
-export const UpdateTodolistTitleTC = (todolistId: string, title: string) => {
+export const updateTodolistTitleTC = (todolistId: string, title: string) => {
     return (dispatch: Dispatch) => {
         todolistsAPI.updateTodolist(todolistId, title)
             .then(response => {

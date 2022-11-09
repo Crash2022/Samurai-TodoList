@@ -5,7 +5,7 @@ import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
-import {addTodolistAC, CreateTodolistTC, GetTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
+import {createTodolistTC, getTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
 import {useSelector} from "react-redux";
 import {AppRootStateType, useTypedDispatch} from "./state/store";
 import styles from './components/Todolist.module.css'
@@ -84,7 +84,7 @@ export const AppWithRedux = React.memo(() => {
     // },[dispatch])
 
     const addNewTodoList = useCallback((title: string) => {
-        dispatch(CreateTodolistTC({
+        dispatch(createTodolistTC({
             id: v1(), title: title,
             filter: 'all', addedDate: '', order: 0
         }));
@@ -93,7 +93,7 @@ export const AppWithRedux = React.memo(() => {
     /*------------------------------------------------*/
 
     useEffect(() => {
-        dispatch(GetTodolistsTC());
+        dispatch(getTodolistsTC());
     },[])
 
     /*------------------------------------------------*/
