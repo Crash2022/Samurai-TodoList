@@ -99,13 +99,6 @@ export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
 
 /*-----------------------------------------------------------------------------------*/
 
-// export const GetTodolistsThunk = (dispatch: Dispatch) => {
-//     todolistsAPI.getTodolists()
-//         .then(response => {
-//             dispatch(setTodolistsAC(response));
-//         })
-// }
-
 export const getTodolistsTC = () => {
     return (dispatch: Dispatch) => {
         todolistsAPI.getTodolists()

@@ -6,7 +6,6 @@ test('IDs should be equal', () => {
     const startTasksState: TasksListType = {};
     const startTodolistsState: Array<TodolistDomainType> = [];
 
-    // const action = createTodolistAC('newTodolist');
     const action = createTodolistAC({
         id: '1', title: 'New Todolist', addedDate: '', order: 0
     });

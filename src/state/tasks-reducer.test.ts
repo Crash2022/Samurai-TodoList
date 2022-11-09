@@ -2,7 +2,6 @@ import {tasksReducer, createTaskAC, deleteTaskAC, setTasksAC, updateTaskAC,
     TasksListType} from "./tasks-reducer";
 import {createTodolistAC, deleteTodolistAC, setTodolistsAC,
     todolistId1, todolistId2,} from "./todolists-reducer";
-import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 
 let startState: TasksListType = { };
@@ -41,7 +40,6 @@ test('correct task should be deleted', () => {
 
 test('correct task should be added', () => {
 
-    // const action = createTaskAC('todolistId1', 'New Task');
     const action = createTaskAC({
         todoListId: 'todolistId1', id: '3', title: 'Angular',
         status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
@@ -72,7 +70,6 @@ test('task status should be updated', () => {
 test('task title should be updated', () => {
 
     const title = 'New Title';
-    // const action = updateTaskTitleAC('todolistId1', '1', newTitle);
     const action = updateTaskAC('todolistId1', '1', {title});
     const endState = tasksReducer(startState, action);
 
@@ -86,9 +83,8 @@ test('task title should be updated', () => {
 
 test('correct array should be added when new todolist was added', () => {
 
-    // let newTodolistTitle = 'New Todolist';
     let newTodolist = {
-        todoListId: 'todolistId1', id: v1(), title: 'New Todolist',
+        todoListId: 'todolistId1', id: '1', title: 'New Todolist',
         status: TaskStatuses.New, priority: TaskPriorities.Middle,
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
     };

@@ -176,28 +176,52 @@ export const UpdateTask = () => {
     const [state, setState] = useState<any>(null);
     const [todolistId, setTodolistId] = useState<string>('');
     const [taskId, setTaskId] = useState<string>('');
+
+    const [newDescription, setNewDescription] = useState<string>('');
     const [newTitle, setNewTitle] = useState<string>('');
+    const [newStatus, setNewStatus] = useState<number>(0);
+    const [newPriority, setNewPriority] = useState<number>(0);
+    const [newStartDate, setNewStartDate] = useState<string>('');
+    const [newDeadline, setNewDeadline] = useState<string>('');
+
     //const todolistId = '58b83589-1691-4b11-bcd5-298270d98392';
     //const taskId = 'c14bedd9-a71a-418e-b078-30b08212b5bb';
     //const newTitle = 'UPDATED task title'
 
     const updateTask = async () => {
-        // !!! надо исправить
-        // try {
-        //     const updatedTask = todolistsAPI.updateTask(todolistId, taskId, {title: newTitle});
-        //     setState(updatedTask);
-        // }
-        // catch(error) {
-        //     console.log(error);
-        // }
+        try {
+            const updatedTask = todolistsAPI.updateTask(todolistId, taskId, {
+                description: newDescription,
+                title: newTitle,
+                status: newStatus,
+                priority: newPriority,
+                startDate: '',
+                deadline: ''
+            });
+            setState(updatedTask);
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 
     return (
         <>
-            <span>Todolist ID: <input type="text" value={todolistId} onChange={(e)=>{setTodolistId(e.currentTarget.value)}}/></span>
-            <span> Task ID: <input type="text" value={taskId} onChange={(e)=>{setTaskId(e.currentTarget.value)}}/></span>
-            <span> Update Task Title: <input type="text" value={newTitle} onChange={(e)=>{setNewTitle(e.currentTarget.value)}}/></span>
-            <span><button onClick={updateTask}>Update Task</button></span>
+            <div style={{marginBottom: '10px'}}>
+                <span>Todolist ID: <input type="text" value={todolistId} onChange={(e)=>{setTodolistId(e.currentTarget.value)}}/></span>
+                <span> Task ID: <input type="text" value={taskId} onChange={(e)=>{setTaskId(e.currentTarget.value)}}/></span>
+            </div>
+            <div style={{marginBottom: '10px'}}>
+                <span> Update Task Status: <input type="number" value={newStatus} onChange={(e)=>{setNewStatus(+e.currentTarget.value)}}/></span>
+                <span> Update Task Priority: <input type="number" value={newPriority} onChange={(e)=>{setNewPriority(+e.currentTarget.value)}}/></span>
+            </div>
+            <div style={{marginBottom: '10px'}}>
+                <span> Update Task Title: <input type="text" value={newTitle} onChange={(e)=>{setNewTitle(e.currentTarget.value)}}/></span>
+                <span> Update Task Description: <input type="text" value={newDescription} onChange={(e)=>{setNewDescription(e.currentTarget.value)}}/></span>
+            </div>
+            <span>
+                <button onClick={updateTask}>Update Task</button>
+            </span>
             {/*<div>{JSON.stringify(state)}</div>*/}
         </>
     );

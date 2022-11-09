@@ -30,9 +30,8 @@ test('correct todolist should be deleted', () => {
 
 test('correct todolist should be added', () => {
 
-    // let newTodolistTitle = 'New Todolist';
     let newTodolist = {
-        todoListId: 'todolistId1', id: v1(), title: 'New Todolist',
+        todoListId: 'todolistId1', id: '1', title: 'New Todolist',
         status: TaskStatuses.New, priority: TaskPriorities.Middle,
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
     };
