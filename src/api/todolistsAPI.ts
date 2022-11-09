@@ -76,6 +76,15 @@ export type TaskUpdateAPIType = {
     deadline?: string
 }
 
+export type UpdateTaskModelType = {
+    description: string
+    title: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
+
 export const todolistsAPI = {
     getTodolists() {
         return (

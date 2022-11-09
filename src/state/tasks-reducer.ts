@@ -1,6 +1,6 @@
 import {AddTodolistACType, RemoveTodolistACType, SetTodolistsACType,
     todolistId1, todolistId2} from "./todolists-reducer";
-import {TaskAPIType, TaskStatuses, TaskUpdateAPIType, todolistsAPI} from "../api/todolistsAPI";
+import {TaskAPIType, TaskStatuses, TaskUpdateAPIType, todolistsAPI, UpdateTaskModelType} from "../api/todolistsAPI";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 
@@ -160,6 +160,7 @@ export const DeleteTaskTC = (todolistId: string, taskId: string) => {
     }
 }
 
+// менее правильный и короткий вариант
 export const UpdateTaskTitleTC = (todolistId: string, taskId: string, title: string) => {
     return (dispatch: Dispatch) => {
         todolistsAPI.updateTask(todolistId, taskId, {title: title})
@@ -169,6 +170,7 @@ export const UpdateTaskTitleTC = (todolistId: string, taskId: string, title: str
     }
 }
 
+// !правильный вариант!
 export const UpdateTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => {
     return (dispatch: Dispatch, getState: () => AppRootStateType) => {
 
@@ -182,7 +184,7 @@ export const UpdateTaskStatusTC = (todolistId: string, taskId: string, status: T
             return;
         }
 
-        const model: TaskUpdateAPIType = {
+        const model: UpdateTaskModelType = {
             description: task.description,
             title: task.title,
             status: status,
