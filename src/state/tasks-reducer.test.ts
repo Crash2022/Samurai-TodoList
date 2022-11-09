@@ -1,7 +1,7 @@
-import {tasksReducer, addTaskAC, removeTaskAC,
+import {tasksReducer, createTaskAC, deleteTaskAC,
     /*changeTaskStatusAC, changeTaskTitleAC,*/ setTasksAC,
     TasksListType} from "./tasks-reducer";
-import {addTodolistAC, removeTodolistAC, setTodolistsAC,
+import {createTodolistAC, deleteTodolistAC, setTodolistsAC,
     todolistId1, todolistId2,} from "./todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
@@ -31,7 +31,7 @@ beforeEach(() => {
 
 test('correct task should be removed', () => {
 
-    const action = removeTaskAC('todolistId2', '1');
+    const action = deleteTaskAC('todolistId2', '1');
     const endState = tasksReducer(startState, action);
 
     expect(endState['todolistId1'].length).toBe(4);
@@ -42,8 +42,8 @@ test('correct task should be removed', () => {
 
 test('correct task should be added', () => {
 
-    // const action = addTaskAC('todolistId1', 'New Task');
-    const action = addTaskAC({
+    // const action = createTaskAC('todolistId1', 'New Task');
+    const action = createTaskAC({
         todoListId: 'todolistId1', id: v1(), title: 'Angular',
         status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
@@ -59,7 +59,7 @@ test('correct task should be added', () => {
 
 // test('task status should be changed', () => {
 //
-//     const action = changeTaskStatusAC('todolistId1', '1', TaskStatuses.New);
+//     const action = updateTaskStatusAC('todolistId1', '1', TaskStatuses.New);
 //     const endState = tasksReducer(startState, action);
 //
 //     expect(endState['todolistId1'].length).toBe(4);
@@ -73,7 +73,7 @@ test('correct task should be added', () => {
 // test('task title should be changed', () => {
 //
 //     const newTitle = 'New Title';
-//     const action = changeTaskTitleAC('todolistId1', '1', newTitle);
+//     const action = updateTaskTitleAC('todolistId1', '1', newTitle);
 //     const endState = tasksReducer(startState, action);
 //
 //     expect(endState['todolistId1'].length).toBe(4);
@@ -91,7 +91,7 @@ test('correct array should be added when new todolist was added', () => {
         status: TaskStatuses.New, priority: TaskPriorities.Middle,
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
     };
-    const endState = tasksReducer(startState, addTodolistAC(newTodolist));
+    const endState = tasksReducer(startState, createTodolistAC(newTodolist));
 
     const keys = Object.keys(endState);
     const newKey = keys.find( el => el != 'todolistId1' && el != 'todolistId2');
@@ -105,7 +105,7 @@ test('correct array should be added when new todolist was added', () => {
 
 test('property with todolistId should be deleted', () => {
 
-    const endState = tasksReducer(startState, removeTodolistAC('todolistId2'));
+    const endState = tasksReducer(startState, deleteTodolistAC('todolistId2'));
 
     const keys = Object.keys(endState);
 
