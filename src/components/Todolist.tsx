@@ -4,16 +4,17 @@ import {AddItemForm} from "../UI/AddItemForm";
 import {EditableSpan} from "../UI/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {addTaskAC, GetTasksTC} from "../state/tasks-reducer";
+import {addTaskAC, CreateTaskTC, GetTasksTC} from "../state/tasks-reducer";
 import { useSelector} from "react-redux";
 import {AppRootStateType, useTypedDispatch} from "../state/store";
 import {Task} from "./Task";
 import {
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC
+    changeTodolistTitleAC, DeleteTodolistTC,
+    removeTodolistAC, UpdateTodolistTitleTC
 } from "../state/todolists-reducer";
-import {TaskAPIType, TaskStatuses} from "../api/todolistsAPI";
+import {TaskAPIType, TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
+import {v1} from "uuid";
 
 export type TodolistPropsType = {
     todolistId: string
@@ -33,16 +34,32 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     /*------------------------------------------------*/
 
     const addTaskHandler = useCallback((titleInput: string) => {
-        dispatch(addTaskAC(props.todolistId, titleInput));
+        dispatch(CreateTaskTC(/*props.todolistId, titleInput)*/ {
+            todoListId: props.todolistId, id: v1(), title: titleInput,
+            status: TaskStatuses.New, priority: TaskPriorities.Middle,
+            description: '', addedDate: '', startDate: '', deadline: '', order: 0
+        }));
     },[props.todolistId])
+
+    // const addTaskHandler = useCallback((titleInput: string) => {
+    //     dispatch(addTaskAC(props.todolistId, titleInput));
+    // },[props.todolistId])
 
     const onChangeTodolistTitle = useCallback((newInputValue: string) => {
-        dispatch(changeTodolistTitleAC(props.todolistId, newInputValue));
+        dispatch(UpdateTodolistTitleTC(props.todolistId, newInputValue));
     },[props.todolistId])
 
+    // const onChangeTodolistTitle = useCallback((newInputValue: string) => {
+    //     dispatch(changeTodolistTitleAC(props.todolistId, newInputValue));
+    // },[props.todolistId])
+
     const onClickRemoveTodolist = useCallback(() => {
-        dispatch(removeTodolistAC(props.todolistId));
+        dispatch(DeleteTodolistTC(props.todolistId));
     },[props.todolistId])
+
+    // const onClickRemoveTodolist = useCallback(() => {
+    //     dispatch(removeTodolistAC(props.todolistId));
+    // },[props.todolistId])
 
     /*------------------------------------------------*/
 

@@ -5,10 +5,11 @@ import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
-import {addTodolistAC, GetTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
+import {addTodolistAC, CreateTodolistTC, GetTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
 import {useSelector} from "react-redux";
 import {AppRootStateType, useTypedDispatch} from "./state/store";
 import styles from './components/Todolist.module.css'
+import {v1} from "uuid";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -78,8 +79,15 @@ export const AppWithRedux = React.memo(() => {
 
     /*------------------------------------------------*/
 
+    // const addNewTodoList = useCallback((title: string) => {
+    //     dispatch(addTodolistAC(title));
+    // },[dispatch])
+
     const addNewTodoList = useCallback((title: string) => {
-        dispatch(addTodolistAC(title));
+        dispatch(CreateTodolistTC({
+            id: v1(), title: title,
+            filter: 'all', addedDate: '', order: 0
+        }));
     },[dispatch])
 
     /*------------------------------------------------*/

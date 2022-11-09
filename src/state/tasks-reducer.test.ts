@@ -1,15 +1,8 @@
-import {
-    tasksReducer, addTaskAC, removeTaskAC,
-    changeTaskStatusAC, changeTaskTitleAC, TasksListType, setTasksAC
-} from "./tasks-reducer";
-import {
-    addTodolistAC,
-    removeTodolistAC,
-    setTodolistsAC,
-    todolistId1,
-    todolistId2,
-    todolistsReducer
-} from "./todolists-reducer";
+import {tasksReducer, addTaskAC, removeTaskAC,
+    changeTaskStatusAC, changeTaskTitleAC, setTasksAC,
+    TasksListType} from "./tasks-reducer";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC,
+    todolistId1, todolistId2,} from "./todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 
@@ -49,12 +42,18 @@ test('correct task should be removed', () => {
 
 test('correct task should be added', () => {
 
-    const action = addTaskAC('todolistId1', 'New Task');
+    // const action = addTaskAC('todolistId1', 'New Task');
+    const action = addTaskAC({
+        todoListId: 'todolistId1', id: v1(), title: 'Angular',
+        status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
+        description: '', addedDate: '', startDate: '', deadline: '', order: 0
+    });
+
     const endState = tasksReducer(startState, action);
 
-    expect(endState['todolistId1'].length).toBe(5);
-    expect(endState['todolistId2'].length).toBe(3);
-    expect(endState['todolistId1'][0].title).toBe('New Task');
+    expect(endState['todolistId1'].length).toBe(3);
+    expect(endState['todolistId2'].length).toBe(2);
+    expect(endState['todolistId1'][0].title).toBe('Angular');
     expect(endState['todolistId1'][0].id).toBeDefined();
 });
 
@@ -86,8 +85,13 @@ test('task title should be changed', () => {
 
 test('correct array should be added when new todolist was added', () => {
 
-    let newTodolistTitle = 'New Todolist';
-    const endState = tasksReducer(startState, addTodolistAC(newTodolistTitle));
+    // let newTodolistTitle = 'New Todolist';
+    let newTodolist = {
+        todoListId: 'todolistId1', id: v1(), title: 'New Todolist',
+        status: TaskStatuses.New, priority: TaskPriorities.Middle,
+        description: '', addedDate: '', startDate: '', deadline: '', order: 0
+    };
+    const endState = tasksReducer(startState, addTodolistAC(newTodolist));
 
     const keys = Object.keys(endState);
     const newKey = keys.find( el => el != 'todolistId1' && el != 'todolistId2');

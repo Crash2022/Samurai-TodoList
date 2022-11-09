@@ -1,11 +1,9 @@
-import {
-    TodolistDomainType, FilterType,
+import {TodolistDomainType, FilterType,
     removeTodolistAC, addTodolistAC,
     changeTodolistTitleAC, changeTodolistFilterAC,
-    todolistsReducer, setTodolistsAC
-} from "./todolists-reducer";
+    todolistsReducer, setTodolistsAC} from "./todolists-reducer";
 import {v1} from "uuid";
-
+import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 
 let todolistId1: string;
 let todolistId2: string;
@@ -32,12 +30,17 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
 
-    let newTodolistTitle = 'New Todolist';
+    // let newTodolistTitle = 'New Todolist';
+    let newTodolist = {
+        todoListId: 'todolistId1', id: v1(), title: 'New Todolist',
+        status: TaskStatuses.New, priority: TaskPriorities.Middle,
+        description: '', addedDate: '', startDate: '', deadline: '', order: 0
+    };
 
-    const endState = todolistsReducer(startState, addTodolistAC(newTodolistTitle));
+    const endState = todolistsReducer(startState, addTodolistAC(newTodolist));
 
     expect(endState.length).toBe(3);
-    expect(endState[0].title).toBe(newTodolistTitle);
+    expect(endState[0].title).toBe('New Todolist');
     expect(endState[0].filter).toBe('all');
 });
 

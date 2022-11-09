@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {todolistsAPI} from "../api/todolistsAPI";
+import {TaskPriorities, TaskStatuses, todolistsAPI} from "../api/todolistsAPI";
+import {v1} from "uuid";
 //import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 
 export default {
@@ -119,7 +120,12 @@ export const CreateTask = () => {
 
     const createTask = async () => {
         try {
-            const createdTask = await todolistsAPI.createTask(todolistId, title);
+            // const createdTask = await todolistsAPI.createTask(todolistId, title);
+            const createdTask = await todolistsAPI.createTask({
+                todoListId: 'todolistId1', id: v1(), title: 'Angular',
+                status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
+                description: '', addedDate: '', startDate: '', deadline: '', order: 0
+            });
             setState(createdTask);
         }
         catch(error) {

@@ -70,7 +70,7 @@ type TasksResponseType = {
 export type TaskUpdateAPIType = {
     description?: string
     title?: string
-    isDone?: number
+    status?: TaskStatuses
     priority?: number
     startDate?: string
     deadline?: string
@@ -118,11 +118,11 @@ export const todolistsAPI = {
                 .then(response => response.data)
         )
     },
-    createTask(todolistId: string, newTask: string) {
+    createTask(task: TaskAPIType /*todolistId: string, newTask: string*/) {
         return (
             instance
                 .post<TodolistsResponseType<{ item: TaskAPIType }>>
-                (`todo-lists/${todolistId}/tasks/`, {title: newTask}, {})
+                (`todo-lists/${task.todoListId}/tasks/`, {title: task.title /*title: newTask*/}, {})
                 .then(response => response.data)
         )
     },

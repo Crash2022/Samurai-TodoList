@@ -11,6 +11,8 @@ export type TodolistDomainType = TodolistAPIType & {
 export let todolistId1 = v1();
 export let todolistId2 = v1();
 
+export let isLoading = true;
+
 // иной метод типизации initialState
 // type StateType = typeof initialState
 
@@ -28,10 +30,13 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return state.filter(t => t.id !== action.id);
         }
         case 'ADD_NEW_TODOLIST': {
-            return [{
-                id: action.todolistId, title: action.title,
-                filter: 'all' as FilterType, addedDate: '', order: 0
-            }, ...state];
+            const newTodolist: TodolistDomainType = {...action.todolist, filter: 'all'}
+            return [newTodolist, ...state];
+
+            // return [{
+            //     id: action.todolistId, title: action.title,
+            //     filter: 'all' as FilterType, addedDate: '', order: 0
+            // }, ...state];
         }
         case 'CHANGE_TODOLIST_TITLE': {
             return state.map(el => el.id === action.id ? {...el, title: action.title} : el);
@@ -55,7 +60,8 @@ export type TodolistActionTypes =
     RemoveTodolistACType |
     ChangeTodolistTitleACType |
     ChangeTodolistFilterACType |
-    SetTodolistsACType;
+    SetTodolistsACType |
+    IsLoadingACType;
 
 export type RemoveTodolistACType = ReturnType<typeof removeTodolistAC>
 export const removeTodolistAC = (todolistId: string) => ({
@@ -64,10 +70,10 @@ export const removeTodolistAC = (todolistId: string) => ({
 } as const)
 
 export type AddTodolistACType = ReturnType<typeof addTodolistAC>
-export const addTodolistAC = (title: string) => ({
-    type: 'ADD_NEW_TODOLIST',
-    title,
-    todolistId: v1()
+export const addTodolistAC = (todolist: TodolistAPIType /*title: string*/) => ({
+    type: 'ADD_NEW_TODOLIST', todolist
+    // title,
+    // todolistId: v1()
 } as const)
 
 export type ChangeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>
@@ -88,6 +94,12 @@ export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
     todolists
 } as const)
 
+export type IsLoadingACType = ReturnType<typeof isLoadingAC>
+export const isLoadingAC = (isLoading: boolean) => ({
+    type: 'IS_LOADING',
+    isLoading
+} as const)
+
 /*-----------------------------------------------------------------------------------*/
 
 // export const GetTodolistsThunk = (dispatch: Dispatch) => {
@@ -102,6 +114,34 @@ export const GetTodolistsTC = () => {
         todolistsAPI.getTodolists()
             .then(response => {
                 dispatch(setTodolistsAC(response));
+            })
+    }
+}
+
+export const DeleteTodolistTC = (todolistId: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.deleteTodolist(todolistId)
+            .then(response => {
+                dispatch(removeTodolistAC(todolistId))
+            })
+    }
+}
+
+export const CreateTodolistTC = (todolist: TodolistDomainType /*title: string*/) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.createTodolist(todolist.title)
+            .then(response => {
+                //dispatch(addTodolistAC(todolist)) // ???
+                dispatch(addTodolistAC(response.data.item))
+            })
+    }
+}
+
+export const UpdateTodolistTitleTC = (todolistId: string, title: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.updateTodolist(todolistId, title)
+            .then(response => {
+                dispatch(changeTodolistTitleAC(todolistId, title))
             })
     }
 }
