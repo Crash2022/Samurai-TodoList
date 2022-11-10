@@ -97,7 +97,7 @@ export const UpdateTodolist = () => {
 export const GetTasks = () => {
 
     const [state, setState] = useState<any>(null);
-    const todolistId = '6ee153fa-fdae-486e-bf16-ac4c5753493a';
+    const todolistId = 'dc620c88-d545-4e13-aaec-95f05790ca1f';
 
     useEffect(() => {
         todolistsAPI.getTasks(todolistId)
