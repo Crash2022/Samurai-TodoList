@@ -122,7 +122,7 @@ export const CreateTask = () => {
         try {
             // const createdTask = await todolistsAPI.createTask(todolistId, title);
             const createdTask = await todolistsAPI.createTask({
-                todoListId: 'todolistId1', id: v1(), title: 'Angular',
+                todoListId: todolistId, id: v1(), title: title,
                 status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
                 description: '', addedDate: '', startDate: '', deadline: '', order: 0
             });
