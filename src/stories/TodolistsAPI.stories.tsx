@@ -153,7 +153,7 @@ export const DeleteTask = () => {
 
     const deleteTask = async () => {
         try {
-            const deletedTask = todolistsAPI.deleteTask(todolistId, taskId);
+            const deletedTask = await todolistsAPI.deleteTask(todolistId, taskId);
             setState(deletedTask);
         }
         catch(error) {
@@ -190,7 +190,7 @@ export const UpdateTask = () => {
 
     const updateTask = async () => {
         try {
-            const updatedTask = todolistsAPI.updateTask(todolistId, taskId, {
+            const updatedTask = await todolistsAPI.updateTask(todolistId, taskId, {
                 description: newDescription,
                 title: newTitle,
                 status: newStatus,
