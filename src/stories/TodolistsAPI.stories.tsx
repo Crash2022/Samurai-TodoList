@@ -51,7 +51,6 @@ export const DeleteTodolist = () => {
 
     const [state, setState] = useState<any>(null);
     const [todolistId, setTodolistId] = useState<string>('');
-    //const todolistId = '3f28d2b3-3d31-465f-896e-0721bbb507f3';
 
     const deleteTodolist = () => {
         todolistsAPI.deleteTodolist(todolistId)
@@ -73,8 +72,6 @@ export const UpdateTodolist = () => {
     const [state, setState] = useState<any>(null);
     const [todolistId, setTodolistId] = useState<string>('');
     const [newTitle, setNewTitle] = useState<string>('');
-    //const newTitle = 'UPDATED todolist title';
-    //const todolistId = 'b2a611f6-50fe-40b3-9d87-d6f169e02f47';
 
     const updateTodolist = () => {
         todolistsAPI.updateTodolist(todolistId, newTitle)
@@ -101,7 +98,7 @@ export const GetTasks = () => {
 
     useEffect(() => {
         todolistsAPI.getTasks(todolistId)
-            .then(response => setState(response.items))
+            .then(response => setState(response.data.items))
             .catch(error => console.log(error))
     }, [])
 
@@ -115,12 +112,9 @@ export const CreateTask = () => {
     const [state, setState] = useState<any>(null);
     const [todolistId, setTodolistId] = useState<string>('');
     const [title, setTitle] = useState<string>('');
-    //const todolistId = '58b83589-1691-4b11-bcd5-298270d98392';
-    //const title = 'NEW task';
 
     const createTask = async () => {
         try {
-            // const createdTask = await todolistsAPI.createTask(todolistId, title);
             const createdTask = await todolistsAPI.createTask({
                 todoListId: todolistId, id: v1(), title: title,
                 status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
@@ -148,8 +142,6 @@ export const DeleteTask = () => {
     const [state, setState] = useState<any>(null);
     const [todolistId, setTodolistId] = useState<string>('');
     const [taskId, setTaskId] = useState<string>('');
-    //const todolistId = '58b83589-1691-4b11-bcd5-298270d98392';
-    //const taskId = '441efd17-17bd-4db0-80ac-84b136705f17';
 
     const deleteTask = async () => {
         try {
@@ -183,10 +175,6 @@ export const UpdateTask = () => {
     const [newPriority, setNewPriority] = useState<number>(0);
     const [newStartDate, setNewStartDate] = useState<string>('');
     const [newDeadline, setNewDeadline] = useState<string>('');
-
-    //const todolistId = '58b83589-1691-4b11-bcd5-298270d98392';
-    //const taskId = 'c14bedd9-a71a-418e-b078-30b08212b5bb';
-    //const newTitle = 'UPDATED task title'
 
     const updateTask = async () => {
         try {

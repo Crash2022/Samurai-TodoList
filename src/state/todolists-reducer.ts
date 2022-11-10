@@ -103,7 +103,7 @@ export const getTodolistsTC = () => {
     return (dispatch: Dispatch) => {
         todolistsAPI.getTodolists()
             .then(response => {
-                dispatch(setTodolistsAC(response));
+                dispatch(setTodolistsAC(response.data));
             })
     }
 }
@@ -122,7 +122,7 @@ export const createTodolistTC = (todolist: TodolistDomainType /*title: string*/)
         todolistsAPI.createTodolist(todolist.title)
             .then(response => {
                 //dispatch(createTodolistAC(todolist)) // !!! так лучше не делать
-                dispatch(createTodolistAC(response.data.item))
+                dispatch(createTodolistAC(response.data.data.item))
             })
     }
 }

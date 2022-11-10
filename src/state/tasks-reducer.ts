@@ -157,7 +157,7 @@ export const getTasksTC = (todolistId: string) => {
     return (dispatch: Dispatch) => {
         todolistsAPI.getTasks(todolistId)
             .then(response => {
-                dispatch(setTasksAC(todolistId, response.items));
+                dispatch(setTasksAC(todolistId, response.data.items));
             })
     }
 }
@@ -167,7 +167,7 @@ export const createTaskTC = (task: TaskAPIType) => {
         todolistsAPI.createTask(task)
             .then(response => {
                 // dispatch(addTaskAC(task)); // !!! так лучше не делать
-                dispatch(createTaskAC(response.data.item));
+                dispatch(createTaskAC(response.data.data.item));
             })
     }
 }

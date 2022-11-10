@@ -81,7 +81,7 @@ export const todolistsAPI = {
         return (
             instance
                 .get<Array<TodolistAPIType>>('todo-lists', {})
-                .then(response => response.data)
+                //.then(response => response.data)
         )
     },
     createTodolist(title: string) {
@@ -89,7 +89,7 @@ export const todolistsAPI = {
             instance
                 .post<TodolistsResponseType<{ item: TodolistAPIType }>>
                 ('todo-lists', {title: title}, {})
-                .then(response => response.data)
+                //.then(response => response.data)
         )
     },
     deleteTodolist(todolistId: string) {
@@ -97,7 +97,7 @@ export const todolistsAPI = {
             instance
                 .delete<TodolistsResponseType>
                 (`todo-lists/${todolistId}`, {})
-                .then(response => response.data)
+                //.then(response => response.data)
         )
     },
     updateTodolist(todolistId: string, newTitle: string) {
@@ -105,7 +105,7 @@ export const todolistsAPI = {
             instance
                 .put<TodolistsResponseType>
                 (`todo-lists/${todolistId}`, {title: newTitle}, {})
-                .then(response => response.data)
+                //.then(response => response.data)
         )
     },
 
@@ -115,7 +115,7 @@ export const todolistsAPI = {
             instance
                 .get<TasksResponseType>
                 (`todo-lists/${todolistId}/tasks`, {})
-                .then(response => response.data)
+                //.then(response => response.data)
         )
     },
     createTask(task: TaskAPIType /*todolistId: string, newTask: string*/) {
@@ -123,7 +123,7 @@ export const todolistsAPI = {
             instance
                 .post<TodolistsResponseType<{ item: TaskAPIType }>>
                 (`todo-lists/${task.todoListId}/tasks/`, {title: task.title /*title: newTask*/}, {})
-                .then(response => response.data)
+                //.then(response => response.data)
         )
     },
     deleteTask(todolistId: string, taskId: string) {
@@ -131,7 +131,7 @@ export const todolistsAPI = {
             instance
                 .delete<TodolistsResponseType>
                 (`todo-lists/${todolistId}/tasks/${taskId}`, {})
-                .then(response => response.data)
+                //.then(response => response.data)
         )
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
@@ -139,7 +139,7 @@ export const todolistsAPI = {
             instance
                 .put<TodolistsResponseType<{ item: UpdateTaskModelType }>>
                 (`todo-lists/${todolistId}/tasks/${taskId}`, {...model}, {})
-                .then(response => response.data)
+                //.then(response => response.data)
         )
     }
 }
