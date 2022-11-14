@@ -35,10 +35,12 @@ export const useTypedSelector: TypedUseSelectorHook<AppRootStateType> = useSelec
 
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionType>;
 // export type AppDispatch = typeof store.dispatch; // другая запись типизации (из доки), работает не всегда
-type AppActionType = TodolistsActionTypes | TasksActionTypes // здесь все типы Action Creator
+
+// типизация всех экшенов
+export type AppActionType = TodolistsActionTypes | TasksActionTypes // здесь все типы Action Creator
 
 // типизация Thunk
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
 
 // @ts-ignore
 window.store = store;
