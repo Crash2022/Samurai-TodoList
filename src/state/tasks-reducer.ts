@@ -33,7 +33,7 @@ export type TasksListType = {
 
 const initialState: TasksListType = { };
 
-export const tasksReducer = (state: TasksListType = initialState, action: TaskActionTypes): TasksListType => {
+export const tasksReducer = (state: TasksListType = initialState, action: TasksActionTypes): TasksListType => {
     switch (action.type) {
         case 'DELETE_TASK': {
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
@@ -94,7 +94,7 @@ export const tasksReducer = (state: TasksListType = initialState, action: TaskAc
 
 /*-----------------------------------------------------------------------------------*/
 
-export type TaskActionTypes =
+export type TasksActionTypes =
     DeleteTaskACType |
     CreateTaskACType |
     //UpdateTaskStatusACType |

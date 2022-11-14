@@ -6,7 +6,7 @@ import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {createTaskTC, getTasksTC} from "../state/tasks-reducer";
 import { useSelector} from "react-redux";
-import {AppRootStateType, useTypedDispatch} from "../state/store";
+import {AppRootStateType, useAppDispatch} from "../state/store";
 import {Task} from "./Task";
 import {updateTodolistFilterAC, deleteTodolistTC, updateTodolistTitleTC} from "../state/todolists-reducer";
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
@@ -23,7 +23,7 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     console.log('todolist')
 
     // используем типизированный Dispatch
-    const dispatch = useTypedDispatch();
+    const dispatch = useAppDispatch();
     const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[props.todolistId]);
 
     const MESSAGE_TASKS_END = 'Задания выполнены';

@@ -6,7 +6,7 @@ import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {deleteTaskTC, updateTaskTC} from "../state/tasks-reducer";
 import {TaskAPIType, TaskStatuses} from "../api/todolistsAPI";
-import {useTypedDispatch} from "../state/store";
+import {useAppDispatch} from "../state/store";
 
 export type TaskPropsType = {
     todolistId: string
@@ -17,7 +17,7 @@ export const Task = React.memo((props: TaskPropsType) => {
 
     console.log('task')
 
-    const dispatch = useTypedDispatch();
+    const dispatch = useAppDispatch();
 
     const removeTaskHandler = useCallback(() => {
         dispatch(deleteTaskTC(props.todolistId, props.task.id));

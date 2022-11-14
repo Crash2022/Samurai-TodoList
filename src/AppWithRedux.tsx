@@ -7,7 +7,7 @@ import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
 import {createTodolistTC, getTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
 import {useSelector} from "react-redux";
-import {AppRootStateType, useTypedDispatch} from "./state/store";
+import {AppRootStateType, useAppDispatch} from "./state/store";
 import styles from './components/Todolist.module.css'
 import {v1} from "uuid";
 
@@ -71,7 +71,7 @@ export const AppWithRedux = React.memo(() => {
 
     const MESSAGE_TODOS_END = 'Список задач пуст!';
 
-    const dispatch = useTypedDispatch();
+    const dispatch = useAppDispatch();
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
 
     // версия с импортом из другого файла
