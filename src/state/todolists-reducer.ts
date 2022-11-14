@@ -100,6 +100,17 @@ export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
 
 /*-----------------------------------------------------------------------------------*/
 
+// async await version getTodolistsTC
+// export const getTodolistsTC = (): AppThunkType => async (dispatch) => {
+//     try {
+//         const response = await todolistsAPI.getTodolists();
+//         dispatch(setTodolistsAC(response.data)); // response находится в переменной
+//     }
+//     catch(error) {
+//         console.log(error)
+//     }
+// }
+
 export const getTodolistsTC = (): AppThunkType => {
     return (dispatch) => {
         todolistsAPI.getTodolists()
