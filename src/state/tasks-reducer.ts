@@ -1,5 +1,7 @@
-import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
-    todolistId1, todolistId2} from "./todolists-reducer";
+import {
+    changeTodolistEntityStatusAC, CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
+    todolistId1, todolistId2
+} from "./todolists-reducer";
 import {
     todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
     UpdateTaskModelType

@@ -141,7 +141,6 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => {
             .then(response => {
                 dispatch(deleteTodolistAC(todolistId))
                 dispatch(appSetStatusAC('succeeded'));
-                dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'));
             })
     }
 }
@@ -160,9 +159,13 @@ export const createTodolistTC = (todolist: TodolistDomainType /*title: string*/)
 
 export const updateTodolistTitleTC = (todolistId: string, title: string): AppThunkType => {
     return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
+        dispatch(changeTodolistEntityStatusAC(todolistId,'loading'));
         todolistsAPI.updateTodolist(todolistId, title)
             .then(response => {
                 dispatch(updateTodolistTitleAC(todolistId, title))
+                dispatch(appSetStatusAC('succeeded'));
+                dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'));
             })
     }
 }
