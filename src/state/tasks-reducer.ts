@@ -7,7 +7,7 @@ import {
     UpdateTaskModelType
 } from "../api/todolistsAPI";
 import {AppRootStateType, AppThunkType} from "./store";
-import {appSetErrorAC, appSetStatusAC} from "./app-reducer";
+import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from "./app-reducer";
 
 export type TasksListType = {
     [todolistId: string]: Array<TaskAPIType>

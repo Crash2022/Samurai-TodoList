@@ -44,7 +44,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
         case 'UPDATE_TODOLIST_FILTER': {
             return state.map(el => el.id === action.id ? {...el, filter: action.filter} : el);
         }
-        case 'CHANGE_TODOLIST_STATUS': {
+        case 'CHANGE_TODOLIST_ENTITY_STATUS': {
             return state.map(el => el.id === action.id ? {...el, entityStatus: action.entityStatus} : el);
         }
         case 'SET_TODOLISTS': {
@@ -93,7 +93,7 @@ export const updateTodolistFilterAC = (id: string, filter: FilterType) => ({
 
 export type ChangeTodolistEntityStatusACType = ReturnType<typeof changeTodolistEntityStatusAC>
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: AppInitialStateStatusType) => ({
-    type: 'CHANGE_TODOLIST_STATUS',
+    type: 'CHANGE_TODOLIST_ENTITY_STATUS',
     id, entityStatus
 } as const)
 
