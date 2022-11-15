@@ -152,9 +152,10 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                                         <Grid item key={todo.id}>
                                             <Paper style={{padding: '15px'}} elevation={8}>
                                                 <Todolist
-                                                    todolistId={todo.id}
-                                                    title={todo.title}
-                                                    filter={todo.filter}
+                                                    todolist={todo}
+                                                    // todolistId={todo.id}
+                                                    // title={todo.title}
+                                                    // filter={todo.filter}
                                                     demo={demo}
                                                 />
                                             </Paper>
