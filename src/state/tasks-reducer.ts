@@ -7,7 +7,7 @@ import {
     UpdateTaskModelType
 } from "../api/todolistsAPI";
 import {AppRootStateType, AppThunkType} from "./store";
-import {appSetErrorAC} from "./app-reducer";
+import {appSetErrorAC, appSetStatusAC} from "./app-reducer";
 
 export type TasksListType = {
     [todolistId: string]: Array<TaskAPIType>
@@ -161,20 +161,24 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
 
 export const getTasksTC = (todolistId: string): AppThunkType => {
     return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
         todolistsAPI.getTasks(todolistId)
             .then(response => {
                 dispatch(setTasksAC(todolistId, response.data.items));
+                dispatch(appSetStatusAC('succeeded'));
             })
     }
 }
 
 export const createTaskTC = (task: TaskAPIType): AppThunkType => {
     return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
         todolistsAPI.createTask(task)
             .then(response => {
                 if (response.data.resultCode === 0) {
                     // dispatch(addTaskAC(task)); // !!! так лучше не делать
                     dispatch(createTaskAC(response.data.data.item));
+                    dispatch(appSetStatusAC('succeeded'));
                 } else {
                     if (response.data.messages) {
                         dispatch(appSetErrorAC(response.data.messages[0]));
@@ -182,6 +186,7 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
                         dispatch(appSetErrorAC('Some Error'));
                     }
                 }
+                dispatch(appSetStatusAC('failed'));
             })
     }
 }

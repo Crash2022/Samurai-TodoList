@@ -13,6 +13,7 @@ import {AppRootStateType, useAppDispatch} from "./state/store";
 import styles from './components/Todolist/Todolist.module.css'
 import {v1} from "uuid";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
+import {AppInitialStateStatusType} from "./state/app-reducer";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -76,6 +77,7 @@ export const AppWithRedux = React.memo(() => {
 
     const dispatch = useAppDispatch();
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
+    const status = useSelector<AppRootStateType, AppInitialStateStatusType>(state => state.app.status);
 
     // версия с импортом из другого файла
     //const todolists = useSelector<AppRootStateType, Array<TodoListType>>(todolistsReducer);
@@ -88,8 +90,8 @@ export const AppWithRedux = React.memo(() => {
 
     const addNewTodoList = useCallback((title: string) => {
         dispatch(createTodolistTC({
-            id: v1(), title: title,
-            filter: 'all', addedDate: '', order: 0
+            id: v1(), title: title, filter: 'all',
+            entityStatus: 'idle', addedDate: '', order: 0
         }));
     },[dispatch])
 
@@ -119,7 +121,7 @@ export const AppWithRedux = React.memo(() => {
                         </Typography>
                         <Button color="inherit">Login</Button>
                     </Toolbar>
-                    {/*<LinearProgress/>*/}
+                    { status === 'loading' && <LinearProgress/> }
                 </AppBar>
                 <ErrorSnackBar/>
             </div>

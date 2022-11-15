@@ -1,11 +1,13 @@
 import {v1} from "uuid";
 import {TodolistAPIType, todolistsAPI} from "../api/todolistsAPI";
 import {AppThunkType} from "./store";
+import {AppInitialStateStatusType, appSetStatusAC} from "./app-reducer";
 
 export type FilterType = 'all' | 'active' | 'completed';
 
 export type TodolistDomainType = TodolistAPIType & {
     filter: FilterType
+    entityStatus: AppInitialStateStatusType
 }
 
 export let todolistId1 = v1();
@@ -28,7 +30,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return state.filter(t => t.id !== action.id);
         }
         case 'CREATE_NEW_TODOLIST': {
-            const newTodolist: TodolistDomainType = {...action.todolist, filter: 'all'}
+            const newTodolist: TodolistDomainType = {...action.todolist, filter: 'all', entityStatus: 'idle'}
             return [newTodolist, ...state];
 
             // return [{
@@ -43,7 +45,7 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
             return state.map(el => el.id === action.id ? {...el, filter: action.filter} : el);
         }
         case 'SET_TODOLISTS': {
-            return action.todolists.map(tl => ({...tl, filter: 'all'}));
+            return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}));
         }
         default:
             //throw new Error("I don't know action type!");
@@ -112,9 +114,11 @@ export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
 
 export const getTodolistsTC = (): AppThunkType => {
     return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
         todolistsAPI.getTodolists()
             .then(response => {
                 dispatch(setTodolistsAC(response.data));
+                dispatch(appSetStatusAC('succeeded'));
             })
     }
 }
@@ -130,10 +134,12 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => {
 
 export const createTodolistTC = (todolist: TodolistDomainType /*title: string*/): AppThunkType => {
     return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
         todolistsAPI.createTodolist(todolist.title)
             .then(response => {
                 //dispatch(createTodolistAC(todolist)) // !!! так лучше не делать
                 dispatch(createTodolistAC(response.data.data.item))
+                dispatch(appSetStatusAC('succeeded'));
             })
     }
 }

@@ -9,7 +9,7 @@ export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'fail
 export type ApplicationActionTypes = AppSetStatusACType | AppSetErrorACType;
 
 const initialState: AppInitialStateType = {
-    status: 'idle', // idle - начальное (стандартное) значение
+    status: 'idle', // idle - начальное значение (простаивание)
     error: null
 }
 
