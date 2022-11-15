@@ -2,8 +2,7 @@ import {v1} from "uuid";
 import {TodolistAPIType, todolistsAPI} from "../api/todolistsAPI";
 import {AppThunkType} from "./store";
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from "./app-reducer";
-import {updateTaskAC} from "./tasks-reducer";
-import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
+import {handleServerNetworkError} from "../utils/errorUtils";
 
 export type FilterType = 'all' | 'active' | 'completed';
 
