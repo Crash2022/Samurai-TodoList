@@ -1,10 +1,12 @@
 export type AppInitialStateType = {
     // происходит ли сейчас взаимодействие с сервером
-    status: InitialStateStatusType
+    status: AppInitialStateStatusType
     // текст ошибки запишем сюда
     error: string | null
 }
-type InitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
+export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
+
+export type ApplicationActionTypes = AppSetStatusACType | AppSetErrorACType;
 
 const initialState: AppInitialStateType = {
     status: 'idle', // idle - начальное (стандартное) значение
@@ -27,10 +29,8 @@ export const appReducer = (state: AppInitialStateType = initialState,
 
 /*-----------------------------------------------------------------------------------*/
 
-export type ApplicationActionTypes = AppSetStatusACType | AppSetErrorACType;
-
 export type AppSetStatusACType = ReturnType<typeof appSetStatusAC>
-export const appSetStatusAC = (status: InitialStateStatusType) => ({
+export const appSetStatusAC = (status: AppInitialStateStatusType) => ({
     type: 'APP/SET_STATUS', status
 } as const)
 
@@ -40,23 +40,3 @@ export const appSetErrorAC = (error: string | null) => ({
 } as const)
 
 /*-----------------------------------------------------------------------------------*/
-
-// async await version getTodolistsTC
-// export const getTodolistsTC = (): AppThunkType => async (dispatch) => {
-//     try {
-//         const response = await todolistsAPI.getTodolists();
-//         dispatch(setTodolistsAC(response.data)); // response находится в переменной
-//     }
-//     catch(error) {
-//         console.log(error)
-//     }
-// }
-
-// export const  = (): AppThunkType => {
-//     return (dispatch) => {
-//         todolistsAPI.getTodolists()
-//             .then(response => {
-//                 dispatch(setTodolistsAC(response.data));
-//             })
-//     }
-// }

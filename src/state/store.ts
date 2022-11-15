@@ -3,7 +3,7 @@ import {TasksActionTypes, tasksReducer} from "./tasks-reducer";
 import {TodolistsActionTypes, todolistsReducer} from "./todolists-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {appReducer} from "./app-reducer";
+import {ApplicationActionTypes, appReducer} from "./app-reducer";
 
 // для React Redux DevTools Chrome
 declare global {
@@ -39,7 +39,7 @@ export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionType
 // export type AppDispatch = typeof store.dispatch; // другая запись типизации (из доки), работает не всегда
 
 // типизация всех экшенов
-export type AppActionType = TodolistsActionTypes | TasksActionTypes // здесь все типы Action Creator
+export type AppActionType = TodolistsActionTypes | TasksActionTypes | ApplicationActionTypes;
 
 // типизация Thunk
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>

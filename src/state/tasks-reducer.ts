@@ -1,8 +1,13 @@
-import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
-    todolistId1, todolistId2} from "./todolists-reducer";
-import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
-    UpdateTaskModelType} from "../api/todolistsAPI";
+import {
+    CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
+    todolistId1, todolistId2
+} from "./todolists-reducer";
+import {
+    todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
+    UpdateTaskModelType
+} from "../api/todolistsAPI";
 import {AppRootStateType, AppThunkType} from "./store";
+import {appSetErrorAC} from "./app-reducer";
 
 export type TasksListType = {
     [todolistId: string]: Array<TaskAPIType>
@@ -30,7 +35,7 @@ export type TasksListType = {
 //     ]
 // }
 
-const initialState: TasksListType = { };
+const initialState: TasksListType = {};
 
 export const tasksReducer = (state: TasksListType = initialState, action: TasksActionTypes): TasksListType => {
     switch (action.type) {
@@ -44,7 +49,7 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
             return {...state, [action.todolistId]: [newTask,...state[action.todolistId]]};*/
 
             const newTask: TaskAPIType = action.task;
-            return {...state, [newTask.todoListId]: [newTask,...state[newTask.todoListId]]};
+            return {...state, [newTask.todoListId]: [newTask, ...state[newTask.todoListId]]};
         }
 
         // обработка тасок двумя кейсами
@@ -59,8 +64,10 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
 
         // обработка тасок одним кейсом
         case 'UPDATE_TASK': {
-            return {...state, [action.todolistId]:
-                    state[action.todolistId].map( el => el.id === action.taskId ? {...el, ...action.model} : el)};
+            return {
+                ...state, [action.todolistId]:
+                    state[action.todolistId].map(el => el.id === action.taskId ? {...el, ...action.model} : el)
+            };
         }
 
         case 'DELETE_TODOLIST': {
@@ -70,7 +77,7 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
             return stateCopy;
         }
         case 'CREATE_NEW_TODOLIST': {
-            return { ...state, [action.todolist.id]: [] };
+            return {...state, [action.todolist.id]: []};
             // return { ...state, [action.todolistId]: [] };
         }
         case 'SET_TODOLISTS': {
@@ -109,7 +116,7 @@ export const deleteTaskAC = (todolistId: string, taskId: string) => ({
     type: 'DELETE_TASK',
     todolistId,
     taskId
-} as const )
+} as const)
 
 export type CreateTaskACType = ReturnType<typeof createTaskAC>
 export const createTaskAC = (task: TaskAPIType /*todolistId: string, titleInput: string*/) => ({
@@ -165,8 +172,16 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
     return (dispatch) => {
         todolistsAPI.createTask(task)
             .then(response => {
-                // dispatch(addTaskAC(task)); // !!! так лучше не делать
-                dispatch(createTaskAC(response.data.data.item));
+                if (response.data.resultCode === 0) {
+                    // dispatch(addTaskAC(task)); // !!! так лучше не делать
+                    dispatch(createTaskAC(response.data.data.item));
+                } else {
+                    if (response.data.messages) {
+                        dispatch(appSetErrorAC(response.data.messages[0]));
+                    } else {
+                        dispatch(appSetErrorAC('Some Error'));
+                    }
+                }
             })
     }
 }
@@ -238,7 +253,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
         const task = state.tasks[todolistId].find(t => t.id === taskId);
 
         // обработка ошибки
-        if(!task) {
+        if (!task) {
             // throw new Error('Task Not Found In The State'); // иной вариант предупреждения
             console.warn('Task Not Found In The State');
             return;

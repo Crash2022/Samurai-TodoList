@@ -119,7 +119,7 @@ export const AppWithRedux = React.memo(() => {
                         </Typography>
                         <Button color="inherit">Login</Button>
                     </Toolbar>
-                    <LinearProgress/>
+                    {/*<LinearProgress/>*/}
                 </AppBar>
                 <ErrorSnackBar/>
             </div>
