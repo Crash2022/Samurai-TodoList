@@ -1,15 +1,15 @@
 import React, {useCallback, useEffect} from 'react'
 import styles from './Todolist.module.css'
-import {AddItemForm} from "../UI/AddItemForm";
-import {EditableSpan} from "../UI/EditableSpan";
+import {AddItemForm} from "../../UI/AddItemForm";
+import {EditableSpan} from "../../UI/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
-import {createTaskTC, getTasksTC} from "../state/tasks-reducer";
+import {createTaskTC, getTasksTC} from "../../state/tasks-reducer";
 import { useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "../state/store";
-import {Task} from "./Task";
-import {updateTodolistFilterAC, deleteTodolistTC, updateTodolistTitleTC} from "../state/todolists-reducer";
-import {TaskAPIType, TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
+import {AppRootStateType, useAppDispatch} from "../../state/store";
+import {Task} from "../Task/Task";
+import {updateTodolistFilterAC, deleteTodolistTC, updateTodolistTitleTC} from "../../state/todolists-reducer";
+import {TaskAPIType, TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
 import {v1} from "uuid";
 
 export type TodolistPropsType = {

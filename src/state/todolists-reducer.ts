@@ -1,6 +1,5 @@
 import {v1} from "uuid";
 import {TodolistAPIType, todolistsAPI} from "../api/todolistsAPI";
-import {Dispatch} from "redux";
 import {AppThunkType} from "./store";
 
 export type FilterType = 'all' | 'active' | 'completed';

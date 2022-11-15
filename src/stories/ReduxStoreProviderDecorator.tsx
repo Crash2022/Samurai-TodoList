@@ -6,10 +6,12 @@ import {todolistId1, todolistId2, todolistsReducer} from "../state/todolists-red
 import {tasksReducer} from "../state/tasks-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
+import {appReducer} from "../state/app-reducer";
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
-    tasks: tasksReducer
+    tasks: tasksReducer,
+    app: appReducer
 })
 
 const initialStorybookState: AppRootStateType = {
@@ -34,6 +36,10 @@ const initialStorybookState: AppRootStateType = {
                 status: TaskStatuses.Completed, priority: TaskPriorities.Later,
                 description: '', addedDate: '', startDate: '', deadline: '', order: 1}
         ]
+    },
+    app: {
+        status: 'idle',
+        error: null
     }
 }
 

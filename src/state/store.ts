@@ -3,6 +3,7 @@ import {TasksActionTypes, tasksReducer} from "./tasks-reducer";
 import {TodolistsActionTypes, todolistsReducer} from "./todolists-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {appReducer} from "./app-reducer";
 
 // для React Redux DevTools Chrome
 declare global {
@@ -19,7 +20,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
-    tasks: tasksReducer
+    tasks: tasksReducer,
+    app: appReducer
 })
 
 // @ts-ignore

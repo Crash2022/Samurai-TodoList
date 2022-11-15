@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import styles from "../components/Todolist.module.css";
+import styles from "../components/Todolist/Todolist.module.css";
 
 export type InputPropsType = {
     inputValue: string

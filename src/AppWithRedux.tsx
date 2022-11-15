@@ -1,15 +1,18 @@
-import {AppBar, Button, Container, Grid, IconButton,
-    Paper, Toolbar, Typography} from '@material-ui/core';
+import {
+    AppBar, Button, Container, Grid, IconButton, LinearProgress,
+    Paper, Toolbar, Typography
+} from '@material-ui/core';
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {Todolist} from './components/Todolist';
+import {Todolist} from './components/Todolist/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
 import {createTodolistTC, getTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
 import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch} from "./state/store";
-import styles from './components/Todolist.module.css'
+import styles from './components/Todolist/Todolist.module.css'
 import {v1} from "uuid";
+import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -116,7 +119,9 @@ export const AppWithRedux = React.memo(() => {
                         </Typography>
                         <Button color="inherit">Login</Button>
                     </Toolbar>
+                    <LinearProgress/>
                 </AppBar>
+                <ErrorSnackBar/>
             </div>
 
             <Container fixed>

@@ -2,7 +2,6 @@ import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
     todolistId1, todolistId2} from "./todolists-reducer";
 import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
     UpdateTaskModelType} from "../api/todolistsAPI";
-import {Dispatch} from "redux";
 import {AppRootStateType, AppThunkType} from "./store";
 
 export type TasksListType = {
