@@ -3,6 +3,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import {AppRootStateType} from "../../state/store";
+import {useSelector} from "react-redux";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -12,7 +14,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export const ErrorSnackBar = () => {
-    const [open, setOpen] = React.useState(true);
+    // const [open, setOpen] = React.useState(false);
+    const error = useSelector<AppRootStateType, string | null>(state => state.app.error);
+
+    const isOpen = error !== null;
 
     // const handleClick = () => {
     //     setOpen(true);
@@ -22,7 +27,7 @@ export const ErrorSnackBar = () => {
         // if (reason === 'clickaway') {
         //     return;
         // }
-        setOpen(false);
+        // setOpen(false);
     };
 
     return (
@@ -30,7 +35,7 @@ export const ErrorSnackBar = () => {
             {/*<Button variant="outlined" onClick={handleClick}>*/}
             {/*    Open success snackbar*/}
             {/*</Button>*/}
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                     This is a success message!
                 </Alert>

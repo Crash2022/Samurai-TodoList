@@ -1,7 +1,4 @@
-import {todolistsAPI} from "../api/todolistsAPI";
-import {AppThunkType} from "./store";
-
-type InitialStateType = {
+export type AppInitialStateType = {
     // происходит ли сейчас взаимодействие с сервером
     status: InitialStateStatusType
     // текст ошибки запишем сюда
@@ -9,13 +6,13 @@ type InitialStateType = {
 }
 type InitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-const initialState: InitialStateType = {
+const initialState: AppInitialStateType = {
     status: 'idle', // idle - начальное (стандартное) значение
     error: null
 }
 
-export const appReducer = (state: InitialStateType = initialState,
-                                 action: ApplicationActionTypes): InitialStateType => {
+export const appReducer = (state: AppInitialStateType = initialState,
+                                 action: ApplicationActionTypes): AppInitialStateType => {
     switch (action.type) {
         case 'APP/SET_STATUS': {
             return {...state, status: action.status};
