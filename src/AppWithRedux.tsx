@@ -69,7 +69,11 @@ import {AppInitialStateStatusType} from "./state/app-reducer";
 
 /*------------------------------------------------*/
 
-export const AppWithRedux = React.memo(() => {
+type AppWithReduxType = {
+    demo?: boolean
+}
+
+export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = false}) => {
 
     console.log('app')
 
@@ -98,6 +102,9 @@ export const AppWithRedux = React.memo(() => {
     /*------------------------------------------------*/
 
     useEffect(() => {
+        if (demo) {
+            return;
+        }
         dispatch(getTodolistsTC());
     },[])
 
@@ -148,6 +155,7 @@ export const AppWithRedux = React.memo(() => {
                                                     todolistId={todo.id}
                                                     title={todo.title}
                                                     filter={todo.filter}
+                                                    demo={demo}
                                                 />
                                             </Paper>
                                         </Grid>

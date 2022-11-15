@@ -16,9 +16,10 @@ export type TodolistPropsType = {
     todolistId: string
     title: string
     filter: string
+    demo?: boolean
 }
 
-export const Todolist = React.memo((props: TodolistPropsType) => {
+export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, ...props}) => {
 
     console.log('todolist')
 
@@ -70,6 +71,9 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     }
 
     useEffect(() => {
+        if (demo) {
+            return;
+        }
         dispatch(getTasksTC(props.todolistId));
     },[])
 
