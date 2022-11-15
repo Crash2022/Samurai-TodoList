@@ -1,7 +1,5 @@
-import {
-    CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
-    todolistId1, todolistId2
-} from "./todolists-reducer";
+import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
+    todolistId1, todolistId2} from "./todolists-reducer";
 import {
     todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
     UpdateTaskModelType
@@ -193,9 +191,11 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
 
 export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
     return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
         todolistsAPI.deleteTask(todolistId, taskId)
             .then(response => {
                 dispatch(deleteTaskAC(todolistId, taskId));
+                dispatch(appSetStatusAC('succeeded'));
             })
     }
 }

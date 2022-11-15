@@ -4,9 +4,10 @@ import {AddComment} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
     addItem: (titleInput: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem, disabled = false}) => {
 
     console.log('add item form')
 
@@ -20,7 +21,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
         const trimValue = inputValue.trim()
 
         if (trimValue) {
-            props.addItem(trimValue);
+            addItem(trimValue);
             setInputValue('');
         } else {
             setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);
@@ -47,10 +48,12 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                        value={inputValue}
                        error={!!error}
                        helperText={error}
+                       disabled={disabled}
             />
             <IconButton onClick={callBackButtonHandler}
                         color="primary"
                         size="medium"
+                        disabled={disabled}
             >
                 <AddComment />
             </IconButton >

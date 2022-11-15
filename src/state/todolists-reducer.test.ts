@@ -1,9 +1,10 @@
 import {TodolistDomainType, FilterType,
     deleteTodolistAC, createTodolistAC,
     updateTodolistTitleAC, updateTodolistFilterAC,
-    todolistsReducer, setTodolistsAC} from "./todolists-reducer";
+    todolistsReducer, setTodolistsAC, changeTodolistEntityStatusAC} from "./todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
+import {AppInitialStateStatusType} from "./app-reducer";
 
 let todolistId1: string;
 let todolistId2: string;
@@ -72,6 +73,16 @@ test('update todolist filter', () => {
     expect(endState.length).toBe(2);
     expect(endState[1].filter).toBe('all');
     expect(endState[0].filter).toBe(updatedTodolistFilter);
+});
+
+test('change todolist entity status', () => {
+
+    const newEntityStatus: AppInitialStateStatusType = 'loading';
+    const action = changeTodolistEntityStatusAC(todolistId1, newEntityStatus);
+    const endState = todolistsReducer(startState, action);
+
+    expect(endState[0].entityStatus).toBe(newEntityStatus);
+    expect(endState[1].entityStatus).toBe('idle');
 });
 
 /*-----------------------------------------------------------------------------------*/

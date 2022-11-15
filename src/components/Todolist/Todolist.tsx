@@ -95,7 +95,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
                 </IconButton>
             </h3>
 
-            <AddItemForm addItem={addTaskHandler}/>
+            <AddItemForm addItem={addTaskHandler} disabled={props.todolist.entityStatus === 'loading'}/>
 
             <div style={{margin: '10px'}}>
                 {/*<ButtonExample todolistId={props.todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
