@@ -42,7 +42,7 @@ export type TaskAPIType = {
 }
 
 // более короткая запись типа через infer?
-type TodolistsResponseType<D = {}> = {
+export type TodolistsResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     data: D

@@ -1,7 +1,9 @@
 import {v1} from "uuid";
 import {TodolistAPIType, todolistsAPI} from "../api/todolistsAPI";
 import {AppThunkType} from "./store";
-import {AppInitialStateStatusType, appSetStatusAC} from "./app-reducer";
+import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from "./app-reducer";
+import {updateTaskAC} from "./tasks-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 
 export type FilterType = 'all' | 'active' | 'completed';
 
@@ -130,6 +132,11 @@ export const getTodolistsTC = (): AppThunkType => {
                 dispatch(setTodolistsAC(response.data));
                 dispatch(appSetStatusAC('succeeded'));
             })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+                // dispatch(appSetErrorAC(error.message));
+                // dispatch(appSetStatusAC('failed'));
+            })
     }
 }
 
@@ -141,6 +148,11 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => {
             .then(response => {
                 dispatch(deleteTodolistAC(todolistId))
                 dispatch(appSetStatusAC('succeeded'));
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+                // dispatch(appSetErrorAC(error.message));
+                // dispatch(appSetStatusAC('failed'));
             })
     }
 }
@@ -154,6 +166,11 @@ export const createTodolistTC = (todolist: TodolistDomainType /*title: string*/)
                 dispatch(createTodolistAC(response.data.data.item))
                 dispatch(appSetStatusAC('succeeded'));
             })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+                // dispatch(appSetErrorAC(error.message));
+                // dispatch(appSetStatusAC('failed'));
+            })
     }
 }
 
@@ -163,9 +180,25 @@ export const updateTodolistTitleTC = (todolistId: string, title: string): AppThu
         dispatch(changeTodolistEntityStatusAC(todolistId,'loading'));
         todolistsAPI.updateTodolist(todolistId, title)
             .then(response => {
-                dispatch(updateTodolistTitleAC(todolistId, title))
-                dispatch(appSetStatusAC('succeeded'));
-                dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'));
+                // handleServerAppError(response.data, dispatch);
+                if (response.data.resultCode === 0) {
+                    dispatch(updateTodolistTitleAC(todolistId, title))
+                    dispatch(appSetStatusAC('succeeded'));
+                    dispatch(changeTodolistEntityStatusAC(todolistId,'succeeded'));
+                } else {
+                    if (response.data.messages) {
+                        dispatch(appSetErrorAC(response.data.messages[0]));
+                        dispatch(appSetStatusAC('failed'));
+                        dispatch(changeTodolistEntityStatusAC(todolistId,'failed'));
+                    } else {
+                        dispatch(appSetErrorAC('Some Error'));
+                    }
+                }
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+                // dispatch(appSetErrorAC(error.message));
+                // dispatch(appSetStatusAC('failed'));
             })
     }
 }
