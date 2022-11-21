@@ -14,7 +14,7 @@ import styles from './components/Todolist/Todolist.module.css'
 import {v1} from "uuid";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
 import {AppInitialStateStatusType, initializeAppTC} from "./state/app-reducer";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "./features/Login/Login";
 
 /*https://samuraitodo.herokuapp.com/*/
@@ -81,6 +81,7 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
 
     const MESSAGE_TODOS_END = 'Список задач пуст!';
 
+    const navigate = useNavigate(); // чтобы можно было пользоваться redirect/navigate вне Routes
     const dispatch = useAppDispatch();
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
     const status = useSelector<AppRootStateType, AppInitialStateStatusType>(state => state.app.status);
@@ -112,10 +113,17 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
         dispatch(getTodolistsTC());
     }, [isLoggedIn])
 
+    // инициализация приложения
     useEffect(() => {
         dispatch(initializeAppTC());
     }, [])
 
+    // редирект на логин, если не залогинились
+    useEffect(() => {
+        !isLoggedIn && navigate('/login');
+    }, [isLoggedIn])
+
+    // лоадер, если приложение не инициализировано
     if (!isInitialized) {
         return (
             <div style={{display: 'flex', justifyContent: 'center', marginTop: '200px'}}>
@@ -124,81 +132,74 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
         )
     }
 
-    // if (!isLoggedIn) {
-    //     return <Navigate to={'/login'}/>
-    // }
-
     /*------------------------------------------------*/
 
     return (
+        <div className="App">
 
-        <BrowserRouter>
+            <div>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                        >
+                            <Menu/>
+                        </IconButton>
+                        <Typography variant="h6">
+                            TodoLists
+                        </Typography>
+                        {/*<NavLink to={'/login'}>*/}
+                        <Button color="inherit">Login</Button>
+                        {/*</NavLink>*/}
+                    </Toolbar>
+                    {status === 'loading' && <LinearProgress/>}
+                </AppBar>
+                <ErrorSnackBar/>
+            </div>
 
-            <div className="App">
-
-                <div>
-                    <AppBar position="static">
-                        <Toolbar>
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                            >
-                                <Menu/>
-                            </IconButton>
-                            <Typography variant="h6">
-                                TodoLists
-                            </Typography>
-                            {/*<NavLink to={'/login'}>*/}
-                                <Button color="inherit">Login</Button>
-                            {/*</NavLink>*/}
-                        </Toolbar>
-                        {status === 'loading' && <LinearProgress/>}
-                    </AppBar>
-                    <ErrorSnackBar/>
-                </div>
-
-                <Container fixed>
-                    <Grid container style={{padding: '20px', textAlign: 'center'}} direction={'column'}>
-                        <Grid item style={{padding: '10px'}}>
-                            Добавить новый список
-                        </Grid>
-                        <Grid item>
-                            <AddItemForm addItem={addNewTodoList}/>
-                        </Grid>
+            <Container fixed>
+                <Grid container style={{padding: '20px', textAlign: 'center'}} direction={'column'}>
+                    <Grid item style={{padding: '10px'}}>
+                        Добавить новый список
                     </Grid>
+                    <Grid item>
+                        <AddItemForm addItem={addNewTodoList}/>
+                    </Grid>
+                </Grid>
 
-                    <Routes>
-                        <Route path={'/login'} element={<Login/>}/>
-                        <Route path={'/'} element={
+                <Routes>
+                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/'} element={
 
-                            todolists.length !== 0 ?
+                        todolists.length !== 0 ?
 
-                                <Grid container spacing={5} justifyContent={'center'}>
-                                    {
-                                        todolists.map(todo => {
-                                            return (
-                                                <Grid item key={todo.id}>
-                                                    <Paper style={{padding: '15px'}} elevation={8}>
-                                                        <Todolist
-                                                            todolist={todo}
-                                                            // todolistId={todo.id}
-                                                            // title={todo.title}
-                                                            // filter={todo.filter}
-                                                            demo={demo}
-                                                        />
-                                                    </Paper>
-                                                </Grid>
-                                            )
-                                        })
-                                    }
-                                </Grid>
-                                : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
+                            <Grid container spacing={5} justifyContent={'center'}>
+                                {
+                                    todolists.map(todo => {
+                                        return (
+                                            <Grid item key={todo.id}>
+                                                <Paper style={{padding: '15px'}} elevation={8}>
+                                                    <Todolist
+                                                        todolist={todo}
+                                                        // todolistId={todo.id}
+                                                        // title={todo.title}
+                                                        // filter={todo.filter}
+                                                        demo={demo}
+                                                    />
+                                                </Paper>
+                                            </Grid>
+                                        )
+                                    })
+                                }
+                            </Grid>
+                            : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
 
-                        }/>
-                    </Routes>
+                    }/>
+                </Routes>
 
-                    {/*{
+                {/*{
                         todolists.length !== 0 ?
 
                             <Grid container spacing={5} justifyContent={'center'}>
@@ -223,10 +224,8 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                             : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
                     }*/}
 
-                </Container>
+            </Container>
 
-            </div>
-
-        </BrowserRouter>
+        </div>
     );
 })
