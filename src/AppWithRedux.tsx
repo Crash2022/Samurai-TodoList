@@ -1,7 +1,5 @@
-import {
-    AppBar, Button, CircularProgress, Container, Grid, IconButton, LinearProgress,
-    Paper, Toolbar, Typography
-} from '@material-ui/core';
+import {AppBar, Button, CircularProgress, Container, Grid, IconButton, LinearProgress,
+    Paper, Toolbar, Typography} from '@material-ui/core';
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist/Todolist';
@@ -14,8 +12,9 @@ import styles from './components/Todolist/Todolist.module.css'
 import {v1} from "uuid";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
 import {AppInitialStateStatusType, initializeAppTC} from "./state/app-reducer";
-import {BrowserRouter, Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "./features/Login/Login";
+import {logoutTC, setIsLoggedInAC} from "./state/login-reducer";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -123,6 +122,11 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
         !isLoggedIn && navigate('/login');
     }, [isLoggedIn])
 
+    // перед проверкой на инициализацию
+    const logoutHandler = useCallback(() => {
+        dispatch(logoutTC());
+    }, [])
+
     // лоадер, если приложение не инициализировано
     if (!isInitialized) {
         return (
@@ -150,9 +154,17 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                         <Typography variant="h6">
                             TodoLists
                         </Typography>
-                        {/*<NavLink to={'/login'}>*/}
-                        <Button color="inherit">Login</Button>
-                        {/*</NavLink>*/}
+
+                        {
+                            isLoggedIn
+                                ? <Button color="inherit"
+                                          onClick={logoutHandler}
+                                  >
+                                    Log Out
+                                  </Button>
+                                : ''
+                        }
+
                     </Toolbar>
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>

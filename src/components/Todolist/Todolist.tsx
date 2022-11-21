@@ -33,7 +33,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     // используем типизированный Dispatch
     const dispatch = useAppDispatch();
     const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[props.todolist.id]);
-    // const isLoggedIn = useTypedSelector<boolean>(state => state.auth.isLoggedIn);
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
 
@@ -84,10 +83,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         }
         dispatch(getTasksTC(props.todolist.id));
     },[])
-
-    // if (!isLoggedIn) {
-    //     return <Navigate to={'/login'}/>
-    // }
 
     return (
         <div>

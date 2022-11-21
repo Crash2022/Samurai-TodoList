@@ -158,7 +158,7 @@ export type AuthResponseData = {
 }
 
 export const authAPI = {
-    loginMe(data: LoginParamsType) {
+    login(data: LoginParamsType) {
         return (
             instance.post<TodolistsResponseType<{userId?: number}>>('auth/login', data)
         )
@@ -166,6 +166,11 @@ export const authAPI = {
     authMe() {
         return (
             instance.get<TodolistsResponseType<AuthResponseData>>('auth/me')
+        )
+    },
+    logout() {
+        return (
+            instance.delete<TodolistsResponseType>('auth/login')
         )
     }
 }

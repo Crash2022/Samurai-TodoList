@@ -36,11 +36,35 @@ export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
 export const loginMeTC = (data: LoginParamsType): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
-        authAPI.loginMe(data)
+        authAPI.login(data)
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    // alert('login')
                     dispatch(setIsLoggedInAC(true));
+                    dispatch(appSetStatusAC('succeeded'));
+                } else {
+                    handleServerAppError(response.data, dispatch);
+                    // if (response.data.messages) {
+                    //     dispatch(appSetErrorAC(response.data.messages[0]));
+                    // } else {
+                    //     dispatch(appSetErrorAC('Some Error'));
+                    // }
+                }
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+                // dispatch(appSetErrorAC(error.message));
+                // dispatch(appSetStatusAC('failed'));
+            })
+    }
+}
+
+export const logoutTC = (): AppThunkType => {
+    return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
+        authAPI.logout()
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setIsLoggedInAC(false));
                     dispatch(appSetStatusAC('succeeded'));
                 } else {
                     handleServerAppError(response.data, dispatch);
