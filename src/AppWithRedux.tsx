@@ -1,5 +1,5 @@
 import {
-    AppBar, Button, Container, Grid, IconButton, LinearProgress,
+    AppBar, Button, CircularProgress, Container, Grid, IconButton, LinearProgress,
     Paper, Toolbar, Typography
 } from '@material-ui/core';
 import React, {useCallback, useEffect} from 'react';
@@ -9,12 +9,12 @@ import {AddItemForm} from "./UI/AddItemForm";
 import {Menu} from "@material-ui/icons";
 import {createTodolistTC, getTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
 import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "./state/store";
+import {AppRootStateType, useAppDispatch, useTypedSelector} from "./state/store";
 import styles from './components/Todolist/Todolist.module.css'
 import {v1} from "uuid";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
-import {AppInitialStateStatusType} from "./state/app-reducer";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {AppInitialStateStatusType, initializeAppTC} from "./state/app-reducer";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "./features/Login/Login";
 
 /*https://samuraitodo.herokuapp.com/*/
@@ -84,6 +84,8 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
     const dispatch = useAppDispatch();
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
     const status = useSelector<AppRootStateType, AppInitialStateStatusType>(state => state.app.status);
+    const isLoggedIn = useTypedSelector<boolean>(state => state.auth.isLoggedIn);
+    const isInitialized = useTypedSelector<boolean>(state => state.app.isInitialized);
 
     // версия с импортом из другого файла
     //const todolists = useSelector<AppRootStateType, Array<TodoListType>>(todolistsReducer);
@@ -104,11 +106,27 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
     /*------------------------------------------------*/
 
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return;
         }
         dispatch(getTodolistsTC());
+    }, [isLoggedIn])
+
+    useEffect(() => {
+        dispatch(initializeAppTC());
     }, [])
+
+    if (!isInitialized) {
+        return (
+            <div style={{display: 'flex', justifyContent: 'center', marginTop: '200px'}}>
+                <CircularProgress/>
+            </div>
+        )
+    }
+
+    // if (!isLoggedIn) {
+    //     return <Navigate to={'/login'}/>
+    // }
 
     /*------------------------------------------------*/
 
@@ -131,7 +149,9 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                             <Typography variant="h6">
                                 TodoLists
                             </Typography>
-                            <Button color="inherit">Login</Button>
+                            {/*<NavLink to={'/login'}>*/}
+                                <Button color="inherit">Login</Button>
+                            {/*</NavLink>*/}
                         </Toolbar>
                         {status === 'loading' && <LinearProgress/>}
                     </AppBar>

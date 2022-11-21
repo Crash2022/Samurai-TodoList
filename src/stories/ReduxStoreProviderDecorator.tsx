@@ -42,10 +42,11 @@ const initialStorybookState: AppRootStateType = {
     },
     app: {
         status: 'idle',
-        error: null
+        error: null,
+        isInitialized: false
     },
     auth: {
-        auth: false
+        isLoggedIn: false
     }
 }
 

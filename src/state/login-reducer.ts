@@ -1,35 +1,34 @@
 import {AppThunkType} from "./store";
-import {authAPI, LoginParamsType, todolistsAPI} from "../api/todolistsAPI";
+import {authAPI, LoginParamsType} from "../api/todolistsAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 import {appSetStatusAC} from "./app-reducer";
-import {createTaskAC} from "./tasks-reducer";
+
+export type LoginActionTypes = SetIsLoggedInACType;
 
 export type LoginInitialStateType = {
-    auth: boolean
+    isLoggedIn: boolean
 }
 
-export type LoginActionTypes = LoginMeACType;
-
 const initialState: LoginInitialStateType = {
-    auth: false
+    isLoggedIn: false
 }
 
 export const loginReducer = (state: LoginInitialStateType = initialState,
-                                 action: LoginActionTypes): LoginInitialStateType => {
+                             action: LoginActionTypes): LoginInitialStateType => {
     switch (action.type) {
-        case 'LOGIN_ME': {
-            return {...state};
+        case 'LOGIN/SET_IS_LOGGED_IN': {
+            return {...state, isLoggedIn: action.isLoggedIn};
         }
         default:
-            return {...state};
+            return state;
     }
 }
 
 /*-----------------------------------------------------------------------------------*/
 
-export type LoginMeACType = ReturnType<typeof loginMeAC>
-export const loginMeAC = () => ({
-    type: 'LOGIN_ME'
+export type SetIsLoggedInACType = ReturnType<typeof setIsLoggedInAC>
+export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
+    type: 'LOGIN/SET_IS_LOGGED_IN', isLoggedIn
 } as const)
 
 /*-----------------------------------------------------------------------------------*/
@@ -40,9 +39,9 @@ export const loginMeTC = (data: LoginParamsType): AppThunkType => {
         authAPI.loginMe(data)
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    alert('login')
-                    // dispatch(loginMeAC(response.data.data.userId));
-                    // dispatch(appSetStatusAC('succeeded'));
+                    // alert('login')
+                    dispatch(setIsLoggedInAC(true));
+                    dispatch(appSetStatusAC('succeeded'));
                 } else {
                     handleServerAppError(response.data, dispatch);
                     // if (response.data.messages) {
@@ -51,12 +50,9 @@ export const loginMeTC = (data: LoginParamsType): AppThunkType => {
                     //     dispatch(appSetErrorAC('Some Error'));
                     // }
                 }
-                //dispatch(setTasksAC(todolistId, response.data.items));
-                //dispatch(appSetStatusAC('succeeded'));
             })
             .catch(error => {
                 handleServerNetworkError(error, dispatch);
-
                 // dispatch(appSetErrorAC(error.message));
                 // dispatch(appSetStatusAC('failed'));
             })

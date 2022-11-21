@@ -151,10 +151,21 @@ export type LoginParamsType = {
     captcha?: string
 }
 
+export type AuthResponseData = {
+    id: number
+    email: string
+    login: string
+}
+
 export const authAPI = {
     loginMe(data: LoginParamsType) {
         return (
             instance.post<TodolistsResponseType<{userId?: number}>>('auth/login', data)
+        )
+    },
+    authMe() {
+        return (
+            instance.get<TodolistsResponseType<AuthResponseData>>('auth/me')
         )
     }
 }

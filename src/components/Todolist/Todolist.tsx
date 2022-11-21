@@ -6,7 +6,7 @@ import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {createTaskTC, getTasksTC} from "../../state/tasks-reducer";
 import { useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "../../state/store";
+import {AppRootStateType, useAppDispatch, useTypedSelector} from "../../state/store";
 import {Task} from "../Task/Task";
 import {
     updateTodolistFilterAC,
@@ -16,6 +16,7 @@ import {
 } from "../../state/todolists-reducer";
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
 import {v1} from "uuid";
+import {Navigate} from "react-router-dom";
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType
@@ -32,6 +33,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     // используем типизированный Dispatch
     const dispatch = useAppDispatch();
     const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[props.todolist.id]);
+    // const isLoggedIn = useTypedSelector<boolean>(state => state.auth.isLoggedIn);
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
 
@@ -82,6 +84,10 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         }
         dispatch(getTasksTC(props.todolist.id));
     },[])
+
+    // if (!isLoggedIn) {
+    //     return <Navigate to={'/login'}/>
+    // }
 
     return (
         <div>

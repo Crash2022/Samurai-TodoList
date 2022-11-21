@@ -1,11 +1,12 @@
-import {AppInitialStateType, appReducer, appSetErrorAC, appSetStatusAC} from "./app-reducer";
+import {AppInitialStateType, appReducer, appSetErrorAC, appSetInitializedAC, appSetStatusAC} from "./app-reducer";
 
 let startState: AppInitialStateType;
 
 beforeEach(() => {
     startState = {
         status: 'idle',
-        error: null
+        error: null,
+        isInitialized: false
     }
 })
 
@@ -19,4 +20,10 @@ test('app error message should be set', () => {
 
     const endTasksState = appReducer(startState, appSetErrorAC('Some Error'));
     expect(endTasksState.error).toBe('Some Error');
+});
+
+test('app should initialize', () => {
+
+    const endTasksState = appReducer(startState, appSetInitializedAC(true));
+    expect(endTasksState.isInitialized).toBeTruthy();
 });

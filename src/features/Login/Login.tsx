@@ -10,11 +10,13 @@ import {
     TextField
 } from "@material-ui/core";
 import {useFormik} from "formik";
-import {useAppDispatch} from "../../state/store";
+import {useAppDispatch, useTypedSelector} from "../../state/store";
 import {loginMeTC} from "../../state/login-reducer";
+import {Navigate} from "react-router-dom";
 
 export const Login = () => {
 
+    const isLoggedIn = useTypedSelector<boolean>(state => state.auth.isLoggedIn);
     const dispatch = useAppDispatch();
 
     const formik = useFormik({
@@ -33,7 +35,7 @@ export const Login = () => {
                     email: 'Enter e-mail'
                 }
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                return  {
+                return {
                     email: 'Invalid email'
                 }
             }
@@ -46,12 +48,31 @@ export const Login = () => {
         }
     });
 
+    if (isLoggedIn) {
+        return <Navigate to={'/'}/>
+    }
+
     return (
         <Grid container justifyContent={'center'}>
             <Grid>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
-                        <FormLabel></FormLabel>
+
+                        <FormLabel>
+                            <p>
+                                To login get registered <a href={'https://social-network.samuraijs.com'}
+                                                           target={'_blank'}>here</a>
+                            </p>
+                            <p>
+                                or use common account credentials
+                            </p>
+                            <p>
+                                E-mail: free@samuraijs.com
+                            </p>
+                            <p>
+                                Password: free
+                            </p>
+                        </FormLabel>
 
                         <FormGroup>
                             <TextField label='E-mail'
@@ -60,8 +81,8 @@ export const Login = () => {
                             />
                             {
                                 formik.errors.email && formik.touched.email
-                                ? <div>{formik.errors.email}</div>
-                                : null
+                                    ? <div>{formik.errors.email}</div>
+                                    : null
                             }
 
                             <TextField label='Password'
@@ -79,7 +100,8 @@ export const Login = () => {
                                               control={<Checkbox
                                                   {...formik.getFieldProps('rememberMe')}
                                                   checked={formik.values.rememberMe}
-                                                  color={'primary'}/>}
+                                                  color={'primary'}
+                                              />}
                             />
                             <Button type={'submit'}
                                     color={'primary'}
