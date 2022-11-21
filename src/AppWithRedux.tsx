@@ -14,6 +14,8 @@ import styles from './components/Todolist/Todolist.module.css'
 import {v1} from "uuid";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
 import {AppInitialStateStatusType} from "./state/app-reducer";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Login} from "./features/Login/Login";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -97,7 +99,7 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
             id: v1(), title: title, filter: 'all',
             entityStatus: 'idle', addedDate: '', order: 0
         }));
-    },[dispatch])
+    }, [dispatch])
 
     /*------------------------------------------------*/
 
@@ -106,34 +108,37 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
             return;
         }
         dispatch(getTodolistsTC());
-    },[])
+    }, [])
 
     /*------------------------------------------------*/
 
     return (
-        <div className="App">
 
-            <div>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                        >
-                            <Menu/>
-                        </IconButton>
-                        <Typography variant="h6">
-                            TodoLists
-                        </Typography>
-                        <Button color="inherit">Login</Button>
-                    </Toolbar>
-                    { status === 'loading' && <LinearProgress/> }
-                </AppBar>
-                <ErrorSnackBar/>
-            </div>
+        <BrowserRouter>
 
-            <Container fixed>
+            <div className="App">
+
+                <div>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                            >
+                                <Menu/>
+                            </IconButton>
+                            <Typography variant="h6">
+                                TodoLists
+                            </Typography>
+                            <Button color="inherit">Login</Button>
+                        </Toolbar>
+                        {status === 'loading' && <LinearProgress/>}
+                    </AppBar>
+                    <ErrorSnackBar/>
+                </div>
+
+                <Container fixed>
                     <Grid container style={{padding: '20px', textAlign: 'center'}} direction={'column'}>
                         <Grid item style={{padding: '10px'}}>
                             Добавить новый список
@@ -142,32 +147,66 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                             <AddItemForm addItem={addNewTodoList}/>
                         </Grid>
                     </Grid>
-                {
-                    todolists.length !== 0 ?
 
-                        <Grid container spacing={5} justifyContent={'center'}>
-                            {
-                                todolists.map(todo => {
-                                    return (
-                                        <Grid item key={todo.id}>
-                                            <Paper style={{padding: '15px'}} elevation={8}>
-                                                <Todolist
-                                                    todolist={todo}
-                                                    // todolistId={todo.id}
-                                                    // title={todo.title}
-                                                    // filter={todo.filter}
-                                                    demo={demo}
-                                                />
-                                            </Paper>
-                                        </Grid>
-                                    )
-                                })
-                            }
-                        </Grid>
-                        : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
-                }
-            </Container>
+                    <Routes>
+                        <Route path={'/login'} element={<Login/>}/>
+                        <Route path={'/'} element={
 
-        </div>
+                            todolists.length !== 0 ?
+
+                                <Grid container spacing={5} justifyContent={'center'}>
+                                    {
+                                        todolists.map(todo => {
+                                            return (
+                                                <Grid item key={todo.id}>
+                                                    <Paper style={{padding: '15px'}} elevation={8}>
+                                                        <Todolist
+                                                            todolist={todo}
+                                                            // todolistId={todo.id}
+                                                            // title={todo.title}
+                                                            // filter={todo.filter}
+                                                            demo={demo}
+                                                        />
+                                                    </Paper>
+                                                </Grid>
+                                            )
+                                        })
+                                    }
+                                </Grid>
+                                : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
+
+                        }/>
+                    </Routes>
+
+                    {/*{
+                        todolists.length !== 0 ?
+
+                            <Grid container spacing={5} justifyContent={'center'}>
+                                {
+                                    todolists.map(todo => {
+                                        return (
+                                            <Grid item key={todo.id}>
+                                                <Paper style={{padding: '15px'}} elevation={8}>
+                                                    <Todolist
+                                                        todolist={todo}
+                                                        // todolistId={todo.id}
+                                                        // title={todo.title}
+                                                        // filter={todo.filter}
+                                                        demo={demo}
+                                                    />
+                                                </Paper>
+                                            </Grid>
+                                        )
+                                    })
+                                }
+                            </Grid>
+                            : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
+                    }*/}
+
+                </Container>
+
+            </div>
+
+        </BrowserRouter>
     );
 })
