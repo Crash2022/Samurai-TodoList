@@ -4,6 +4,7 @@ import {TodolistsActionTypes, todolistsReducer} from "./todolists-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {ApplicationActionTypes, appReducer} from "./app-reducer";
+import {LoginActionTypes, loginReducer} from "./login-reducer";
 
 // для React Redux DevTools Chrome
 declare global {
@@ -21,7 +22,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
     tasks: tasksReducer,
-    app: appReducer
+    app: appReducer,
+    auth: loginReducer
 })
 
 // @ts-ignore
@@ -39,7 +41,11 @@ export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionType
 // export type AppDispatch = typeof store.dispatch; // другая запись типизации (из доки), работает не всегда
 
 // типизация всех экшенов
-export type AppActionType = TodolistsActionTypes | TasksActionTypes | ApplicationActionTypes;
+export type AppActionType =
+    TodolistsActionTypes |
+    TasksActionTypes |
+    ApplicationActionTypes |
+    LoginActionTypes;
 
 // типизация Thunk
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
