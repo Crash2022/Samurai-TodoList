@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import {useFormik} from "formik";
 import {useAppDispatch, useTypedSelector} from "../../state/store";
-import {loginMeTC} from "../../state/login-reducer";
+import {loginTC} from "../../state/login-reducer";
 import {Navigate} from "react-router-dom";
 
 export const Login = () => {
@@ -27,7 +27,7 @@ export const Login = () => {
         },
         onSubmit: (values) => {
             // alert(JSON.stringify(values));
-            dispatch(loginMeTC(values));
+            dispatch(loginTC(values));
         },
         validate: (values) => {
             if (!values.email) {
@@ -55,6 +55,7 @@ export const Login = () => {
     return (
         <Grid container justifyContent={'center'}>
             <Grid>
+
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
 
@@ -113,6 +114,7 @@ export const Login = () => {
 
                     </FormControl>
                 </form>
+
             </Grid>
         </Grid>
     );

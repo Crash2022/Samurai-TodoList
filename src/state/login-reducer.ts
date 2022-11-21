@@ -33,7 +33,7 @@ export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
 
 /*-----------------------------------------------------------------------------------*/
 
-export const loginMeTC = (data: LoginParamsType): AppThunkType => {
+export const loginTC = (data: LoginParamsType): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         authAPI.login(data)
