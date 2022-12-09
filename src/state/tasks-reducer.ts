@@ -5,10 +5,143 @@ import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
 import {AppRootStateType, AppThunkType} from "./store";
 import {appSetStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-export type TasksListType = {
-    [todolistId: string]: Array<TaskAPIType>
+// redux-toolkit
+
+const initialState = {};
+
+const slice = createSlice({
+    name: 'tasks',
+    initialState: initialState,
+    reducers: {
+        deleteTaskAC(state, action: PayloadAction<{todolistId: string, taskId: string}>) {
+            [action.payload.todolistId].filter(t => t.id !== action.payload.taskId)
+        },
+        createTaskAC(state, action: PayloadAction<{task: TaskAPIType}>) {
+            const newTask: TaskAPIType = action.payload.task;
+            //newTask.todoListId: [newTask, ...state[newTask.todoListId]]
+        },
+        updateTaskAC(state, action: PayloadAction<{todolistId: string, taskId: string, model: UpdateDomainTaskModelType}>) {
+            // return {
+            //     ...state, [action.todolistId]:
+            //         state[action.todolistId].map(el => el.id === action.taskId ? {...el, ...action.model} : el)
+            // };
+        },
+        setTasksAC(state, action: PayloadAction<{todolistId: string, tasks: Array<TaskAPIType>}>) {
+            // const copyState = {...state};
+            // copyState[action.todolistId] = action.tasks;
+            // return copyState;
+        }
+    }
+})
+
+export const tasksReducer = slice.reducer;
+export const {deleteTaskAC, createTaskAC, updateTaskAC, setTasksAC} = slice.actions;
+
+
+export const getTasksTC = (todolistId: string): AppThunkType => {
+    return (dispatch) => {
+        dispatch(appSetStatusAC({status: 'loading'}));
+        todolistsAPI.getTasks(todolistId)
+            .then(response => {
+                dispatch(setTasksAC({todolistId, response.data.items}));
+                dispatch(appSetStatusAC({status: 'succeeded'}));
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+            })
+    }
 }
+
+export const createTaskTC = (task: TaskAPIType): AppThunkType => {
+    return (dispatch) => {
+        dispatch(appSetStatusAC({status: 'loading'}));
+        todolistsAPI.createTask(task)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(createTaskAC({response.data.data.item}));
+                    dispatch(appSetStatusAC({status: 'succeeded'}));
+                } else {
+                    handleServerAppError(response.data, dispatch);
+                }
+                dispatch(appSetStatusAC({status: 'failed'}));
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+            })
+    }
+}
+
+export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
+    return (dispatch) => {
+        dispatch(appSetStatusAC({status: 'loading'}));
+        todolistsAPI.deleteTask(todolistId, taskId)
+            .then(response => {
+                dispatch(deleteTaskAC({todolistId, taskId}));
+                dispatch(appSetStatusAC({status: 'succeeded'}));
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+            })
+    }
+}
+
+// обновление разных свойств таски в одной "санке"
+export type UpdateDomainTaskModelType = {
+    description?: string
+    title?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: string
+    deadline?: string
+}
+
+export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType): AppThunkType => {
+    return (dispatch, getState: () => AppRootStateType) => {
+
+        const state = getState();
+        const task = state.tasks[todolistId].find(t => t.id === taskId);
+
+        // обработка ошибки
+        if (!task) {
+            // throw new Error('Task Not Found In The State'); // иной вариант предупреждения
+            console.warn('Task Not Found In The State');
+            return;
+        }
+
+        const apiModel: UpdateTaskModelType = {
+            description: task.description,
+            title: task.title,
+            status: task.status,
+            priority: task.priority,
+            startDate: task.startDate,
+            deadline: task.deadline,
+            ...domainModel
+        }
+
+        todolistsAPI.updateTask(todolistId, taskId, apiModel)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(updateTaskAC({todolistId, taskId, domainModel}));
+                } else {
+                    handleServerAppError(response.data, dispatch);
+                }
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+            })
+    }
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+// react-redux
+// export type TasksListType = {
+//     [todolistId: string]: Array<TaskAPIType>
+// }
 
 // иной метод типизации initialState
 // type StateType = typeof initialState
@@ -32,7 +165,7 @@ export type TasksListType = {
 //     ]
 // }
 
-const initialState: TasksListType = {};
+/*const initialState: TasksListType = {};
 
 export const tasksReducer = (state: TasksListType = initialState, action: TasksActionTypes): TasksListType => {
     switch (action.type) {
@@ -40,10 +173,10 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
         }
         case 'CREATE_TASK': {
-            /*const newTask: TaskAPIType = {todoListId: action.todolistId, id: v1(), title: action.titleInput,
+            /!*const newTask: TaskAPIType = {todoListId: action.todolistId, id: v1(), title: action.titleInput,
                 status: TaskStatuses.New, priority: TaskPriorities.Low,
                 description: '', addedDate: '', startDate: '', deadline: '', order: 0};
-            return {...state, [action.todolistId]: [newTask,...state[action.todolistId]]};*/
+            return {...state, [action.todolistId]: [newTask,...state[action.todolistId]]};*!/
 
             const newTask: TaskAPIType = action.task;
             return {...state, [newTask.todoListId]: [newTask, ...state[newTask.todoListId]]};
@@ -93,11 +226,11 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
             //throw new Error("I don't know action type!");
             return state;
     }
-}
+}*/
 
 /*-----------------------------------------------------------------------------------*/
 
-export type TasksActionTypes =
+/*export type TasksActionTypes =
     DeleteTaskACType |
     CreateTaskACType |
     //UpdateTaskStatusACType |
@@ -116,11 +249,11 @@ export const deleteTaskAC = (todolistId: string, taskId: string) => ({
 } as const)
 
 export type CreateTaskACType = ReturnType<typeof createTaskAC>
-export const createTaskAC = (task: TaskAPIType /*todolistId: string, titleInput: string*/) => ({
+export const createTaskAC = (task: TaskAPIType /!*todolistId: string, titleInput: string*!/) => ({
     type: 'CREATE_TASK', task
-    /*todolistId,
-    titleInput*/
-} as const)
+    /!*todolistId,
+    titleInput*!/
+} as const)*/
 
 // *версия без объекта model
 // export type UpdateTaskStatusACType = ReturnType<typeof updateTaskStatusAC>
@@ -140,7 +273,7 @@ export const createTaskAC = (task: TaskAPIType /*todolistId: string, titleInput:
 // } as const)
 
 // *версия с объектом model для изменения статуса и тайтла таски
-export type UpdateTaskACType = ReturnType<typeof updateTaskAC>
+/*export type UpdateTaskACType = ReturnType<typeof updateTaskAC>
 export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateDomainTaskModelType) => ({
     type: 'UPDATE_TASK',
     todolistId,
@@ -152,10 +285,11 @@ export type SetTasksACType = ReturnType<typeof setTasksAC>
 export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
     type: 'SET_TASKS',
     todolistId, tasks
-} as const)
+} as const)*/
 
 /*-----------------------------------------------------------------------------------*/
 
+/*
 export const getTasksTC = (todolistId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
@@ -215,7 +349,7 @@ export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType =
     }
 }
 
-/*
+/!*
 // менее правильный и короткий вариант
 export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string) => {
     return (dispatch: Dispatch) => {
@@ -254,7 +388,7 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
                 dispatch(updateTaskStatusAC(todolistId, taskId, status));
             })
     }
-}*/
+}*!/
 
 // обновление разных свойств таски в одной "санке"
 export type UpdateDomainTaskModelType = {
@@ -308,4 +442,4 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}
+}*/

@@ -4,7 +4,7 @@ import {TodolistsActionTypes, todolistsReducer} from "./todolists-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {ApplicationActionTypes, appReducer} from "./app-reducer";
-import {/*LoginActionTypes,*/ loginReducer} from "./login-reducer";
+import {LoginActionTypes, loginReducer} from "./login-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 // для React Redux DevTools Chrome
@@ -52,8 +52,8 @@ export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionType
 export type AppActionType =
     TodolistsActionTypes |
     TasksActionTypes |
-    ApplicationActionTypes
-    // LoginActionTypes;
+    ApplicationActionTypes |
+    LoginActionTypes;
 
 // типизация Thunk
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
