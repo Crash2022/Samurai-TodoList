@@ -1,10 +1,10 @@
 import {applyMiddleware, combineReducers, compose, legacy_createStore} from "redux";
-import {TasksActionTypes, tasksReducer} from "./tasks-reducer";
-import {TodolistsActionTypes, todolistsReducer} from "./todolists-reducer";
+import {tasksReducer} from "./tasks-reducer";
+import {todolistsReducer} from "./todolists-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {ApplicationActionTypes, appReducer} from "./app-reducer";
-import {LoginActionTypes, loginReducer} from "./login-reducer";
+import {appReducer} from "./app-reducer";
+import {loginReducer} from "./login-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 // для React Redux DevTools Chrome
@@ -45,18 +45,18 @@ export type AppRootStateType = ReturnType<typeof rootReducer>;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useTypedSelector: TypedUseSelectorHook<AppRootStateType> = useSelector;
 
-export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionType>;
+export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any/*AppActionType*/>;
 // export type AppDispatch = typeof store.dispatch; // другая запись типизации (из доки), работает не всегда
 
 // типизация всех экшенов
-export type AppActionType =
-    TodolistsActionTypes |
-    TasksActionTypes |
-    ApplicationActionTypes |
-    LoginActionTypes;
+// export type AppActionType =
+//     TodolistsActionTypes |
+//     TasksActionTypes |
+//     ApplicationActionTypes |
+//     LoginActionTypes;
 
 // типизация Thunk
-export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, any/*AppActionType*/>
 
 // @ts-ignore
 window.store = store;

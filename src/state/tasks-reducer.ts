@@ -1,5 +1,5 @@
-import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
-    todolistId1, todolistId2} from "./todolists-reducer";
+// import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
+//     todolistId1, todolistId2} from "./todolists-reducer";
 import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
     UpdateTaskModelType} from "../api/todolistsAPI";
 import {AppRootStateType, AppThunkType} from "./store";
@@ -16,7 +16,11 @@ const slice = createSlice({
     initialState: initialState,
     reducers: {
         deleteTaskAC(state, action: PayloadAction<{todolistId: string, taskId: string}>) {
-            [action.payload.todolistId].filter(t => t.id !== action.payload.taskId)
+            // const index = state.findIndex(t => t.id === action.payload.todolistId);
+            // if (index > -1) {
+            //     state.splice(index, 1);
+            // }
+            [action.payload.todolistId].filter(t => t.id !== action.payload.taskId);
         },
         createTaskAC(state, action: PayloadAction<{task: TaskAPIType}>) {
             const newTask: TaskAPIType = action.payload.task;
@@ -45,7 +49,7 @@ export const getTasksTC = (todolistId: string): AppThunkType => {
         dispatch(appSetStatusAC({status: 'loading'}));
         todolistsAPI.getTasks(todolistId)
             .then(response => {
-                dispatch(setTasksAC({todolistId, response.data.items}));
+                dispatch(setTasksAC({todolistId, tasks: response.data.items}));
                 dispatch(appSetStatusAC({status: 'succeeded'}));
             })
             .catch(error => {
@@ -60,7 +64,7 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
         todolistsAPI.createTask(task)
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    dispatch(createTaskAC({response.data.data.item}));
+                    dispatch(createTaskAC({task: response.data.data.item}));
                     dispatch(appSetStatusAC({status: 'succeeded'}));
                 } else {
                     handleServerAppError(response.data, dispatch);
@@ -123,7 +127,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
         todolistsAPI.updateTask(todolistId, taskId, apiModel)
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    dispatch(updateTaskAC({todolistId, taskId, domainModel}));
+                    dispatch(updateTaskAC({todolistId, taskId, model: domainModel}));
                 } else {
                     handleServerAppError(response.data, dispatch);
                 }

@@ -8,12 +8,10 @@ import {createTaskTC, getTasksTC} from "../../state/tasks-reducer";
 import { useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch, useTypedSelector} from "../../state/store";
 import {Task} from "../Task/Task";
-import {
+import {TodolistDomainType,
     updateTodolistFilterAC,
     deleteTodolistTC,
-    updateTodolistTitleTC,
-    TodolistDomainType
-} from "../../state/todolists-reducer";
+    updateTodolistTitleTC} from "../../state/todolists-reducer";
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
 import {v1} from "uuid";
 import {Navigate} from "react-router-dom";
@@ -100,14 +98,14 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
             <div style={{margin: '10px'}}>
                 {/*<ButtonExample todolistId={props.todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
-                <Button onClick={() => dispatch(updateTodolistFilterAC(props.todolist.id, 'all'))}
+                <Button onClick={() => dispatch(updateTodolistFilterAC({id: props.todolist.id, filter: 'all'}))}
                         variant={props.todolist.filter === 'all' ? 'contained' : 'text'}>All
                 </Button>
-                <Button onClick={() => dispatch(updateTodolistFilterAC(props.todolist.id,'completed'))}
+                <Button onClick={() => dispatch(updateTodolistFilterAC({id: props.todolist.id, filter: 'completed'}))}
                         variant={props.todolist.filter === 'completed' ? 'contained' : 'text'}
                 color={'primary'}>Completed
                 </Button>
-                <Button onClick={() => dispatch(updateTodolistFilterAC(props.todolist.id,'active'))}
+                <Button onClick={() => dispatch(updateTodolistFilterAC({id: props.todolist.id, filter: 'active'}))}
                         variant={props.todolist.filter === 'active' ? 'contained' : 'text'}
                         color={'secondary'}>Active
                 </Button>

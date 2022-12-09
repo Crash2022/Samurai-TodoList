@@ -21,6 +21,7 @@ const slice = createSlice({
             state.status = action.payload.status;
         },
         appSetErrorAC(state, action: PayloadAction<{error: string | null}>) {
+            // @ts-ignore
             state.error = action.payload.error; // ?
         },
         appSetInitializedAC(state, action: PayloadAction<{isInitialized: boolean}>) {
