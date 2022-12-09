@@ -2,6 +2,7 @@ import {authAPI} from "../api/todolistsAPI";
 import {AppThunkType} from "./store";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 import {setIsLoggedInAC} from "./login-reducer";
+import {Dispatch} from "@reduxjs/toolkit";
 
 export type ApplicationActionTypes =
     AppSetStatusACType |
@@ -60,12 +61,14 @@ export const appSetInitializedAC = (isInitialized: boolean) => ({
 /*-----------------------------------------------------------------------------------*/
 
 export const initializeAppTC = (): AppThunkType => {
-    return (dispatch) => {
+    // типизация Dispatch для Redux-Toolkit, для React-Redux другая (не надо)
+    return (dispatch: Dispatch) => {
         dispatch(appSetStatusAC('loading'));
         authAPI.authMe()
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(true));
+                    // dispatch(setIsLoggedInAC(true));
+                    dispatch(setIsLoggedInAC({isLoggedIn: true}));
                     dispatch(appSetStatusAC('succeeded'));
                 } else {
                     handleServerAppError(response.data, dispatch);
