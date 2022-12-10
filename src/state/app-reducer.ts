@@ -5,23 +5,30 @@ import {setIsLoggedInAC} from "./login-reducer";
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 
 // redux-toolkit
-const initialState = {
+export type AppInitialStateType = {
+    // происходит ли сейчас взаимодействие с сервером
+    status: AppInitialStateStatusType
+    // текст ошибки запишем сюда
+    error: string | null
+    isInitialized: boolean
+}
+
+export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
+
+const initialState: AppInitialStateType = {
     status: 'idle', // idle - начальное значение (простаивание)
     error: null,
     isInitialized: false
 }
 
-export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
-
 const slice = createSlice({
     name: 'app',
-    initialState: initialState,
+    initialState,
     reducers: {
         appSetStatusAC(state, action: PayloadAction<{status: AppInitialStateStatusType}>) {
             state.status = action.payload.status;
         },
         appSetErrorAC(state, action: PayloadAction<{error: string | null}>) {
-            // @ts-ignore
             state.error = action.payload.error; // ?
         },
         appSetInitializedAC(state, action: PayloadAction<{isInitialized: boolean}>) {

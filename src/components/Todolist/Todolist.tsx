@@ -14,7 +14,6 @@ import {TodolistDomainType,
     updateTodolistTitleTC} from "../../state/todolists-reducer";
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
 import {v1} from "uuid";
-import {Navigate} from "react-router-dom";
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType

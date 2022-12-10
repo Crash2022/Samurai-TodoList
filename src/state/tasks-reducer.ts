@@ -1,9 +1,6 @@
 // import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
 //     todolistId1, todolistId2} from "./todolists-reducer";
-import {
-    todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
-    UpdateTaskModelType, TodolistAPIType
-} from "../api/todolistsAPI";
+import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses, UpdateTaskModelType} from "../api/todolistsAPI";
 import {AppRootStateType, AppThunkType} from "./store";
 import {appSetStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
@@ -11,8 +8,12 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {createTodolistAC, deleteTodolistAC, setTodolistsAC} from "./todolists-reducer";
 
 // redux-toolkit
+export type TasksListType = {
+    [todolistId: string]: Array<TaskAPIType>
+}
 
-const initialState = {};
+const initialState: TasksListType = {};
+// const initialState: {[index: string]: Array<TaskAPIType>} = {};
 
 const slice = createSlice({
     name: 'tasks',
@@ -41,7 +42,7 @@ const slice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(deleteTodolistAC, (state, action) => {
-            delete state[action.payload.id];
+            delete state[action.payload.todolistId];
         });
         builder.addCase(createTodolistAC, (state, action) => {
             state[action.payload.todolist.id] = [];

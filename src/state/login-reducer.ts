@@ -1,4 +1,4 @@
-import {AppThunkType} from "./store";
+// import {AppThunkType} from "./store";
 import {authAPI, LoginParamsType} from "../api/todolistsAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 import {appSetStatusAC} from "./app-reducer";
@@ -11,7 +11,7 @@ const initialState = {
 
 const slice = createSlice({
     name: 'login',
-    initialState: initialState,
+    initialState,
     reducers: {
         setIsLoggedInAC(state, action: PayloadAction<{isLoggedIn: boolean}>) {
             state.isLoggedIn = action.payload.isLoggedIn;

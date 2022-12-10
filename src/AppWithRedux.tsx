@@ -14,7 +14,7 @@ import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
 import {AppInitialStateStatusType, initializeAppTC} from "./state/app-reducer";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "./features/Login/Login";
-import {logoutTC, setIsLoggedInAC} from "./state/login-reducer";
+import {logoutTC} from "./state/login-reducer";
 
 /*https://samuraitodo.herokuapp.com/*/
 

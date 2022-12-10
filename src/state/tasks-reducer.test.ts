@@ -1,7 +1,7 @@
 import {tasksReducer, createTaskAC, deleteTaskAC, setTasksAC, updateTaskAC,
     TasksListType} from "./tasks-reducer";
 import {createTodolistAC, deleteTodolistAC, setTodolistsAC,
-    todolistId1, todolistId2,} from "./todolists-reducer";
+    /*todolistId1, todolistId2*/} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 
 let startState: TasksListType = { };
@@ -29,7 +29,7 @@ beforeEach(() => {
 
 test('correct task should be deleted', () => {
 
-    const action = deleteTaskAC('todolistId2', '1');
+    const action = deleteTaskAC({todolistId: 'todolistId2', taskId: '1'});
     const endState = tasksReducer(startState, action);
 
     expect(endState['todolistId1'].length).toBe(2);
@@ -40,10 +40,10 @@ test('correct task should be deleted', () => {
 
 test('correct task should be added', () => {
 
-    const action = createTaskAC({
-        todoListId: 'todolistId1', id: '3', title: 'Angular',
-        status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
-        description: '', addedDate: '', startDate: '', deadline: '', order: 0
+    const action = createTaskAC({task:
+            {todoListId: 'todolistId1', id: '3', title: 'Angular',
+            status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
+            description: '', addedDate: '', startDate: '', deadline: '', order: 0}
     });
 
     const endState = tasksReducer(startState, action);
@@ -56,7 +56,7 @@ test('correct task should be added', () => {
 
 test('task status should be updated', () => {
 
-    const action = updateTaskAC('todolistId1', '1', {status: TaskStatuses.New});
+    const action = updateTaskAC({todolistId: 'todolistId1', taskId: '1', model: {status: TaskStatuses.New}});
     const endState = tasksReducer(startState, action);
 
     expect(endState['todolistId1'].length).toBe(2);
@@ -70,7 +70,7 @@ test('task status should be updated', () => {
 test('task title should be updated', () => {
 
     const title = 'New Title';
-    const action = updateTaskAC('todolistId1', '1', {title});
+    const action = updateTaskAC({todolistId: 'todolistId1', taskId: '1', model: {title}});
     const endState = tasksReducer(startState, action);
 
     expect(endState['todolistId1'].length).toBe(2);
@@ -88,7 +88,7 @@ test('correct array should be added when new todolist was added', () => {
         status: TaskStatuses.New, priority: TaskPriorities.Middle,
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
     };
-    const endState = tasksReducer(startState, createTodolistAC(newTodolist));
+    const endState = tasksReducer(startState, createTodolistAC({todolist: newTodolist}));
 
     const keys = Object.keys(endState);
     const newKey = keys.find( el => el != 'todolistId1' && el != 'todolistId2');
@@ -102,7 +102,7 @@ test('correct array should be added when new todolist was added', () => {
 
 test('property with todolistId should be deleted', () => {
 
-    const endState = tasksReducer(startState, deleteTodolistAC('todolistId2'));
+    const endState = tasksReducer(startState, deleteTodolistAC({todolistId: 'todolistId2'}));
 
     const keys = Object.keys(endState);
 
@@ -114,10 +114,10 @@ test('property with todolistId should be deleted', () => {
 
 test('empty array should be added when set new todolist', () => {
 
-    const action = setTodolistsAC([
+    const action = setTodolistsAC({todolists:[
         {id: 'todolistId1', title: 'Выучить', addedDate: '', order: 0},
         {id: 'todolistId2', title: 'Купить', addedDate: '', order: 0}
-    ])
+    ]})
 
     const endState = tasksReducer({ }, action);
 
@@ -130,7 +130,7 @@ test('empty array should be added when set new todolist', () => {
 
 test('tasks should be added to correct todolist', () => {
 
-    const action = setTasksAC( 'todolistId1', startState['todolistId1']);
+    const action = setTasksAC( {todolistId: 'todolistId1', tasks: startState['todolistId1']});
     const endState = tasksReducer({ 'todolistId2' : [], 'todolistId1' : [] }, action);
 
     expect(endState['todolistId1'].length).toBe(2);
