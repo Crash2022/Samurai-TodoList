@@ -1,11 +1,14 @@
 // import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,
 //     todolistId1, todolistId2} from "./todolists-reducer";
-import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
-    UpdateTaskModelType} from "../api/todolistsAPI";
+import {
+    todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses,
+    UpdateTaskModelType, TodolistAPIType
+} from "../api/todolistsAPI";
 import {AppRootStateType, AppThunkType} from "./store";
 import {appSetStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createTodolistAC, deleteTodolistAC, setTodolistsAC} from "./todolists-reducer";
 
 // redux-toolkit
 
@@ -13,30 +16,41 @@ const initialState = {};
 
 const slice = createSlice({
     name: 'tasks',
-    initialState: initialState,
+    initialState,
     reducers: {
         deleteTaskAC(state, action: PayloadAction<{todolistId: string, taskId: string}>) {
-            // const index = state.findIndex(t => t.id === action.payload.todolistId);
-            // if (index > -1) {
-            //     state.splice(index, 1);
-            // }
-            [action.payload.todolistId].filter(t => t.id !== action.payload.taskId);
+            const tasks = state[action.payload.todolistId];
+            const index = tasks.findIndex(t => t.id === action.payload.taskId);
+            if (index > -1) {
+                tasks.splice(index, 1);
+            }
         },
         createTaskAC(state, action: PayloadAction<{task: TaskAPIType}>) {
-            const newTask: TaskAPIType = action.payload.task;
-            //newTask.todoListId: [newTask, ...state[newTask.todoListId]]
+            state[action.payload.task.todoListId].unshift(action.payload.task);
         },
         updateTaskAC(state, action: PayloadAction<{todolistId: string, taskId: string, model: UpdateDomainTaskModelType}>) {
-            // return {
-            //     ...state, [action.todolistId]:
-            //         state[action.todolistId].map(el => el.id === action.taskId ? {...el, ...action.model} : el)
-            // };
+            const tasks = state[action.payload.todolistId];
+            const index = tasks.findIndex(t => t.id === action.payload.taskId);
+            if (index > -1) {
+                tasks[index] = {...tasks[index], ...action.payload.model};
+            }
         },
         setTasksAC(state, action: PayloadAction<{todolistId: string, tasks: Array<TaskAPIType>}>) {
-            // const copyState = {...state};
-            // copyState[action.todolistId] = action.tasks;
-            // return copyState;
+            state[action.payload.todolistId] = action.payload.tasks;
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(deleteTodolistAC, (state, action) => {
+            delete state[action.payload.id];
+        });
+        builder.addCase(createTodolistAC, (state, action) => {
+            state[action.payload.todolist.id] = [];
+        });
+        builder.addCase(setTodolistsAC, (state, action) => {
+            action.payload.todolists.forEach(tl => {
+                state[tl.id] = [];
+            })
+        });
     }
 })
 

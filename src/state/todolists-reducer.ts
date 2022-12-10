@@ -17,7 +17,7 @@ export type TodolistDomainType = TodolistAPIType & {
 
 const slice = createSlice({
     name: 'todolists',
-    initialState: initialState,
+    initialState,
     reducers: {
         deleteTodolistAC(state, action: PayloadAction<{todolistId: string}>) {
             const index = state.findIndex(t => t.id === action.payload.todolistId);
@@ -26,7 +26,7 @@ const slice = createSlice({
             }
         },
         createTodolistAC(state, action: PayloadAction<{todolist: TodolistAPIType}>) {
-            state.push({...action.payload.todolist, filter: 'all', entityStatus: 'idle'});
+            state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'});
         },
         updateTodolistTitleAC(state, action: PayloadAction<{id: string, title: string}>) {
             const index = state.findIndex(t => t.id === action.payload.id);
