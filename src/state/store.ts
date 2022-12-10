@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, compose, legacy_createStore} from "redux";
+import {combineReducers, compose} from "redux";
 import {tasksReducer} from "./tasks-reducer";
 import {todolistsReducer} from "./todolists-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
@@ -28,7 +28,7 @@ const rootReducer = combineReducers({
 })
 
 // react-redux store
-// @ts-ignore
+// @ts-ignore // для Chrome Extension
 // export const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 // redux-toolkit store
@@ -48,7 +48,7 @@ export const useTypedSelector: TypedUseSelectorHook<AppRootStateType> = useSelec
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any/*AppActionType*/>;
 // export type AppDispatch = typeof store.dispatch; // другая запись типизации (из доки), работает не всегда
 
-// типизация всех экшенов
+// типизация всех экшенов для React-Redux
 // export type AppActionType =
 //     TodolistsActionTypes |
 //     TasksActionTypes |

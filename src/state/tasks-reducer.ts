@@ -13,7 +13,6 @@ export type TasksListType = {
 }
 
 const initialState: TasksListType = {};
-// const initialState: {[index: string]: Array<TaskAPIType>} = {};
 
 const slice = createSlice({
     name: 'tasks',

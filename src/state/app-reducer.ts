@@ -29,7 +29,7 @@ const slice = createSlice({
             state.status = action.payload.status;
         },
         appSetErrorAC(state, action: PayloadAction<{error: string | null}>) {
-            state.error = action.payload.error; // ?
+            state.error = action.payload.error;
         },
         appSetInitializedAC(state, action: PayloadAction<{isInitialized: boolean}>) {
             state.isInitialized = action.payload.isInitialized;
@@ -41,7 +41,7 @@ export const appReducer = slice.reducer;
 export const {appSetStatusAC, appSetErrorAC, appSetInitializedAC} = slice.actions;
 
 export const initializeAppTC = (): AppThunkType => {
-    // типизация Dispatch для Redux-Toolkit, для React-Redux другая (не надо)
+    // типизация Dispatch для Redux-Toolkit, для React-Redux другая
     return (dispatch: Dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         authAPI.authMe()
