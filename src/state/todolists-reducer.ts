@@ -5,14 +5,14 @@ import {handleServerNetworkError} from "../utils/errorUtils";
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 
 // redux-toolkit
-const initialState: Array<TodolistDomainType> = [];
-
 export type FilterType = 'all' | 'active' | 'completed';
 
 export type TodolistDomainType = TodolistAPIType & {
     filter: FilterType
     entityStatus: AppInitialStateStatusType
 }
+
+const initialState: Array<TodolistDomainType> = [];
 
 const slice = createSlice({
     name: 'todolists',

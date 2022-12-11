@@ -5,7 +5,11 @@ import {appSetStatusAC} from "./app-reducer";
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 
 // redux-toolkit
-const initialState = {
+export type LoginStateType = {
+    isLoggedIn: boolean
+}
+
+const initialState: LoginStateType = {
     isLoggedIn: false
 }
 
