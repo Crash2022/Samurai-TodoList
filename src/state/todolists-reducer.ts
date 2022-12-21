@@ -52,7 +52,7 @@ export const {deleteTodolistAC, createTodolistAC, updateTodolistTitleAC, updateT
 
 
 export const getTodolistsTC = (): AppThunkType => {
-    return (dispatch: Dispatch) => {
+    return (dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         todolistsAPI.getTodolists()
             .then(response => {
@@ -66,7 +66,7 @@ export const getTodolistsTC = (): AppThunkType => {
 }
 
 export const deleteTodolistTC = (todolistId: string): AppThunkType => {
-    return (dispatch: Dispatch) => {
+    return (dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         dispatch(changeTodolistEntityStatusAC({id: todolistId, entityStatus: 'loading'}));
         todolistsAPI.deleteTodolist(todolistId)
@@ -81,7 +81,7 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => {
 }
 
 export const createTodolistTC = (todolist: TodolistDomainType): AppThunkType => {
-    return (dispatch: Dispatch) => {
+    return (dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         todolistsAPI.createTodolist(todolist.title)
             .then(response => {
@@ -95,7 +95,7 @@ export const createTodolistTC = (todolist: TodolistDomainType): AppThunkType => 
 }
 
 export const updateTodolistTitleTC = (todolistId: string, title: string): AppThunkType => {
-    return (dispatch: Dispatch) => {
+    return (dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         dispatch(changeTodolistEntityStatusAC({id: todolistId, entityStatus: 'loading'}));
         todolistsAPI.updateTodolist(todolistId, title)

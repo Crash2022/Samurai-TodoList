@@ -42,7 +42,7 @@ export const {appSetStatusAC, appSetErrorAC, appSetInitializedAC} = slice.action
 
 export const initializeAppTC = (): AppThunkType => {
     // типизация Dispatch для Redux-Toolkit, для React-Redux другая
-    return (dispatch: Dispatch) => {
+    return (dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         authAPI.authMe()
             .then(response => {

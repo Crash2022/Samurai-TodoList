@@ -20,7 +20,7 @@ export const Task = React.memo((props: TaskPropsType) => {
     const dispatch = useAppDispatch();
 
     const removeTaskHandler = useCallback(() => {
-        dispatch(deleteTaskTC(props.todolistId, props.task.id));
+        dispatch(deleteTaskTC({todolistId: props.todolistId, taskId: props.task.id}));
     },[props.todolistId, props.task.id])
 
     // const removeTaskHandler = useCallback(() => {

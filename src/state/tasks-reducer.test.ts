@@ -1,5 +1,7 @@
-import {tasksReducer, createTaskAC, deleteTaskAC, setTasksAC, updateTaskAC,
-    TasksListType} from "./tasks-reducer";
+import {
+    tasksReducer, createTaskAC, /*deleteTaskAC,*/ updateTaskAC,
+    TasksListType, getTasksTC, deleteTaskTC
+} from "./tasks-reducer";
 import {createTodolistAC, deleteTodolistAC, setTodolistsAC,
     /*todolistId1, todolistId2*/} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
@@ -29,7 +31,8 @@ beforeEach(() => {
 
 test('correct task should be deleted', () => {
 
-    const action = deleteTaskAC({todolistId: 'todolistId2', taskId: '1'});
+    const action = deleteTaskTC.fulfilled({todolistId: 'todolistId2', taskId: '1'},
+        'requestId', {todolistId: 'todolistId2', taskId: '1'});
     const endState = tasksReducer(startState, action);
 
     expect(endState['todolistId1'].length).toBe(2);
@@ -130,7 +133,11 @@ test('empty array should be added when set new todolist', () => {
 
 test('tasks should be added to correct todolist', () => {
 
-    const action = setTasksAC( {todolistId: 'todolistId1', tasks: startState['todolistId1']});
+    // react-redux
+    // const action = setTasksAC( {todolistId: 'todolistId1', tasks: startState['todolistId1']});
+
+    // redux-toolkit
+    const action = getTasksTC.fulfilled( {todolistId: 'todolistId1', tasks: startState['todolistId1']}, 'requestId', 'todolistId1');
     const endState = tasksReducer({ 'todolistId2' : [], 'todolistId1' : [] }, action);
 
     expect(endState['todolistId1'].length).toBe(2);
