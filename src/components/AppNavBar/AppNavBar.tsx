@@ -2,12 +2,12 @@ import {AppBar, Button, Container, IconButton, LinearProgress, Typography} from 
 import Toolbar from '@mui/material/Toolbar'
 import {Menu} from "@material-ui/icons";
 import React, {useCallback, useEffect} from "react";
-import {logoutTC} from "../state/login-reducer";
+import {logoutTC} from "../../state/login-reducer";
 import {useNavigate} from "react-router-dom";
 import style from "./AppNavBar.module.css";
-import {useAppDispatch} from "../hooks/useAppDispatch";
-import {selectAppStatus, selectAuthIsLoggedIn} from "../state/selectors";
-import {useAppSelector} from "../hooks/useAppSelector";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {selectAppStatus, selectAuthIsLoggedIn} from "../../state/selectors";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 export const AppNavBar = () => {
 

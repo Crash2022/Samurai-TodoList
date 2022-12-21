@@ -2,7 +2,6 @@ import {combineReducers, compose} from "redux";
 import {tasksReducer} from "./tasks-reducer";
 import {todolistsReducer} from "./todolists-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {appReducer} from "./app-reducer";
 import {loginReducer} from "./login-reducer";
 import {configureStore} from "@reduxjs/toolkit";

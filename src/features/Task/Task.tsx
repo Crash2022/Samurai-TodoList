@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useCallback} from 'react'
 import {v1} from "uuid"
 import styles from '../Todolist/Todolist.module.css'
-import {EditableSpan} from "../../UI/EditableSpan";
+import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {deleteTaskTC, updateTaskTC} from "../../state/tasks-reducer";

@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from "@storybook/react";
-import {Task} from "../components/Task/Task";
+import {Task} from "../features/Task/Task";
 import {ReduxStoreProviderDecorator} from "./ReduxStoreProviderDecorator";
 import {action} from "@storybook/addon-actions";
 import {useSelector} from "react-redux";

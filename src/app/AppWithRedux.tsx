@@ -1,21 +1,21 @@
 import {CircularProgress, Container, Grid, Paper} from '@material-ui/core';
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {Todolist} from './components/Todolist/Todolist';
-import {AddItemForm} from "./UI/AddItemForm";
-import {createTodolistTC, getTodolistsTC} from "./state/todolists-reducer";
-import styles from './components/Todolist/Todolist.module.css'
+import {Todolist} from '../features/Todolist/Todolist';
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
+import {createTodolistTC, getTodolistsTC} from "../state/todolists-reducer";
+import styles from '../features/Todolist/Todolist.module.css'
 import {v1} from "uuid";
-import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
-import {initializeAppTC} from "./state/app-reducer";
+import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
+import {initializeAppTC} from "../state/app-reducer";
 import {Route, Routes, useNavigate} from "react-router-dom";
-import {Login} from "./features/Login/Login";
-import {logoutTC} from "./state/login-reducer";
-import {AppNavBar} from "./UI/AppNavBar";
-import style from '../src/UI/AppNavBar.module.css'
-import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from "./state/selectors";
-import {useAppSelector} from "./hooks/useAppSelector";
-import {useAppDispatch} from "./hooks/useAppDispatch";
+import {Login} from "../features/Login/Login";
+import {logoutTC} from "../state/login-reducer";
+import {AppNavBar} from "../components/AppNavBar/AppNavBar";
+import style from '../components/AppNavBar/AppNavBar.module.css'
+import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from "../state/selectors";
+import {useAppSelector} from "../hooks/useAppSelector";
+import {useAppDispatch} from "../hooks/useAppDispatch";
 
 /*https://samuraitodo.herokuapp.com/*/
 
