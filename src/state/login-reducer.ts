@@ -36,12 +36,10 @@ export const loginTC = createAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType
     }
 })
 
-export const logoutTC = createAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType,
-    { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldsErrorsType> } }>
-('login/login', async (data: LoginParamsType, thunkAPI) => {
+export const logoutTC = createAsyncThunk('login/login', async (thunkAPI) => {
     thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
     try {
-        const response = await authAPI.login(data);
+        const response = await authAPI.logout();
 
         if (response.data.resultCode === 0) {
             thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
