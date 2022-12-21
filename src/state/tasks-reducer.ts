@@ -14,14 +14,12 @@ export type TasksListType = {
 
 const initialState: TasksListType = {};
 
-export const getTasksTC = createAsyncThunk('tasks/getTasks', (todolistId: string, thunkAPI) => {
+export const getTasksTC = createAsyncThunk('tasks/getTasks', async (todolistId: string, thunkAPI) => {
     thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
-    return todolistsAPI.getTasks(todolistId)
-        .then(response => {
-            // thunkAPI.dispatch(setTasksAC({todolistId, tasks: response.data.items}));
-            thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
-            return {todolistId, tasks: response.data.items};
-        })
+    const response = await todolistsAPI.getTasks(todolistId);
+    // thunkAPI.dispatch(setTasksAC({todolistId, tasks: response.data.items}));
+    thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
+    return {todolistId, tasks: response.data.items};
     // .catch(error => {
     //     handleServerNetworkError(error, thunkAPI.dispatch);
     // })
@@ -44,7 +42,7 @@ export const createTaskTC = createAsyncThunk('tasks/createTask', (task: TaskAPIT
         })
 })
 
-export const deleteTaskTC = createAsyncThunk('tasks/deleteTask', (param: {todolistId: string, taskId: string}, thunkAPI) => {
+export const deleteTaskTC = createAsyncThunk('tasks/deleteTask', (param: { todolistId: string, taskId: string }, thunkAPI) => {
     thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
     return todolistsAPI.deleteTask(param.todolistId, param.taskId)
         .then(response => {
@@ -52,9 +50,9 @@ export const deleteTaskTC = createAsyncThunk('tasks/deleteTask', (param: {todoli
             // thunkAPI.dispatch(deleteTaskAC({todolistId: param.todolistId, taskId: param.taskId}));
             // thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
         })
-        // .catch(error => {
-            // handleServerNetworkError(error, thunkAPI.dispatch);
-        // })
+    // .catch(error => {
+    // handleServerNetworkError(error, thunkAPI.dispatch);
+    // })
 })
 
 // slice

@@ -31,6 +31,7 @@ beforeEach(() => {
 
 test('correct task should be deleted', () => {
 
+    // const action = deleteTaskAC({todolistId: 'todolistId2', taskId: '1'});
     const action = deleteTaskTC.fulfilled({todolistId: 'todolistId2', taskId: '1'},
         'requestId', {todolistId: 'todolistId2', taskId: '1'});
     const endState = tasksReducer(startState, action);
