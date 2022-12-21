@@ -1,5 +1,6 @@
 import {AppBar, Button, CircularProgress, Container, Grid, IconButton, LinearProgress,
-    Paper, Toolbar, Typography} from '@material-ui/core';
+    Paper, /*Toolbar,*/ Typography} from '@material-ui/core';
+import Toolbar from '@mui/material/Toolbar'
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist/Todolist';
@@ -15,6 +16,8 @@ import {AppInitialStateStatusType, initializeAppTC} from "./state/app-reducer";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "./features/Login/Login";
 import {logoutTC} from "./state/login-reducer";
+import {AppNavBar} from "./UI/AppNavBar";
+import style from '../src/UI/AppNavBar.module.css'
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -141,33 +144,8 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
     return (
         <div className="App">
 
-            <div>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                        >
-                            <Menu/>
-                        </IconButton>
-                        <Typography variant="h6">
-                            TodoLists
-                        </Typography>
-
-                        {
-                            isLoggedIn
-                                ? <Button color="inherit"
-                                          onClick={logoutHandler}
-                                  >
-                                    Log Out
-                                  </Button>
-                                : ''
-                        }
-
-                    </Toolbar>
-                    {status === 'loading' && <LinearProgress/>}
-                </AppBar>
+            <div className={style.appNavBar}>
+                <AppNavBar/>
                 <ErrorSnackBar/>
             </div>
 

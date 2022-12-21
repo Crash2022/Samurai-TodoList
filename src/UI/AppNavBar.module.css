@@ -1,0 +1,11 @@
+.appNavBar {
+    height: 70px;
+}
+
+.navbarMenu {
+    display: flex;
+    align-items: center;
+}
+.navbarLogout {
+
+}
