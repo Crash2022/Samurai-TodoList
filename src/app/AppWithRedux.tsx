@@ -8,7 +8,7 @@ import styles from '../features/Todolist/Todolist.module.css'
 import {v1} from "uuid";
 import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import {initializeAppTC} from "../state/app-reducer";
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import {logoutTC} from "../state/login-reducer";
 import {AppNavBar} from "../components/AppNavBar/AppNavBar";
@@ -17,6 +17,7 @@ import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from "../st
 import {useAppSelector} from "../hooks/useAppSelector";
 import {useAppDispatch} from "../hooks/useAppDispatch";
 import {PATH} from "../api/path";
+import {Error404} from "../components/Error404/Error404";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -182,6 +183,8 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                             : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
 
                     }/>
+                    <Route path={PATH.COMMON.ERROR404} element={<Error404/>}/>
+                    <Route path={'*'} element={<Navigate to={PATH.COMMON.ERROR404} />}/>
                 </Routes>
 
                 {/*{
