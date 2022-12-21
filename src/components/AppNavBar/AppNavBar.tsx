@@ -8,6 +8,7 @@ import style from "./AppNavBar.module.css";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {selectAppStatus, selectAuthIsLoggedIn} from "../../state/selectors";
 import {useAppSelector} from "../../hooks/useAppSelector";
+import { PATH } from "../../api/path";
 
 export const AppNavBar = () => {
 
@@ -18,7 +19,7 @@ export const AppNavBar = () => {
 
     // редирект на логин, если не залогинились
     useEffect(() => {
-        !isLoggedIn && navigate('/login');
+        !isLoggedIn && navigate(PATH.LOGIN.LOGIN);
     }, [isLoggedIn])
 
     const logoutHandler = useCallback(() => {

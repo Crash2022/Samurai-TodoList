@@ -16,6 +16,7 @@ import style from '../components/AppNavBar/AppNavBar.module.css'
 import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from "../state/selectors";
 import {useAppSelector} from "../hooks/useAppSelector";
 import {useAppDispatch} from "../hooks/useAppDispatch";
+import {PATH} from "../api/path";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -116,7 +117,7 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
 
     // редирект на логин, если не залогинились
     useEffect(() => {
-        !isLoggedIn && navigate('/login');
+        !isLoggedIn && navigate(PATH.LOGIN.LOGIN);
     }, [isLoggedIn])
 
     // перед проверкой на инициализацию
@@ -154,7 +155,7 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                 </Grid>
 
                 <Routes>
-                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={PATH.LOGIN.LOGIN} element={<Login/>}/>
                     <Route path={'/'} element={
 
                         todolists.length !== 0 ?
