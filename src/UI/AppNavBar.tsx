@@ -3,17 +3,18 @@ import Toolbar from '@mui/material/Toolbar'
 import {Menu} from "@material-ui/icons";
 import React, {useCallback, useEffect} from "react";
 import {logoutTC} from "../state/login-reducer";
-import {useAppDispatch, useTypedSelector} from "../state/store";
-import {AppInitialStateStatusType} from "../state/app-reducer";
 import {useNavigate} from "react-router-dom";
 import style from "./AppNavBar.module.css";
+import {useAppDispatch} from "../hooks/useAppDispatch";
+import {selectAppStatus, selectAuthIsLoggedIn} from "../state/selectors";
+import {useAppSelector} from "../hooks/useAppSelector";
 
 export const AppNavBar = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const isLoggedIn = useTypedSelector<boolean>(state => state.auth.isLoggedIn);
-    const status = useTypedSelector<AppInitialStateStatusType>(state => state.app.status);
+    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
+    const status = useAppSelector(selectAppStatus);
 
     // редирект на логин, если не залогинились
     useEffect(() => {

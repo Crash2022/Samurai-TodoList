@@ -41,9 +41,9 @@ export const store = configureStore({
 export type AppRootStateType = ReturnType<typeof rootReducer>;
 // export type AppRootStateType = ReturnType<typeof store.getState>; // другая запись типизации
 
-// типизация Dispatch и Selector
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useTypedSelector: TypedUseSelectorHook<AppRootStateType> = useSelector;
+// типизация Dispatch и Selector (useHooks)
+// export const useAppDispatch = () => useDispatch<AppDispatch>();
+// export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector;
 
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any/*AppActionType*/>;
 // export type AppDispatch = typeof store.dispatch; // другая запись типизации (из доки), работает не всегда

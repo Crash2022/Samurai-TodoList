@@ -1,23 +1,21 @@
-import {AppBar, Button, CircularProgress, Container, Grid, IconButton, LinearProgress,
-    Paper, /*Toolbar,*/ Typography} from '@material-ui/core';
-import Toolbar from '@mui/material/Toolbar'
+import {CircularProgress, Container, Grid, Paper} from '@material-ui/core';
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist/Todolist';
 import {AddItemForm} from "./UI/AddItemForm";
-import {Menu} from "@material-ui/icons";
-import {createTodolistTC, getTodolistsTC, TodolistDomainType} from "./state/todolists-reducer";
-import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch, useTypedSelector} from "./state/store";
+import {createTodolistTC, getTodolistsTC} from "./state/todolists-reducer";
 import styles from './components/Todolist/Todolist.module.css'
 import {v1} from "uuid";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
-import {AppInitialStateStatusType, initializeAppTC} from "./state/app-reducer";
+import {initializeAppTC} from "./state/app-reducer";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "./features/Login/Login";
 import {logoutTC} from "./state/login-reducer";
 import {AppNavBar} from "./UI/AppNavBar";
 import style from '../src/UI/AppNavBar.module.css'
+import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from "./state/selectors";
+import {useAppSelector} from "./hooks/useAppSelector";
+import {useAppDispatch} from "./hooks/useAppDispatch";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -83,15 +81,11 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
 
     const MESSAGE_TODOS_END = 'Список задач пуст!';
 
-    const navigate = useNavigate(); // чтобы можно было пользоваться redirect/navigate вне Routes
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
-    const status = useSelector<AppRootStateType, AppInitialStateStatusType>(state => state.app.status);
-    const isLoggedIn = useTypedSelector<boolean>(state => state.auth.isLoggedIn);
-    const isInitialized = useTypedSelector<boolean>(state => state.app.isInitialized);
-
-    // версия с импортом из другого файла
-    //const todolists = useSelector<AppRootStateType, Array<TodoListType>>(todolistsReducer);
+    const todolists = useAppSelector(selectTodolists);
+    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
+    const isInitialized = useAppSelector(selectAppInitialized);
 
     /*------------------------------------------------*/
 

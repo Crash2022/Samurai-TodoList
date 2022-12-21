@@ -10,13 +10,15 @@ import {
     TextField
 } from "@material-ui/core";
 import {useFormik} from "formik";
-import {useAppDispatch, useTypedSelector} from "../../state/store";
 import {loginTC} from "../../state/login-reducer";
 import {Navigate} from "react-router-dom";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {selectAuthIsLoggedIn} from "../../state/selectors";
 
 export const Login = () => {
 
-    const isLoggedIn = useTypedSelector<boolean>(state => state.auth.isLoggedIn);
+    const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
     const dispatch = useAppDispatch();
 
     const formik = useFormik({

@@ -5,8 +5,6 @@ import {EditableSpan} from "../../UI/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {createTaskTC, getTasksTC} from "../../state/tasks-reducer";
-import { useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch, useTypedSelector} from "../../state/store";
 import {Task} from "../Task/Task";
 import {TodolistDomainType,
     updateTodolistFilterAC,
@@ -14,6 +12,11 @@ import {TodolistDomainType,
     updateTodolistTitleTC} from "../../state/todolists-reducer";
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
 import {v1} from "uuid";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {selectTasksObj} from "../../state/selectors";
+import {AppRootStateType} from "../../state/store";
+import {useSelector} from "react-redux";
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType
@@ -27,8 +30,8 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
     console.log('todolist')
 
-    // используем типизированный Dispatch
     const dispatch = useAppDispatch();
+    // const tasksObj = useAppSelector<Array<TaskAPIType>>(selectTasksObj[props.todolist.id]);
     const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[props.todolist.id]);
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
