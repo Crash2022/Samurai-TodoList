@@ -121,10 +121,6 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
         !isLoggedIn && navigate(PATH.LOGIN.LOGIN);
     }, [isLoggedIn])
 
-    // перед проверкой на инициализацию
-    const logoutHandler = useCallback(() => {
-        dispatch(logoutTC());
-    }, [])
 
     // лоадер, если приложение не инициализировано
     if (!isInitialized) {

@@ -9,12 +9,18 @@ import {
     Grid,
     TextField
 } from "@material-ui/core";
-import {useFormik} from "formik";
+import {FormikHelpers, FormikValues, useFormik} from "formik";
 import {loginTC} from "../../state/login-reducer";
 import {Navigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {selectAuthIsLoggedIn} from "../../state/selectors";
+
+type FormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
 
 export const Login = () => {
 
@@ -27,10 +33,24 @@ export const Login = () => {
             password: '',
             rememberMe: false
         },
+        // первая версия
         onSubmit: (values) => {
             // alert(JSON.stringify(values));
             dispatch(loginTC(values));
         },
+
+        // версия с подсветкой отдельного поля
+        // onSubmit: async (values: FormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
+        //     // alert(JSON.stringify(values));
+        //     const response = await dispatch(loginTC(values));
+        //
+        //     if (loginTC.rejected.match(action)) {
+        //         if (action.payload?.fieldsErrors?.length) {
+        //             const error = action.payload?.fieldsErrors[0];
+        //             formikHelpers.setFieldError(error.field, error.error);
+        //         }
+        //     }
+        // },
         validate: (values) => {
             if (!values.email) {
                 return {

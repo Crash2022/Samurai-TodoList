@@ -1,8 +1,9 @@
 import {authAPI} from "../api/todolistsAPI";
 import {AppThunkType} from "./store";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
-import {setIsLoggedInAC} from "./login-reducer";
-import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {loginTC, logoutTC, setIsLoggedInAC} from "./login-reducer";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {AxiosError} from "axios";
 
 // redux-toolkit
 export type AppInitialStateType = {
@@ -21,26 +22,53 @@ const initialState: AppInitialStateType = {
     isInitialized: false
 }
 
+export const initializeAppTC = createAsyncThunk('app/initializeApp', async (thunkAPI) => {
+    thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
+    try {
+        const response = await authAPI.authMe();
+
+        if (response.data.resultCode === 0) {
+            thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
+            return {isLoggedIn: true};
+        } else {
+            // handleServerAppError(response.data, thunkAPI.dispatch);
+            return thunkAPI.rejectWithValue({errors: response.data.messages, fieldErrors: response.data.fieldsErrors})
+        }
+        // dispatch(appSetInitializedAC({isInitialized: true}));
+    } catch (err) {
+        const error: any = err; // AxiosError
+        // handleServerNetworkError(error, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+    }
+})
+
 const slice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-        appSetStatusAC(state, action: PayloadAction<{status: AppInitialStateStatusType}>) {
+        appSetStatusAC(state, action: PayloadAction<{ status: AppInitialStateStatusType }>) {
             state.status = action.payload.status;
         },
-        appSetErrorAC(state, action: PayloadAction<{error: string | null}>) {
+        appSetErrorAC(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error;
         },
-        appSetInitializedAC(state, action: PayloadAction<{isInitialized: boolean}>) {
+        appSetInitializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
             state.isInitialized = action.payload.isInitialized;
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(loginTC.fulfilled, (state, action) => {
+            state.isLoggedIn = action.payload.isLoggedIn;
+        });
+
     }
 })
 
 export const appReducer = slice.reducer;
 export const {appSetStatusAC, appSetErrorAC, appSetInitializedAC} = slice.actions;
 
-export const initializeAppTC = (): AppThunkType => {
+// вариант thunk из react-redux
+/*export const initializeAppTC = (): AppThunkType => {
     // типизация Dispatch для Redux-Toolkit, для React-Redux другая
     return (dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
@@ -58,7 +86,7 @@ export const initializeAppTC = (): AppThunkType => {
                 handleServerNetworkError(error, dispatch);
             })
     }
-}
+}*/
 
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/

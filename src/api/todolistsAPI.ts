@@ -45,7 +45,12 @@ export type TaskAPIType = {
 export type TodolistsResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
+    fieldsErrors?: Array<FieldsErrorsType>
     data: D
+}
+export type FieldsErrorsType = {
+    field: string
+    error: string
 }
 
 // развёрнутая типизация

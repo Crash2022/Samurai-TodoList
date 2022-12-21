@@ -44,8 +44,10 @@ export type AppRootStateType = ReturnType<typeof rootReducer>;
 // export const useAppDispatch = () => useDispatch<AppDispatch>();
 // export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector;
 
-export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any/*AppActionType*/>;
-// export type AppDispatch = typeof store.dispatch; // другая запись типизации (из доки), работает не всегда
+// react-redux
+// export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionType>;
+// redux-toolkit
+export type AppDispatch = typeof store.dispatch;
 
 // типизация всех экшенов для React-Redux
 // export type AppActionType =
@@ -55,7 +57,10 @@ export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any/*AppActio
 //     LoginActionTypes;
 
 // типизация Thunk
-export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, any/*AppActionType*/>
+// react-redux
+// export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
+// redux-toolkit
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, any>
 
 // @ts-ignore
 window.store = store;

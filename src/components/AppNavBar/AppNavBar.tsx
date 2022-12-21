@@ -52,6 +52,7 @@ export const AppNavBar = () => {
                             <div className={style.navbarLogout}>
                                 <Button color="inherit"
                                         onClick={logoutHandler}
+                                        style={{fontWeight: 'bold'}}
                                 >
                                     Log Out
                                 </Button>
