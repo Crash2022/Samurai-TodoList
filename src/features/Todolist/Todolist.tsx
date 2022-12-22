@@ -39,7 +39,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     /*------------------------------------------------*/
 
     const addTaskHandler = useCallback((titleInput: string) => {
-        dispatch(createTaskTC(/*props.todolistId, titleInput)*/ {
+        dispatch(createTaskTC( {
             todoListId: props.todolist.id, id: v1(), title: titleInput,
             status: TaskStatuses.New, priority: TaskPriorities.Middle,
             description: '', addedDate: '', startDate: '', deadline: '', order: 0

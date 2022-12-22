@@ -1,9 +1,6 @@
 import {authAPI} from "../api/todolistsAPI";
-import {AppThunkType} from "./store";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
-import {loginTC, logoutTC, setIsLoggedInAC} from "./login-reducer";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AxiosError} from "axios";
 
 // redux-toolkit
 export type AppInitialStateType = {
@@ -16,56 +13,52 @@ export type AppInitialStateType = {
 
 export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-const initialState: AppInitialStateType = {
-    status: 'idle', // idle - начальное значение (простаивание)
-    error: null,
-    isInitialized: false
-}
+// const initialState: AppInitialStateType = {
+//     status: 'idle', // idle - начальное значение (простаивание)
+//     error: null,
+//     isInitialized: false
+// }
 
-export const initializeAppTC = createAsyncThunk('app/initializeApp', async (thunkAPI) => {
-    thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
+export const initializeAppTC = createAsyncThunk('app/initializeApp', async (param, {dispatch}) => {
+    dispatch(appSetStatusAC({status: 'loading'}));
     try {
         const response = await authAPI.authMe();
 
         if (response.data.resultCode === 0) {
-            thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
-            return {isLoggedIn: true};
+            dispatch(appSetStatusAC({status: 'succeeded'}));
         } else {
-            // handleServerAppError(response.data, thunkAPI.dispatch);
-            return thunkAPI.rejectWithValue({errors: response.data.messages, fieldErrors: response.data.fieldsErrors})
+            handleServerAppError(response.data, dispatch);
         }
-        // dispatch(appSetInitializedAC({isInitialized: true}));
-    } catch (err) {
-        const error: any = err; // AxiosError
-        // handleServerNetworkError(error, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+    } catch (error) {
+        handleServerNetworkError(error, dispatch);
     }
 })
 
 const slice = createSlice({
     name: 'app',
-    initialState,
+    initialState: {
+        status: 'idle',
+        error: null,
+        isInitialized: false
+    } as AppInitialStateType,
     reducers: {
         appSetStatusAC(state, action: PayloadAction<{ status: AppInitialStateStatusType }>) {
             state.status = action.payload.status;
         },
         appSetErrorAC(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error;
-        },
-        appSetInitializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
-            state.isInitialized = action.payload.isInitialized;
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(loginTC.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.isLoggedIn;
+        builder.addCase(appSetInitializedAC.fulfilled, (state) => {
+            state.isInitialized = true;
         });
 
     }
 })
 
 export const appReducer = slice.reducer;
-export const {appSetStatusAC, appSetErrorAC, appSetInitializedAC} = slice.actions;
+export const {appSetStatusAC, appSetErrorAC} = slice.actions;
 
 // вариант thunk из react-redux
 /*export const initializeAppTC = (): AppThunkType => {

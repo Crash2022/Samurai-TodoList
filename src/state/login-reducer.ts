@@ -1,57 +1,59 @@
-// import {AppThunkType} from "./store";
 import {authAPI, FieldsErrorsType, LoginParamsType} from "../api/todolistsAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 import {appSetStatusAC} from "./app-reducer";
 import {createAsyncThunk, createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {deleteTodolistAC} from "./todolists-reducer";
-import {AxiosError} from "axios";
 
 // redux-toolkit
-// export type LoginStateType = {
-//     isLoggedIn: boolean
-// }
+export type LoginStateType = {
+    isLoggedIn: boolean
+}
 
 // const initialState: LoginStateType = {
 //     isLoggedIn: false
 // }
 
-export const loginTC = createAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType,
-    { rejectValue: { errors: Array<string>, fieldsErrors?: Array<FieldsErrorsType> } }>
-('login/login', async (data: LoginParamsType, thunkAPI) => {
+type loginRejectValue = {
+    rejectValue: {
+        errors: Array<string>
+        fieldsErrors?: Array<FieldsErrorsType>
+    }
+}
+
+export const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
+    ('login/login', async (data: LoginParamsType, thunkAPI) => {
     thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
     try {
         const response = await authAPI.login(data);
 
         if (response.data.resultCode === 0) {
             thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
-            return {isLoggedIn: true};
+            return;
         } else {
-            // handleServerAppError(response.data, thunkAPI.dispatch);
+            handleServerAppError(response.data, thunkAPI.dispatch);
             return thunkAPI.rejectWithValue({errors: response.data.messages, fieldsErrors: response.data.fieldsErrors})
         }
     } catch (err) {
         const error: any = err; // AxiosError
-        // handleServerNetworkError(error, thunkAPI.dispatch);
+        handleServerNetworkError(error, thunkAPI.dispatch);
         return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
     }
 })
 
-export const logoutTC = createAsyncThunk('login/login', async (thunkAPI) => {
+export const logoutTC = createAsyncThunk('login/logout', async (param, thunkAPI) => {
     thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
     try {
         const response = await authAPI.logout();
 
         if (response.data.resultCode === 0) {
             thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
-            return {isLoggedIn: false};
+            return;
         } else {
-            // handleServerAppError(response.data, thunkAPI.dispatch);
-            return thunkAPI.rejectWithValue({errors: response.data.messages, fieldsErrors: response.data.fieldsErrors})
+            handleServerAppError(response.data, thunkAPI.dispatch);
+            return thunkAPI.rejectWithValue({});
         }
-    } catch (err) {
-        const error: any = err; // AxiosError
-        // handleServerNetworkError(error, thunkAPI.dispatch);
-        return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+    } catch (error) {
+        handleServerNetworkError(error, thunkAPI.dispatch);
+        return thunkAPI.rejectWithValue({});
     }
 })
 
@@ -59,18 +61,18 @@ const slice = createSlice({
     name: 'login',
     initialState: {
         isLoggedIn: false
-    },
+    } as LoginStateType,
     reducers: {
         setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn;
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(loginTC.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.isLoggedIn;
+        builder.addCase(loginTC.fulfilled, (state) => {
+            state.isLoggedIn = true;
         });
-        builder.addCase(logoutTC.fulfilled, (state, action) => {
-            state.isLoggedIn = action.payload.isLoggedIn;
+        builder.addCase(logoutTC.fulfilled, (state) => {
+            state.isLoggedIn = false;
         });
     }
 })
