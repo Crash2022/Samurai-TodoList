@@ -29,8 +29,11 @@ export const Task = React.memo((props: TaskPropsType) => {
 
     const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = event.currentTarget.checked;
-        dispatch(updateTaskTC(props.todolistId, props.task.id,
-            {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}));
+        dispatch(updateTaskTC({todolistId: props.todolistId, taskId: props.task.id,
+            domainModel: {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}}));
+        // react-redux
+        // dispatch(updateTaskTC(props.todolistId, props.task.id,
+        //     {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}));
     },[props.todolistId, props.task.id])
 
     // const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +43,9 @@ export const Task = React.memo((props: TaskPropsType) => {
     // },[props.todolistId, props.task.id])
 
     const changeTaskTitleHandler = useCallback((newInputValue: string) => {
-        dispatch(updateTaskTC(props.todolistId, props.task.id, {title: newInputValue}));
+        dispatch(updateTaskTC({todolistId: props.todolistId, taskId: props.task.id, domainModel: {title: newInputValue}}));
+        // react-redux
+        // dispatch(updateTaskTC(props.todolistId, props.task.id, {title: newInputValue}));
     },[props.todolistId, props.task.id])
 
     // const changeTaskTitleHandler = useCallback((newInputValue: string) => {

@@ -1,10 +1,11 @@
 import {appSetErrorAC, appSetStatusAC} from "../state/app-reducer";
 import {TodolistsResponseType} from "../api/todolistsAPI";
 // import {AppDispatch} from "../state/store";
-import {ThunkDispatch} from "@reduxjs/toolkit";
+import {AnyAction, Dispatch, ThunkDispatch} from "@reduxjs/toolkit";
+import {AppRootStateType} from "../state/store";
 
 // redux-toolkit
-export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: ThunkDispatch<any, any, any>) => {
+export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: Dispatch) => {
     if (data.messages) {
         dispatch(appSetErrorAC({error: data.messages[0]}));
     } else {
@@ -13,7 +14,7 @@ export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch
     dispatch(appSetStatusAC({status: 'failed'}));
 }
 
-export const handleServerNetworkError = (error: {message: string}, dispatch: ThunkDispatch<any, any, any>) => {
+export const handleServerNetworkError = (error: {message: string}, dispatch: Dispatch) => {
     dispatch(appSetErrorAC({error: error.message ? error.message : 'Some Error Occurred'}));
     dispatch(appSetStatusAC({status: 'failed'}));
 }

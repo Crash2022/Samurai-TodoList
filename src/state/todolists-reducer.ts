@@ -20,7 +20,7 @@ export const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
         const response = await todolistsAPI.getTodolists();
         dispatch(appSetStatusAC({status: 'succeeded'}));
         return {todolists: response.data};
-    } catch (error) {
+    } catch (err) {
         const error: any = err; // AxiosError
         handleServerNetworkError(error, dispatch);
     }
@@ -97,24 +97,24 @@ const slice = createSlice({
             state[index].entityStatus = action.payload.entityStatus;
         }
     },
-    extraReducers: (builder) => {
-        builder.addCase(getTodolistsTC.fulfilled (state, action) => {
-            return action.payload.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}));
-        });
-        builder.addCase(createTodolistTC.fulfilled (state, action) => {
+    extraReducers: builder =>
+        builder.addCase(getTodolistsTC.fulfilled,(state, action) => {
+            const payload = action.payload as {todolists: TodolistDomainType[]}
+            payload.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}));
+        })
+        .addCase(createTodolistTC.fulfilled,(state, action) => {
             state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'});
-        });
-        builder.addCase(deleteTodolistTC.fulfilled (state, action) => {
+        })
+        .addCase(deleteTodolistTC.fulfilled,(state, action) => {
             const index = state.findIndex(t => t.id === action.payload.todolistId);
             if (index > -1) {
                 state.splice(index, 1);
             }
-        });
-        builder.addCase(updateTodolistTitleTC.fulfilled (state, action) => {
+        })
+        .addCase(updateTodolistTitleTC.fulfilled,(state, action) => {
             const index = state.findIndex(t => t.id === action.payload.id);
-            state[index].title = action.payload.title;
-        });
-    }
+            state[index].title = action.payload.title as string;
+        })
 })
 
 export const todolistsReducer = slice.reducer;

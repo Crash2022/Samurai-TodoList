@@ -51,7 +51,9 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     // },[props.todolistId])
 
     const onChangeTodolistTitle = useCallback((newInputValue: string) => {
-        dispatch(updateTodolistTitleTC(props.todolist.id, newInputValue));
+        dispatch(updateTodolistTitleTC( {todolistId: props.todolist.id, title:newInputValue}));
+        // react-redux
+        // dispatch(updateTodolistTitleTC( props.todolist.id, newInputValue));
     },[props.todolist.id])
 
     // const onChangeTodolistTitle = useCallback((newInputValue: string) => {

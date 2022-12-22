@@ -3,7 +3,7 @@ import {AppRootStateType} from "./store";
 import {appSetStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {createTodolistTC, deleteTodolistTC, getTodolistsTC} from "./todolists-reducer";
+import {createTodolistTC, deleteTodolistTC, getTodolistsTC, TodolistDomainType} from "./todolists-reducer";
 
 // redux-toolkit
 export type TasksListType = {
@@ -118,9 +118,8 @@ const slice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getTodolistsTC.fulfilled, (state, action) => {
-            action.payload.todolists.forEach(tl => {
-                state[tl.id] = [];
-            })
+            const payload = action.payload as {todolists: TodolistDomainType[]}
+            payload.todolists.forEach(tl => {state[tl.id] = []})
         });
         builder.addCase(createTodolistTC.fulfilled, (state, action) => {
             state[action.payload.todolist.id] = [];
@@ -147,7 +146,7 @@ const slice = createSlice({
             const tasks = state[action.payload.todolistId];
             const index = tasks.findIndex(t => t.id === action.payload.taskId);
             if (index > -1) {
-                tasks[index] = {...tasks[index], ...action.payload.model};
+                tasks[index] = {...tasks[index], ...action.payload.domainModel};
             }
         });
     }
