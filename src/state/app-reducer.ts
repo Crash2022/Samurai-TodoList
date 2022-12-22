@@ -19,7 +19,8 @@ export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'fail
 //     isInitialized: false
 // }
 
-export const initializeAppTC = createAsyncThunk('app/initializeApp', async (param, {dispatch}) => {
+export const initializeAppTC = createAsyncThunk('app/initializeApp',
+    async (param, {dispatch}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
     try {
         const response = await authAPI.authMe();
