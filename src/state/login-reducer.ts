@@ -1,7 +1,7 @@
 import {authAPI, FieldsErrorsType, LoginParamsType} from "../api/todolistsAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 import {appSetStatusAC} from "./app-reducer";
-import {createAsyncThunk, createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 // redux-toolkit
 export type LoginStateType = {
@@ -52,7 +52,8 @@ export const logoutTC = createAsyncThunk('login/logout',
             handleServerAppError(response.data, dispatch);
             return rejectWithValue({});
         }
-    } catch (error) {
+    } catch (err) {
+        const error: any = err; // AxiosError
         handleServerNetworkError(error, dispatch);
         return rejectWithValue({});
     }

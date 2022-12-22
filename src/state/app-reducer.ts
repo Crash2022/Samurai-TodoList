@@ -22,6 +22,7 @@ export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'fail
 export const initializeAppTC = createAsyncThunk('app/initializeApp',
     async (param, {dispatch}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
+
     try {
         const response = await authAPI.authMe();
 
@@ -30,7 +31,8 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp',
         } else {
             handleServerAppError(response.data, dispatch);
         }
-    } catch (error) {
+    } catch (err) {
+        const error: any = err; // AxiosError
         handleServerNetworkError(error, dispatch);
     }
 })
@@ -54,7 +56,6 @@ const slice = createSlice({
         builder.addCase(initializeAppTC.fulfilled, (state) => {
             state.isInitialized = true;
         });
-
     }
 })
 

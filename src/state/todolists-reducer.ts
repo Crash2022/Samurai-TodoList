@@ -1,7 +1,7 @@
 import {TodolistAPIType, todolistsAPI} from "../api/todolistsAPI";
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from "./app-reducer";
 import {handleServerNetworkError} from "../utils/errorUtils";
-import {createAsyncThunk, createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 // redux-toolkit
 export type FilterType = 'all' | 'active' | 'completed';
@@ -16,11 +16,12 @@ const initialState: Array<TodolistDomainType> = [];
 export const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
     async (param, {dispatch}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
-    const response = await todolistsAPI.getTodolists();
     try {
+        const response = await todolistsAPI.getTodolists();
         dispatch(appSetStatusAC({status: 'succeeded'}));
         return {todolists: response.data};
     } catch (error) {
+        const error: any = err; // AxiosError
         handleServerNetworkError(error, dispatch);
     }
 })
@@ -29,11 +30,12 @@ export const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
     async (todolistId: string, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
     dispatch(changeTodolistEntityStatusAC({id: todolistId, entityStatus: 'loading'}));
-    const response = await todolistsAPI.deleteTodolist(todolistId);
     try {
+        const response = await todolistsAPI.deleteTodolist(todolistId);
         dispatch(appSetStatusAC({status: 'succeeded'}));
         return {todolistId};
-    } catch (error) {
+    } catch (err) {
+        const error: any = err; // AxiosError
         handleServerNetworkError(error, dispatch);
         return rejectWithValue(null);
     }
@@ -42,11 +44,12 @@ export const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
 export const createTodolistTC = createAsyncThunk('todolists/createTodolist',
     async (todolist: TodolistDomainType, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
-    const response = await todolistsAPI.createTodolist(todolist.title);
         try {
+            const response = await todolistsAPI.createTodolist(todolist.title);
             dispatch(appSetStatusAC({status: 'succeeded'}));
             return {todolist: response.data.data.item};
-        } catch (error) {
+        } catch (err) {
+            const error: any = err; // AxiosError
             handleServerNetworkError(error, dispatch);
             return rejectWithValue(null);
         }
@@ -57,8 +60,9 @@ export const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist'
     async (param: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
     dispatch(changeTodolistEntityStatusAC({id: param.todolistId, entityStatus: 'loading'}));
-    const response = await todolistsAPI.updateTodolist(param.todolistId, param.title);
     try {
+        const response = await todolistsAPI.updateTodolist(param.todolistId, param.title);
+
         if (response.data.resultCode === 0) {
             dispatch(appSetStatusAC({status: 'succeeded'}));
             dispatch(changeTodolistEntityStatusAC({id: param.todolistId, entityStatus: 'succeeded'}));
@@ -73,7 +77,8 @@ export const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist'
                 return {error: 'Some Error'};
             }
         }
-    } catch (error) {
+    } catch (err) {
+        const error: any = err; // AxiosError
         handleServerNetworkError(error, dispatch);
         return rejectWithValue(null);
     }
