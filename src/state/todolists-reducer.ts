@@ -16,6 +16,7 @@ const initialState: Array<TodolistDomainType> = [];
 export const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
     async (param, {dispatch}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
+
     try {
         const response = await todolistsAPI.getTodolists();
         dispatch(appSetStatusAC({status: 'succeeded'}));
@@ -30,6 +31,7 @@ export const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
     async (todolistId: string, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
     dispatch(changeTodolistEntityStatusAC({id: todolistId, entityStatus: 'loading'}));
+
     try {
         const response = await todolistsAPI.deleteTodolist(todolistId);
         dispatch(appSetStatusAC({status: 'succeeded'}));
@@ -44,6 +46,7 @@ export const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
 export const createTodolistTC = createAsyncThunk('todolists/createTodolist',
     async (todolist: TodolistDomainType, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
+
         try {
             const response = await todolistsAPI.createTodolist(todolist.title);
             dispatch(appSetStatusAC({status: 'succeeded'}));
@@ -60,6 +63,7 @@ export const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist'
     async (param: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
     dispatch(changeTodolistEntityStatusAC({id: param.todolistId, entityStatus: 'loading'}));
+
     try {
         const response = await todolistsAPI.updateTodolist(param.todolistId, param.title);
 

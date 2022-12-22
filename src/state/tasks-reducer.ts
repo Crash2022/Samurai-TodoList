@@ -15,6 +15,7 @@ const initialState: TasksListType = {};
 export const getTasksTC = createAsyncThunk('tasks/getTasks',
     async (todolistId: string, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
+
     try {
         const response = await todolistsAPI.getTasks(todolistId);
         dispatch(appSetStatusAC({status: 'succeeded'}));
@@ -32,6 +33,7 @@ export const createTaskTC = createAsyncThunk('tasks/createTask',
     rejectWithValue
 }) => {
     dispatch(appSetStatusAC({status: 'loading'}));
+
     try {
         const response = await todolistsAPI.createTask(task);
 
@@ -53,6 +55,7 @@ export const createTaskTC = createAsyncThunk('tasks/createTask',
 export const deleteTaskTC = createAsyncThunk('tasks/deleteTask',
     async (param: { todolistId: string, taskId: string }, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
+
     try {
         const response = await todolistsAPI.deleteTask(param.todolistId, param.taskId);
         return {todolistId: param.todolistId, taskId: param.taskId}

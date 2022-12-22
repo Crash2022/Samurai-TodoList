@@ -22,6 +22,7 @@ type loginRejectValue = {
 export const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
     ('login/login', async (data: LoginParamsType, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
+
     try {
         const response = await authAPI.login(data);
 
