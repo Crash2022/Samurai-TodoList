@@ -60,7 +60,6 @@ export const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist'
     const response = await todolistsAPI.updateTodolist(param.todolistId, param.title);
     try {
         if (response.data.resultCode === 0) {
-            dispatch(updateTodolistTitleAC({id: param.todolistId, title: param.title}))
             dispatch(appSetStatusAC({status: 'succeeded'}));
             dispatch(changeTodolistEntityStatusAC({id: param.todolistId, entityStatus: 'succeeded'}));
             return {id: param.todolistId, title: param.title};

@@ -39,6 +39,7 @@ export const store = configureStore({
 // типизация state
 export type AppRootStateType = ReturnType<typeof rootReducer>;
 // export type AppRootStateType = ReturnType<typeof store.getState>; // другая запись типизации
+// export type AppRootState = ReturnType<typeof store.getState> // типизация из документации
 
 // типизация Dispatch и Selector (useHooks)
 // export const useAppDispatch = () => useDispatch<AppDispatch>();
@@ -48,6 +49,7 @@ export type AppRootStateType = ReturnType<typeof rootReducer>;
 // export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionType>;
 // redux-toolkit
 export type AppDispatch = typeof store.dispatch;
+
 
 // типизация всех экшенов для React-Redux
 // export type AppActionType =

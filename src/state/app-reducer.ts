@@ -51,7 +51,7 @@ const slice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(appSetInitializedAC.fulfilled, (state) => {
+        builder.addCase(initializeAppTC.fulfilled, (state) => {
             state.isInitialized = true;
         });
 

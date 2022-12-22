@@ -4,11 +4,9 @@ import {appSetStatusAC} from "./app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
-    createTodolistAC, createTodolistTC,
-    deleteTodolistAC,
+    createTodolistTC,
     deleteTodolistTC,
     getTodolistsTC,
-    setTodolistsAC
 } from "./todolists-reducer";
 
 // redux-toolkit
@@ -19,16 +17,14 @@ export type TasksListType = {
 const initialState: TasksListType = {};
 
 export const getTasksTC = createAsyncThunk('tasks/getTasks',
-    async (todolistId: string, thunkAPI) => {
-    thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
+    async (todolistId: string, {dispatch}) => {
+    dispatch(appSetStatusAC({status: 'loading'}));
     try {
         const response = await todolistsAPI.getTasks(todolistId);
-        // thunkAPI.dispatch(setTasksAC({todolistId, tasks: response.data.items}));
-        thunkAPI.dispatch(appSetStatusAC({status: 'succeeded'}));
+        dispatch(appSetStatusAC({status: 'succeeded'}));
         return {todolistId, tasks: response.data.items};
-    } catch (err) {
-        const error: any = err; // AxiosError
-        // handleServerNetworkError(error, thunkAPI.dispatch);
+    } catch (error) {
+        handleServerNetworkError(error, dispatch);
     }
 })
 
@@ -56,14 +52,14 @@ export const createTaskTC = createAsyncThunk('tasks/createTask',
 })
 
 export const deleteTaskTC = createAsyncThunk('tasks/deleteTask',
-    async (param: { todolistId: string, taskId: string }, thunkAPI) => {
+    async (param: { todolistId: string, taskId: string }, {dispatch, rejectWithValue}) => {
     thunkAPI.dispatch(appSetStatusAC({status: 'loading'}));
     try {
         const response = await todolistsAPI.deleteTask(param.todolistId, param.taskId);
         return {todolistId: param.todolistId, taskId: param.taskId}
     } catch (err) {
         const error: any = err; // AxiosError
-        return thunkAPI.rejectWithValue({errors: [error.message], fieldsErrors: undefined})
+        return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
     }
 })
 
