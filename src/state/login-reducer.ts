@@ -4,11 +4,11 @@ import {appSetStatusAC} from "./app-reducer";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 // redux-toolkit
-export type LoginStateType = {
+export type LoginInitialStateType = {
     isLoggedIn: boolean
 }
 
-// const initialState: LoginStateType = {
+// const initialState: LoginInitialStateType = {
 //     isLoggedIn: false
 // }
 
@@ -64,7 +64,7 @@ const slice = createSlice({
     name: 'login',
     initialState: {
         isLoggedIn: false
-    } as LoginStateType,
+    } as LoginInitialStateType,
     reducers: {
         setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
             state.isLoggedIn = action.payload.isLoggedIn;
