@@ -1,5 +1,5 @@
 import {tasksReducer, TasksListType, getTasksTC, deleteTaskTC, updateTaskTC, createTaskTC} from "./tasks-reducer";
-import {createTodolistTC, deleteTodolistTC} from "./todolists-reducer";
+import {createTodolistTC, deleteTodolistTC, getTodolistsTC} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
 
 let startState: TasksListType = { };
@@ -51,10 +51,13 @@ test('correct task should be added', () => {
     // });
 
     // redux-toolkit
-    const action = createTaskTC(
-            {todoListId: 'todolistId1', id: '3', title: 'Angular',
+    const action = createTaskTC.fulfilled(
+        {task: {todoListId: 'todolistId1', id: '3', title: 'Angular',
                 status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
-                description: '', addedDate: '', startDate: '', deadline: '', order: 0}
+                description: '', addedDate: '', startDate: '', deadline: '', order: 0}},
+        'requestId', {todoListId: 'todolistId1', id: '3', title: 'Angular',
+            status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
+            description: '', addedDate: '', startDate: '', deadline: '', order: 0}
     );
 
     const endState = tasksReducer(startState, action);
@@ -71,7 +74,7 @@ test('task status should be updated', () => {
     // const action = updateTaskAC({todolistId: 'todolistId1', taskId: '1', model: {status: TaskStatuses.New}});
     // redux-toolkit
     const action = updateTaskTC.fulfilled({todolistId: 'todolistId1', taskId: '1', domainModel: {status: TaskStatuses.New}},
-        'requestId', 'New Status');
+        'requestId', {todolistId: 'todolistId1', taskId: '1', domainModel: {status: TaskStatuses.New}});
     const endState = tasksReducer(startState, action);
 
     expect(endState['todolistId1'].length).toBe(2);
@@ -89,7 +92,7 @@ test('task title should be updated', () => {
     // const action = updateTaskAC({todolistId: 'todolistId1', taskId: '1', model: {title}});
     // redux-toolkit
     const action = updateTaskTC.fulfilled({todolistId: 'todolistId1', taskId: '1', domainModel: {title}},
-        'requestId', 'New Title');
+        'requestId', {todolistId: 'todolistId1', taskId: '1', domainModel: {title}});
 
     const endState = tasksReducer(startState, action);
 
@@ -121,7 +124,7 @@ test('correct array should be added when new todolist was added', () => {
 
     };
     const endState = tasksReducer(startState, createTodolistTC.fulfilled({todolist: newTodolist.todolist},
-        'requestId', newTodolist.todolist.title));
+        'requestId', {id: '1', title: 'New Todolist', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle' }));
 
     const keys = Object.keys(endState);
     const newKey = keys.find( el => el != 'todolistId1' && el != 'todolistId2');
@@ -159,10 +162,10 @@ test('empty array should be added when set new todolist', () => {
     // ]})
 
     // redux-toolkit
-    const action = setTodolistsAC({todolists:[
+    const action = getTodolistsTC.fulfilled({todolists:[
             {id: 'todolistId1', title: 'Выучить', addedDate: '', order: 0},
             {id: 'todolistId2', title: 'Купить', addedDate: '', order: 0}
-        ]})
+        ]}, 'requestId')
 
     const endState = tasksReducer({ }, action);
 

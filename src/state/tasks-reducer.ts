@@ -407,8 +407,7 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
 
 /*-----------------------------------------------------------------------------------*/
 
-/*
-export const getTasksTC = (todolistId: string): AppThunkType => {
+/*export const getTasksTC = (todolistId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.getTasks(todolistId)
@@ -422,9 +421,9 @@ export const getTasksTC = (todolistId: string): AppThunkType => {
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}
+}*/
 
-export const createTaskTC = (task: TaskAPIType): AppThunkType => {
+/*export const createTaskTC = (task: TaskAPIType): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.createTask(task)
@@ -449,9 +448,9 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}
+}*/
 
-export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
+/*export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.deleteTask(todolistId, taskId)
@@ -465,9 +464,9 @@ export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType =
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}
+}*/
 
-/!*
+/*
 // менее правильный и короткий вариант
 export const updateTaskTitleTC = (todolistId: string, taskId: string, title: string) => {
     return (dispatch: Dispatch) => {
@@ -506,8 +505,9 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
                 dispatch(updateTaskStatusAC(todolistId, taskId, status));
             })
     }
-}*!/
+}*/
 
+/*
 // обновление разных свойств таски в одной "санке"
 export type UpdateDomainTaskModelType = {
     description?: string

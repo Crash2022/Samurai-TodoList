@@ -1,6 +1,7 @@
 import {
-    TodolistDomainType, FilterType, updateTodolistFilterAC,
-    todolistsReducer, changeTodolistEntityStatusAC, deleteTodolistTC, createTodolistTC, updateTodolistTitleTC
+    TodolistDomainType, FilterType, todolistsReducer,
+    updateTodolistFilterAC, changeTodolistEntityStatusAC,
+    deleteTodolistTC, createTodolistTC, updateTodolistTitleTC, getTodolistsTC
 } from "./todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
@@ -51,7 +52,7 @@ test('correct todolist should be added', () => {
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
     };
     const endState = todolistsReducer(startState, createTodolistTC.fulfilled({todolist: newTodolist},
-        'requestId', ''));
+        'requestId', {id: '1', title: 'New Todolist', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle' }));
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe('New Todolist');
@@ -123,7 +124,7 @@ test('todolists should be set to the state', () => {
     // const endState = todolistsReducer([], setTodolistsAC({todolists: startState}));
 
     // redux-toolkit
-    const endState = todolistsReducer([], setTodolistsAC({todolists: startState}));
+    const endState = todolistsReducer([], getTodolistsTC.fulfilled({todolists: startState}, 'requestId'));
 
     expect(endState.length).toBe(2);
     expect(endState[0].id).toBe(todolistId1);
