@@ -123,35 +123,35 @@ const slice = createSlice({
         builder.addCase(getTodolistsTC.fulfilled, (state, action) => {
             const payload = action.payload as {todolists: TodolistDomainType[]}
             payload.todolists.forEach(tl => {state[tl.id] = []})
-        });
-        builder.addCase(createTodolistTC.fulfilled, (state, action) => {
+        })
+        .addCase(createTodolistTC.fulfilled, (state, action) => {
             state[action.payload.todolist.id] = [];
-        });
-        builder.addCase(deleteTodolistTC.fulfilled, (state, action) => {
+        })
+        .addCase(deleteTodolistTC.fulfilled, (state, action) => {
             delete state[action.payload.todolistId];
-        });
+        })
 
 
-        builder.addCase(getTasksTC.fulfilled, (state, action) => {
+        .addCase(getTasksTC.fulfilled, (state, action) => {
             state[action.payload.todolistId] = action.payload.tasks;
-        });
-        builder.addCase(createTaskTC.fulfilled, (state, action) => {
+        })
+        .addCase(createTaskTC.fulfilled, (state, action) => {
             state[action.payload.task.todoListId].unshift(action.payload.task);
-        });
-        builder.addCase(deleteTaskTC.fulfilled, (state, action) => {
+        })
+        .addCase(deleteTaskTC.fulfilled, (state, action) => {
             const tasks = state[action.payload.todolistId];
             const index = tasks.findIndex(t => t.id === action.payload.taskId);
             if (index > -1) {
                 tasks.splice(index, 1);
             }
-        });
-        builder.addCase(updateTaskTC.fulfilled, (state, action) => {
+        })
+        .addCase(updateTaskTC.fulfilled, (state, action) => {
             const tasks = state[action.payload.todolistId];
             const index = tasks.findIndex(t => t.id === action.payload.taskId);
             if (index > -1) {
                 tasks[index] = {...tasks[index], ...action.payload.domainModel};
             }
-        });
+        })
     }
 })
 

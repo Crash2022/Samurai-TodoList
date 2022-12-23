@@ -8,10 +8,6 @@ export type LoginInitialStateType = {
     isLoggedIn: boolean
 }
 
-// const initialState: LoginInitialStateType = {
-//     isLoggedIn: false
-// }
-
 type loginRejectValue = {
     rejectValue: {
         errors: Array<string>

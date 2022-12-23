@@ -13,12 +13,6 @@ export type AppInitialStateType = {
 
 export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-// const initialState: AppInitialStateType = {
-//     status: 'idle', // idle - начальное значение (простаивание)
-//     error: null,
-//     isInitialized: false
-// }
-
 export const initializeAppTC = createAsyncThunk('app/initializeApp',
     async (param, {dispatch}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
@@ -55,7 +49,7 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(initializeAppTC.fulfilled, (state) => {
             state.isInitialized = true;
-        });
+        })
     }
 })
 

@@ -75,7 +75,7 @@ export const Login = () => {
     }
 
     return (
-        <Grid container justifyContent={'center'}>
+        <Grid container justifyContent={'center'} style={{marginTop: '30px'}}>
             <Grid>
 
                 <form onSubmit={formik.handleSubmit}>
