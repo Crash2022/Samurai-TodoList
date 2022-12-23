@@ -7,5 +7,5 @@ import {Navigate, Outlet} from "react-router-dom";
 export const PrivateRoutes = () => {
     const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
 
-    return isLoggedIn ? <Outlet /> : <Navigate to={PATH.LOGIN.LOGIN} />
+    return isLoggedIn ? <Outlet /> : <Navigate to={PATH.COMMON.LOGIN} />
 }

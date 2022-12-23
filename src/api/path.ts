@@ -1,8 +1,9 @@
 export const PATH = {
-    LOGIN: {
-        LOGIN: '/login',
+    APP: {
+        TODOLISTS: '/todolists',
     },
     COMMON: {
+        LOGIN: '/login',
         ERROR404: '/error404',
     }
 }

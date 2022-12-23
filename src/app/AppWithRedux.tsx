@@ -19,6 +19,7 @@ import {useAppDispatch} from "../hooks/useAppDispatch";
 import {PATH} from "../api/path";
 import {Error404} from "../components/Error404/Error404";
 import {TodolistMain} from "../features/Todolist/TodolistMain";
+import {PrivateRoutes} from "../components/PrivateRoutes/PrivateRoutes";
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -119,7 +120,7 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
 
     // редирект на логин, если не залогинились
     useEffect(() => {
-        !isLoggedIn && navigate(PATH.LOGIN.LOGIN);
+        !isLoggedIn && navigate(PATH.COMMON.LOGIN);
     }, [isLoggedIn])
 
 
@@ -160,34 +161,35 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                 {/*}*/}
 
                 <Routes>
-                    <Route path={PATH.LOGIN.LOGIN} element={<Login/>}/>
-                    <Route path={'/'} element={<TodolistMain demo={demo}/>
+                    <Route element={<PrivateRoutes/>}>
+                        <Route path={'/'} element={<TodolistMain demo={demo}/>}/>
+                        <Route path={PATH.APP.TODOLISTS} element={<TodolistMain/>}/>
+                    </Route>
 
-                        // todolists.length !== 0 ?
-                        //
-                        //     <Grid container spacing={5} justifyContent={'center'}>
-                        //         {
-                        //             todolists.map(todo => {
-                        //                 return (
-                        //                     <Grid item key={todo.id}>
-                        //                         <Paper style={{padding: '15px'}} elevation={8}>
-                        //                             <Todolist
-                        //                                 todolist={todo}
-                        //                                 // todolistId={todo.id}
-                        //                                 // title={todo.title}
-                        //                                 // filter={todo.filter}
-                        //                                 demo={demo}
-                        //                             />
-                        //                         </Paper>
-                        //                     </Grid>
-                        //                 )
-                        //             })
-                        //         }
-                        //     </Grid>
-                        //     : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
+                         {/*todolists.length !== 0 ?
 
-                    }/>
+                             <Grid container spacing={5} justifyContent={'center'}>
+                                 {
+                                     todolists.map(todo => {
+                                         return (
+                                             <Grid item key={todo.id}>
+                                                 <Paper style={{padding: '15px'}} elevation={8}>
+                                                     <Todolist
+                                                         todolist={todo}
+                                                         // todolistId={todo.id}
+                                                         // title={todo.title}
+                                                         // filter={todo.filter}
+                                                         demo={demo}
+                                                     />
+                                                 </Paper>
+                                             </Grid>
+                                         )
+                                     })
+                                 }
+                             </Grid>
+                             : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>*/}
 
+                    <Route path={PATH.COMMON.LOGIN} element={<Login/>}/>
                     <Route path={PATH.COMMON.ERROR404} element={<Error404/>}/>
                     <Route path={'*'} element={<Navigate to={PATH.COMMON.ERROR404} />}/>
                 </Routes>
