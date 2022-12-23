@@ -13,16 +13,11 @@ import {TodolistDomainType,
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
 import {v1} from "uuid";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {useAppSelector} from "../../hooks/useAppSelector";
-import {selectTasksObj} from "../../state/selectors";
 import {AppRootStateType} from "../../state/store";
 import {useSelector} from "react-redux";
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType
-    // todolistId: string
-    // title: string
-    // filter: string
     demo?: boolean
 }
 

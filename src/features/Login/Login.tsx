@@ -81,7 +81,7 @@ export const Login = () => {
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
 
-                        <FormLabel>
+                        <FormLabel style={{textAlign: 'center'}}>
                             <p>
                                 To login get registered <a href={'https://social-network.samuraijs.com'}
                                                            target={'_blank'}>here</a>

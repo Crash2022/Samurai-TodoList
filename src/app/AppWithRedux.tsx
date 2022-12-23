@@ -1,16 +1,11 @@
-import {CircularProgress, Container, Grid, Paper} from '@material-ui/core';
-import React, {useCallback, useEffect} from 'react';
+import {CircularProgress, Container} from '@material-ui/core';
+import React, {useEffect} from 'react';
 import './App.css';
-import {Todolist} from '../features/Todolist/Todolist';
-import {AddItemForm} from "../components/AddItemForm/AddItemForm";
-import {createTodolistTC, getTodolistsTC} from "../state/todolists-reducer";
-import styles from '../features/Todolist/Todolist.module.css'
-import {v1} from "uuid";
+import {getTodolistsTC} from "../state/todolists-reducer";
 import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import {initializeAppTC} from "../state/app-reducer";
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "../features/Login/Login";
-import {logoutTC} from "../state/login-reducer";
 import {AppNavBar} from "../components/AppNavBar/AppNavBar";
 import style from '../components/AppNavBar/AppNavBar.module.css'
 import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from "../state/selectors";
@@ -145,49 +140,11 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
 
             <Container fixed>
 
-                {/*{*/}
-                {/*    isLoggedIn ?*/}
-
-                {/*    <Grid container style={{padding: '20px', textAlign: 'center'}} direction={'column'}>*/}
-                {/*        <Grid item style={{padding: '10px'}}>*/}
-                {/*            Добавить новый список*/}
-                {/*        </Grid>*/}
-                {/*        <Grid item>*/}
-                {/*            <AddItemForm addItem={addNewTodoList}/>*/}
-                {/*        </Grid>*/}
-                {/*    </Grid>*/}
-
-                {/*    : ''*/}
-                {/*}*/}
-
                 <Routes>
                     <Route element={<PrivateRoutes/>}>
-                        <Route path={'/'} element={<TodolistMain demo={demo}/>}/>
-                        <Route path={PATH.APP.TODOLISTS} element={<TodolistMain/>}/>
+                        <Route path={'/'} element={<Navigate to={PATH.APP.TODOLISTS}/>} />
+                        <Route path={PATH.APP.TODOLISTS} element={<TodolistMain demo={demo}/>}/>
                     </Route>
-
-                         {/*todolists.length !== 0 ?
-
-                             <Grid container spacing={5} justifyContent={'center'}>
-                                 {
-                                     todolists.map(todo => {
-                                         return (
-                                             <Grid item key={todo.id}>
-                                                 <Paper style={{padding: '15px'}} elevation={8}>
-                                                     <Todolist
-                                                         todolist={todo}
-                                                         // todolistId={todo.id}
-                                                         // title={todo.title}
-                                                         // filter={todo.filter}
-                                                         demo={demo}
-                                                     />
-                                                 </Paper>
-                                             </Grid>
-                                         )
-                                     })
-                                 }
-                             </Grid>
-                             : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>*/}
 
                     <Route path={PATH.COMMON.LOGIN} element={<Login/>}/>
                     <Route path={PATH.COMMON.ERROR404} element={<Error404/>}/>
