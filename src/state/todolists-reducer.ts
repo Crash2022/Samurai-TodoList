@@ -14,7 +14,7 @@ export type TodolistDomainType = TodolistAPIType & {
 let initialState: Array<TodolistDomainType> = [];
 
 export const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
-    async (param, {dispatch}) => {
+    async (param, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
         try {
@@ -24,6 +24,7 @@ export const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
         } catch (err) {
             const error: any = err; // AxiosError
             handleServerNetworkError(error, dispatch);
+            return rejectWithValue(null);
         }
     })
 
@@ -103,10 +104,7 @@ const slice = createSlice({
     },
     extraReducers: builder =>
         builder.addCase(getTodolistsTC.fulfilled, (state, action) => {
-            //const payload = action.payload as { todolists: TodolistDomainType[] }
-            if (action.payload) {
-                initialState = action.payload.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}));
-            }
+            return action.payload.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}));
         })
             .addCase(createTodolistTC.fulfilled, (state, action) => {
                 state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'});
