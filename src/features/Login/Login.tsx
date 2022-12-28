@@ -7,7 +7,7 @@ import {
     FormGroup,
     FormLabel,
     Grid,
-    TextField
+    TextField,
 } from "@material-ui/core";
 import {FormikHelpers, FormikValues, useFormik} from "formik";
 import {loginTC} from "../../state/login-reducer";
@@ -77,10 +77,14 @@ export const Login = () => {
     return (
         <Grid container justifyContent={'center'} style={{marginTop: '30px'}}>
             <Grid>
-
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit}
+                      style={{
+                          // border: '1px solid #3f51b5',
+                          padding: '30px',
+                          borderRadius: '5px',
+                          boxShadow: '2px 2px 10px 1px gray'
+                      }}>
                     <FormControl>
-
                         <FormLabel style={{textAlign: 'center'}}>
                             <p>
                                 To login get registered <a href={'https://social-network.samuraijs.com'}
@@ -90,36 +94,43 @@ export const Login = () => {
                                 or use common account credentials
                             </p>
                             <p>
-                                E-mail: free@samuraijs.com
+                                <b>E-mail:</b> free@samuraijs.com
                             </p>
                             <p>
-                                Password: free
+                                <b>Password:</b> free
                             </p>
                         </FormLabel>
 
                         <FormGroup>
-                            <TextField label='E-mail'
-                                       margin='normal'
-                                       {...formik.getFieldProps('email')}
-                            />
-                            {
-                                formik.errors.email && formik.touched.email
-                                    ? <div>{formik.errors.email}</div>
-                                    : null
-                            }
+                            <div style={{height: '90px', width: '100%'}}>
+                                <TextField label='E-mail'
+                                           margin='normal'
+                                           style={{width: '252px'}}
+                                           {...formik.getFieldProps('email')}
+                                />
+                                {
+                                    formik.errors.email && formik.touched.email
+                                        ? <div>{formik.errors.email}</div>
+                                        : null
+                                }
+                            </div>
 
-                            <TextField label='Password'
-                                       margin='normal'
-                                       {...formik.getFieldProps('password')}
-                                       type='password'
-                            />
-                            {
-                                formik.errors.password && formik.touched.password
-                                    ? <div>{formik.errors.password}</div>
-                                    : null
-                            }
+                            <div style={{height: '90px', marginBottom: '20px'}}>
+                                <TextField label='Password'
+                                           margin='normal'
+                                           style={{width: '252px'}}
+                                           {...formik.getFieldProps('password')}
+                                           type='password'
+                                />
+                                {
+                                    formik.errors.password && formik.touched.password
+                                        ? <div>{formik.errors.password}</div>
+                                        : null
+                                }
+                            </div>
 
                             <FormControlLabel label={'Remember Me'}
+                                              style={{marginBottom: '10px'}}
                                               control={<Checkbox
                                                   {...formik.getFieldProps('rememberMe')}
                                                   checked={formik.values.rememberMe}
@@ -136,7 +147,6 @@ export const Login = () => {
 
                     </FormControl>
                 </form>
-
             </Grid>
         </Grid>
     );

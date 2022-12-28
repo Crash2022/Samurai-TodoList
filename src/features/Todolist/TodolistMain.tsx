@@ -20,8 +20,6 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
     const dispatch = useAppDispatch();
     const todolists = useAppSelector(selectTodolists);
 
-    console.log('todos', todolists)
-
     const addNewTodoList = useCallback((title: string) => {
         dispatch(createTodolistTC({
             id: v1(), title: title, filter: 'all',
