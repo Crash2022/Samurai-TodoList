@@ -126,20 +126,20 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
             <div style={{margin: '10px'}}>
                 {/*<ButtonExample todolistId={todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
 
-                {renderFilterButton(updateFilterAll, 'all', 'All', 'inherit')}
+                {renderFilterButton(updateFilterAll, 'all', 'All', 'default')}
                 {/*<Button onClick={updateFilterAll}
                         variant={todolist.filter === 'all' ? 'contained' : 'text'}>
                     All
                 </Button>*/}
 
-                {renderFilterButton(updateFilterCompleted, 'all', 'Completed', 'primary')}
+                {renderFilterButton(updateFilterCompleted, 'completed', 'Completed', 'primary')}
                 {/*<Button onClick={updateFilterCompleted}
                         variant={todolist.filter === 'completed' ? 'contained' : 'text'}
                         color={'primary'}>
                     Completed
                 </Button>*/}
 
-                {renderFilterButton(updateFilterActive, 'all', 'Active', 'secondary')}
+                {renderFilterButton(updateFilterActive, 'active', 'Active', 'secondary')}
                 {/*<Button onClick={updateFilterActive}
                         variant={todolist.filter === 'active' ? 'contained' : 'text'}
                         color={'secondary'}>
