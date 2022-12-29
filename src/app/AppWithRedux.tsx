@@ -106,7 +106,7 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
     // лоадер, если приложение не инициализировано
     if (!isInitialized) {
         return (
-            <div style={{display: 'flex', justifyContent: 'center', marginTop: '200px'}}>
+            <div className="circularProgress">
                 <CircularProgress/>
             </div>
         )
