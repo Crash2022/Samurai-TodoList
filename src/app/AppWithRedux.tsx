@@ -8,7 +8,7 @@ import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import {AppNavBar} from "../common/components/AppNavBar/AppNavBar";
 import style from '../common/components/AppNavBar/AppNavBar.module.css'
-import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from "../state/selectors";
+import {selectAppInitialized, selectAuthIsLoggedIn} from "../state/selectors";
 import {useAppSelector} from "../common/hooks/useAppSelector";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
 import {PATH} from "../api/path";
@@ -78,26 +78,10 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
 
     console.log('app')
 
-    // const MESSAGE_TODOS_END = 'Список задач пуст!';
-
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    // const todolists = useAppSelector(selectTodolists);
     const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
     const isInitialized = useAppSelector(selectAppInitialized);
-
-    /*------------------------------------------------*/
-
-    // const addNewTodoList = useCallback((title: string) => {
-    //     dispatch(addTodolistAC(title));
-    // },[dispatch])
-
-    // const addNewTodoList = useCallback((title: string) => {
-    //     dispatch(createTodolistTC({
-    //         id: v1(), title: title, filter: 'all',
-    //         entityStatus: 'idle', addedDate: '', order: 0
-    //     }));
-    // }, [dispatch])
 
     /*------------------------------------------------*/
 
