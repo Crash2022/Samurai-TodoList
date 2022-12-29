@@ -86,6 +86,11 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
     /*------------------------------------------------*/
 
+
+    /*const updateAllFilterButtonHandler = useCallback((filter: FilterType) => {
+        updateTodolistFilterAC({id: todolist.id, filter: filter})
+    },[todolist.id])*/
+
     const updateFilterAll = () => {
         dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'all'}))
     }
@@ -96,7 +101,8 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'active'}))
     }
 
-    const renderFilterButton = (onClick: () => void, filter: FilterType, buttonName: string, color: PropTypes.Color) => {
+    const renderFilterButton = (onClick: () => void, filter: FilterType,
+                                buttonName: string, color: PropTypes.Color) => {
         return (
             <Button onClick={onClick}
                     variant={todolist.filter === filter ? 'contained' : 'text'}
@@ -132,14 +138,14 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
                     All
                 </Button>*/}
 
-                {renderFilterButton(updateFilterCompleted, 'completed', 'Completed', 'primary')}
+                {renderFilterButton( updateFilterCompleted, 'completed', 'Completed', 'primary')}
                 {/*<Button onClick={updateFilterCompleted}
                         variant={todolist.filter === 'completed' ? 'contained' : 'text'}
                         color={'primary'}>
                     Completed
                 </Button>*/}
 
-                {renderFilterButton(updateFilterActive, 'active', 'Active', 'secondary')}
+                {renderFilterButton( updateFilterActive, 'active', 'Active', 'secondary')}
                 {/*<Button onClick={updateFilterActive}
                         variant={todolist.filter === 'active' ? 'contained' : 'text'}
                         color={'secondary'}>

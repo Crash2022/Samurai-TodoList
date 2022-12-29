@@ -58,6 +58,7 @@ export const deleteTaskTC = createAsyncThunk('tasks/deleteTask',
 
         try {
             const response = await todolistsAPI.deleteTask(param.todolistId, param.taskId);
+            dispatch(appSetStatusAC({status: 'succeeded'}));
             return {todolistId: param.todolistId, taskId: param.taskId}
         } catch (err) {
             const error: any = err; // AxiosError
