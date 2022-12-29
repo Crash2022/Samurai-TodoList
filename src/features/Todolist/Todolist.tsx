@@ -45,21 +45,21 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     //     dispatch(addTaskAC(props.todolistId, titleInput));
     // },[props.todolistId])
 
-    const onChangeTodolistTitle = useCallback((newInputValue: string) => {
+    const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
         dispatch(updateTodolistTitleTC( {todolistId: props.todolist.id, title:newInputValue}));
         // react-redux
         // dispatch(updateTodolistTitleTC( props.todolist.id, newInputValue));
     },[props.todolist.id])
 
-    // const onChangeTodolistTitle = useCallback((newInputValue: string) => {
+    // const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
     //     dispatch(changeTodolistTitleAC(props.todolistId, newInputValue));
     // },[props.todolistId])
 
-    const onClickRemoveTodolist = useCallback(() => {
+    const removeTodolistHandler = useCallback(() => {
         dispatch(deleteTodolistTC(props.todolist.id));
     },[props.todolist.id])
 
-    // const onClickRemoveTodolist = useCallback(() => {
+    // const removeTodolistHandler = useCallback(() => {
     //     dispatch(removeTodolistAC(props.todolistId));
     // },[props.todolistId])
 
@@ -85,9 +85,9 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         <div>
             <h3>
                 <EditableSpan title={props.todolist.title}
-                              onChangeInput={onChangeTodolistTitle}
+                              onChangeInput={changeTodolistTitleHandler}
                 />
-                <IconButton onClick={onClickRemoveTodolist} color="secondary"
+                <IconButton onClick={removeTodolistHandler} color="secondary"
                             disabled={props.todolist.entityStatus === 'loading'}>
                     <Delete />
                 </IconButton>
