@@ -1,7 +1,7 @@
-import {TodolistAPIType, todolistsAPI} from "../api/todolistsAPI";
-import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from "./app-reducer";
-import {handleServerNetworkError} from "../common/utils/errorUtils";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
+import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
+import {handleServerNetworkError} from '../common/utils/errorUtils';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // redux-toolkit
 export type FilterType = 'all' | 'active' | 'completed';

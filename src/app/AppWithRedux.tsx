@@ -1,20 +1,20 @@
 import {CircularProgress, Container} from '@material-ui/core';
 import React, {useEffect} from 'react';
 import './App.css';
-import {getTodolistsTC} from "../state/todolists-reducer";
-import {ErrorSnackBar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
-import {initializeAppTC} from "../state/app-reducer";
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
-import {Login} from "../features/Login/Login";
-import {AppNavBar} from "../common/components/AppNavBar/AppNavBar";
+import {getTodolistsTC} from '../state/todolists-reducer';
+import {ErrorSnackBar} from '../common/components/ErrorSnackBar/ErrorSnackBar';
+import {initializeAppTC} from '../state/app-reducer';
+import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
+import {Login} from '../features/Login/Login';
+import {AppNavBar} from '../common/components/AppNavBar/AppNavBar';
 import style from '../common/components/AppNavBar/AppNavBar.module.css'
-import {selectAppInitialized, selectAuthIsLoggedIn} from "../state/selectors";
-import {useAppSelector} from "../common/hooks/useAppSelector";
-import {useAppDispatch} from "../common/hooks/useAppDispatch";
-import {PATH} from "../api/path";
-import {Error404} from "../common/components/Error404/Error404";
-import {TodolistMain} from "../features/Todolist/TodolistMain";
-import {PrivateRoutes} from "../common/components/PrivateRoutes/PrivateRoutes";
+import {selectAppInitialized, selectAuthIsLoggedIn} from '../state/selectors';
+import {useAppSelector} from '../common/hooks/useAppSelector';
+import {useAppDispatch} from '../common/hooks/useAppDispatch';
+import {PATH} from '../api/path';
+import {Error404} from '../common/components/Error404/Error404';
+import {TodolistMain} from '../features/Todolist/TodolistMain';
+import {PrivateRoutes} from '../common/components/PrivateRoutes/PrivateRoutes';
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -126,13 +126,13 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
 
                 <Routes>
                     <Route element={<PrivateRoutes/>}>
-                        <Route path={'/'} element={<Navigate to={PATH.APP.TODOLISTS}/>} />
+                        <Route path={'/'} element={<Navigate to={PATH.APP.TODOLISTS}/>}/>
                         <Route path={PATH.APP.TODOLISTS} element={<TodolistMain demo={demo}/>}/>
                     </Route>
 
                     <Route path={PATH.COMMON.LOGIN} element={<Login/>}/>
                     <Route path={PATH.COMMON.ERROR404} element={<Error404/>}/>
-                    <Route path={'*'} element={<Navigate to={PATH.COMMON.ERROR404} />}/>
+                    <Route path={'*'} element={<Navigate to={PATH.COMMON.ERROR404}/>}/>
                 </Routes>
 
             </Container>

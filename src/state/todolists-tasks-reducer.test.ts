@@ -1,5 +1,5 @@
-import {TasksListType, tasksReducer} from "./tasks-reducer";
-import {createTodolistTC, TodolistDomainType, todolistsReducer} from "./todolists-reducer";
+import {TasksListType, tasksReducer} from './tasks-reducer';
+import {createTodolistTC, TodolistDomainType, todolistsReducer} from './todolists-reducer';
 
 test('IDs should be equal', () => {
 
@@ -13,7 +13,7 @@ test('IDs should be equal', () => {
 
     // redux-toolkit
     const action = createTodolistTC.fulfilled({todolist: {id: '1', title: 'New Todolist', addedDate: '', order: 0}},
-        'requestId',  {id: '1', title: 'New Todolist', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle' });
+        'requestId', {id: '1', title: 'New Todolist', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle'});
 
     const endTasksState = tasksReducer(startTasksState, action);
     const endTodolistsState = todolistsReducer(startTodolistsState, action);

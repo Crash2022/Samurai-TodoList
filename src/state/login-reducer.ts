@@ -1,7 +1,7 @@
-import {authAPI, FieldsErrorsType, LoginParamsType} from "../api/todolistsAPI";
-import {handleServerAppError, handleServerNetworkError} from "../common/utils/errorUtils";
-import {appSetStatusAC} from "./app-reducer";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {authAPI, FieldsErrorsType, LoginParamsType} from '../api/todolistsAPI';
+import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
+import {appSetStatusAC} from './app-reducer';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // redux-toolkit
 export type LoginInitialStateType = {
@@ -16,7 +16,7 @@ type loginRejectValue = {
 }
 
 export const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
-    ('login/login', async (data: LoginParamsType, {dispatch, rejectWithValue}) => {
+('login/login', async (data: LoginParamsType, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
 
     try {
@@ -38,23 +38,23 @@ export const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectV
 
 export const logoutTC = createAsyncThunk('login/logout',
     async (param, {dispatch, rejectWithValue}) => {
-    dispatch(appSetStatusAC({status: 'loading'}));
-    try {
-        const response = await authAPI.logout();
+        dispatch(appSetStatusAC({status: 'loading'}));
+        try {
+            const response = await authAPI.logout();
 
-        if (response.data.resultCode === 0) {
-            dispatch(appSetStatusAC({status: 'succeeded'}));
-            return;
-        } else {
-            handleServerAppError(response.data, dispatch);
+            if (response.data.resultCode === 0) {
+                dispatch(appSetStatusAC({status: 'succeeded'}));
+                return;
+            } else {
+                handleServerAppError(response.data, dispatch);
+                return rejectWithValue({});
+            }
+        } catch (err) {
+            const error: any = err; // AxiosError
+            handleServerNetworkError(error, dispatch);
             return rejectWithValue({});
         }
-    } catch (err) {
-        const error: any = err; // AxiosError
-        handleServerNetworkError(error, dispatch);
-        return rejectWithValue({});
-    }
-})
+    })
 
 const slice = createSlice({
     name: 'login',
@@ -70,9 +70,9 @@ const slice = createSlice({
         builder.addCase(loginTC.fulfilled, (state) => {
             state.isLoggedIn = true;
         })
-        .addCase(logoutTC.fulfilled, (state) => {
-            state.isLoggedIn = false;
-        })
+            .addCase(logoutTC.fulfilled, (state) => {
+                state.isLoggedIn = false;
+            })
 
 })
 

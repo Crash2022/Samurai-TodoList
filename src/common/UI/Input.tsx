@@ -1,9 +1,9 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
-import styles from "../../features/Todolist/Todolist.module.css";
+import styles from '../../features/Todolist/Todolist.module.css';
 
 export type InputPropsType = {
     inputValue: string
-    setInputValue: (value: string)=> void
+    setInputValue: (value: string) => void
     error: string | null
     setError: (errorTitle: string) => void
     onKeyPress: () => void
@@ -17,16 +17,16 @@ export const Input = (props: InputPropsType) => {
 
     const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         props.setError('')
-        return event.key === "Enter" ? props.onKeyPress() : ''
+        return event.key === 'Enter' ? props.onKeyPress() : ''
     }
 
     const inputClass = `${props.error ? styles.inputError : styles.inputClass}`
 
     return (
-            <input value={props.inputValue}
-                   onChange={onChangeInputHandler}
-                   onKeyDown={onKeyDownHandler}
-                   className={inputClass}
-            />
+        <input value={props.inputValue}
+               onChange={onChangeInputHandler}
+               onKeyDown={onKeyDownHandler}
+               className={inputClass}
+        />
     );
 }

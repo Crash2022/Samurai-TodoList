@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {IconButton, TextField} from "@material-ui/core";
-import {AddComment} from "@material-ui/icons";
+import {IconButton, TextField} from '@material-ui/core';
+import {AddComment} from '@material-ui/icons';
 
 export type AddItemFormPropsType = {
     addItem: (titleInput: string) => void
@@ -55,8 +55,8 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
                         size="medium"
                         disabled={disabled}
             >
-                <AddComment />
-            </IconButton >
+                <AddComment/>
+            </IconButton>
         </div>
     );
 })

@@ -1,6 +1,6 @@
-import {authAPI} from "../api/todolistsAPI";
-import {handleServerAppError, handleServerNetworkError} from "../common/utils/errorUtils";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {authAPI} from '../api/todolistsAPI';
+import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // redux-toolkit
 export type AppInitialStateType = {
@@ -15,21 +15,21 @@ export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'fail
 
 export const initializeAppTC = createAsyncThunk('app/initializeApp',
     async (param, {dispatch}) => {
-    dispatch(appSetStatusAC({status: 'loading'}));
+        dispatch(appSetStatusAC({status: 'loading'}));
 
-    try {
-        const response = await authAPI.authMe();
+        try {
+            const response = await authAPI.authMe();
 
-        if (response.data.resultCode === 0) {
-            dispatch(appSetStatusAC({status: 'succeeded'}));
-        } else {
-            handleServerAppError(response.data, dispatch);
+            if (response.data.resultCode === 0) {
+                dispatch(appSetStatusAC({status: 'succeeded'}));
+            } else {
+                handleServerAppError(response.data, dispatch);
+            }
+        } catch (err) {
+            const error: any = err; // AxiosError
+            handleServerNetworkError(error, dispatch);
         }
-    } catch (err) {
-        const error: any = err; // AxiosError
-        handleServerNetworkError(error, dispatch);
-    }
-})
+    })
 
 const slice = createSlice({
     name: 'app',

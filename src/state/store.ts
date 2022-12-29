@@ -1,10 +1,10 @@
-import {combineReducers, compose} from "redux";
-import {tasksReducer} from "./tasks-reducer";
-import {todolistsReducer} from "./todolists-reducer";
+import {combineReducers, compose} from 'redux';
+import {tasksReducer} from './tasks-reducer';
+import {todolistsReducer} from './todolists-reducer';
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {appReducer} from "./app-reducer";
-import {loginReducer} from "./login-reducer";
-import {configureStore} from "@reduxjs/toolkit";
+import {appReducer} from './app-reducer';
+import {loginReducer} from './login-reducer';
+import {configureStore} from '@reduxjs/toolkit';
 
 // для React Redux DevTools Chrome
 declare global {

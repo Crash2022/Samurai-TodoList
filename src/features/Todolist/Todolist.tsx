@@ -1,20 +1,22 @@
 import React, {useCallback, useEffect} from 'react'
 import styles from './Todolist.module.css'
-import {AddItemForm} from "../../common/components/AddItemForm/AddItemForm";
-import {EditableSpan} from "../../common/components/EditableSpan/EditableSpan";
-import {Button, IconButton} from "@material-ui/core";
-import {Delete} from "@material-ui/icons";
-import {createTaskTC, getTasksTC} from "../../state/tasks-reducer";
-import {Task} from "../Task/Task";
-import {TodolistDomainType,
+import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm';
+import {EditableSpan} from '../../common/components/EditableSpan/EditableSpan';
+import {Button, IconButton} from '@material-ui/core';
+import {Delete} from '@material-ui/icons';
+import {createTaskTC, getTasksTC} from '../../state/tasks-reducer';
+import {Task} from '../Task/Task';
+import {
+    TodolistDomainType,
     updateTodolistFilterAC,
     deleteTodolistTC,
-    updateTodolistTitleTC} from "../../state/todolists-reducer";
-import {TaskAPIType, TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
-import {v1} from "uuid";
-import {useAppDispatch} from "../../common/hooks/useAppDispatch";
-import {AppRootStateType} from "../../state/store";
-import {useSelector} from "react-redux";
+    updateTodolistTitleTC
+} from '../../state/todolists-reducer';
+import {TaskAPIType, TaskPriorities, TaskStatuses} from '../../api/todolistsAPI';
+import {v1} from 'uuid';
+import {useAppDispatch} from '../../common/hooks/useAppDispatch';
+import {AppRootStateType} from '../../state/store';
+import {useSelector} from 'react-redux';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType
@@ -34,22 +36,22 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     /*------------------------------------------------*/
 
     const addTaskHandler = useCallback((titleInput: string) => {
-        dispatch(createTaskTC( {
+        dispatch(createTaskTC({
             todoListId: props.todolist.id, id: v1(), title: titleInput,
             status: TaskStatuses.New, priority: TaskPriorities.Middle,
             description: '', addedDate: '', startDate: '', deadline: '', order: 0
         }));
-    },[props.todolist.id])
+    }, [props.todolist.id])
 
     // const addTaskHandler = useCallback((titleInput: string) => {
     //     dispatch(addTaskAC(props.todolistId, titleInput));
     // },[props.todolistId])
 
     const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
-        dispatch(updateTodolistTitleTC( {todolistId: props.todolist.id, title:newInputValue}));
+        dispatch(updateTodolistTitleTC({todolistId: props.todolist.id, title: newInputValue}));
         // react-redux
         // dispatch(updateTodolistTitleTC( props.todolist.id, newInputValue));
-    },[props.todolist.id])
+    }, [props.todolist.id])
 
     // const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
     //     dispatch(changeTodolistTitleAC(props.todolistId, newInputValue));
@@ -57,7 +59,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
     const removeTodolistHandler = useCallback(() => {
         dispatch(deleteTodolistTC(props.todolist.id));
-    },[props.todolist.id])
+    }, [props.todolist.id])
 
     // const removeTodolistHandler = useCallback(() => {
     //     dispatch(removeTodolistAC(props.todolistId));
@@ -79,7 +81,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
             return;
         }
         dispatch(getTasksTC(props.todolist.id));
-    },[])
+    }, [])
 
     return (
         <div>
@@ -89,7 +91,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
                 />
                 <IconButton onClick={removeTodolistHandler} color="secondary"
                             disabled={props.todolist.entityStatus === 'loading'}>
-                    <Delete />
+                    <Delete/>
                 </IconButton>
             </h3>
 
@@ -102,7 +104,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
                 </Button>
                 <Button onClick={() => dispatch(updateTodolistFilterAC({id: props.todolist.id, filter: 'completed'}))}
                         variant={props.todolist.filter === 'completed' ? 'contained' : 'text'}
-                color={'primary'}>Completed
+                        color={'primary'}>Completed
                 </Button>
                 <Button onClick={() => dispatch(updateTodolistFilterAC({id: props.todolist.id, filter: 'active'}))}
                         variant={props.todolist.filter === 'active' ? 'contained' : 'text'}

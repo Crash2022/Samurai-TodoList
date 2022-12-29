@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
     Button,
     Checkbox,
@@ -8,13 +8,13 @@ import {
     FormLabel,
     Grid,
     TextField,
-} from "@material-ui/core";
-import {FormikHelpers, FormikValues, useFormik} from "formik";
-import {loginTC} from "../../state/login-reducer";
-import {Navigate} from "react-router-dom";
-import {useAppDispatch} from "../../common/hooks/useAppDispatch";
-import {useAppSelector} from "../../common/hooks/useAppSelector";
-import {selectAuthIsLoggedIn} from "../../state/selectors";
+} from '@material-ui/core';
+import {FormikHelpers, FormikValues, useFormik} from 'formik';
+import {loginTC} from '../../state/login-reducer';
+import {Navigate} from 'react-router-dom';
+import {useAppDispatch} from '../../common/hooks/useAppDispatch';
+import {useAppSelector} from '../../common/hooks/useAppSelector';
+import {selectAuthIsLoggedIn} from '../../state/selectors';
 
 type FormValuesType = {
     email: string
@@ -103,8 +103,8 @@ export const Login = () => {
 
                         <FormGroup>
                             <div style={{height: '90px', width: '100%'}}>
-                                <TextField label='E-mail'
-                                           margin='normal'
+                                <TextField label="E-mail"
+                                           margin="normal"
                                            style={{width: '252px'}}
                                            {...formik.getFieldProps('email')}
                                 />
@@ -116,11 +116,11 @@ export const Login = () => {
                             </div>
 
                             <div style={{height: '90px', marginBottom: '20px'}}>
-                                <TextField label='Password'
-                                           margin='normal'
+                                <TextField label="Password"
+                                           margin="normal"
                                            style={{width: '252px'}}
                                            {...formik.getFieldProps('password')}
-                                           type='password'
+                                           type="password"
                                 />
                                 {
                                     formik.errors.password && formik.touched.password
