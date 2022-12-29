@@ -86,12 +86,13 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
     /*------------------------------------------------*/
 
+    // фильтрация тудулиста в одной функции
+    const updateAllFilterButtonHandler = useCallback((filter: FilterType) => {
+        dispatch(updateTodolistFilterAC({id: todolist.id, filter: filter}))
+    },[todolist.id])
 
-    /*const updateAllFilterButtonHandler = useCallback((filter: FilterType) => {
-        updateTodolistFilterAC({id: todolist.id, filter: filter})
-    },[todolist.id])*/
-
-    const updateFilterAll = () => {
+    // фильтрация тудулиста в разнах функциях
+    /*const updateFilterAll = () => {
         dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'all'}))
     }
     const updateFilterCompleted = () => {
@@ -99,12 +100,12 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     }
     const updateFilterActive = () => {
         dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'active'}))
-    }
+    }*/
 
-    const renderFilterButton = (onClick: () => void, filter: FilterType,
+    const renderFilterButton = (/*onClick: () => void,*/ filter: FilterType,
                                 buttonName: string, color: PropTypes.Color) => {
         return (
-            <Button onClick={onClick}
+            <Button onClick={() => {updateAllFilterButtonHandler(filter)}}
                     variant={todolist.filter === filter ? 'contained' : 'text'}
                     color={color}
             >
@@ -132,20 +133,20 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
             <div style={{margin: '10px'}}>
                 {/*<ButtonExample todolistId={todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
 
-                {renderFilterButton(updateFilterAll, 'all', 'All', 'default')}
+                {renderFilterButton( 'all', 'All', 'default')}
                 {/*<Button onClick={updateFilterAll}
                         variant={todolist.filter === 'all' ? 'contained' : 'text'}>
                     All
                 </Button>*/}
 
-                {renderFilterButton( updateFilterCompleted, 'completed', 'Completed', 'primary')}
+                {renderFilterButton(  'completed', 'Completed', 'primary')}
                 {/*<Button onClick={updateFilterCompleted}
                         variant={todolist.filter === 'completed' ? 'contained' : 'text'}
                         color={'primary'}>
                     Completed
                 </Button>*/}
 
-                {renderFilterButton( updateFilterActive, 'active', 'Active', 'secondary')}
+                {renderFilterButton(  'active', 'Active', 'secondary')}
                 {/*<Button onClick={updateFilterActive}
                         variant={todolist.filter === 'active' ? 'contained' : 'text'}
                         color={'secondary'}>
