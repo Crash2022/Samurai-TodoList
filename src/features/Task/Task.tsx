@@ -7,8 +7,10 @@ import {Delete} from '@material-ui/icons';
 import {deleteTaskTC, updateTaskTC} from '../../state/tasks-reducer';
 import {TaskAPIType, TaskStatuses} from '../../api/todolistsAPI';
 import {useAppDispatch} from '../../common/hooks/useAppDispatch';
+import {useAppSelector} from '../../common/hooks/useAppSelector';
+import {selectAppStatus} from '../../state/selectors';
 
-export type TaskPropsType = {
+type TaskPropsType = {
     todolistId: string
     task: TaskAPIType
 }
@@ -18,6 +20,7 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
     console.log('task')
 
     const dispatch = useAppDispatch();
+    const status = useAppSelector(selectAppStatus)
 
     const removeTaskHandler = useCallback(() => {
         dispatch(deleteTaskTC({todolistId: todolistId, taskId: task.id}));
@@ -28,10 +31,9 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
     // },[todolistId, task.id])
 
     const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        let newIsDoneValue = event.currentTarget.checked;
         dispatch(updateTaskTC({
             todolistId: todolistId, taskId: task.id,
-            domainModel: {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}
+            domainModel: {status: event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}
         }));
         // react-redux
         // dispatch(updateTaskTC(todolistId, task.id,
@@ -62,6 +64,7 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
         <li key={v1()} className={task.status === TaskStatuses.Completed ? styles.isDoneTask : ''}>
             <Checkbox checked={task.status === TaskStatuses.Completed}
                       onChange={changeStatusHandler}
+                      disabled={status === 'loading'}
             />
             <EditableSpan title={task.title}
                           onChangeInput={changeTaskTitleHandler}

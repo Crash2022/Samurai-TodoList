@@ -1,29 +1,33 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {TextField} from '@material-ui/core';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {selectAppError} from '../../../state/selectors';
 
-export type EditableSpanPropsType = {
+type EditableSpanPropsType = {
     title: string
     onChangeInput: (newInputValue: string) => void
 }
 
-export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
+export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title, onChangeInput}) => {
 
     console.log('editable span')
 
+    // const error = useAppSelector(selectAppError);
+
     const [editMode, setEditMode] = useState<boolean>(false);
-    const [title, setTitle] = useState<string>('');
+    const [inputTitle, setInputTitle] = useState<string>('');
 
     const onClickEditSpanHandler = () => {
         setEditMode(true);
-        setTitle(props.title);
+        setInputTitle(title);
     }
     const onClickNotEditSpanHandler = () => {
-        props.onChangeInput(title);
+        onChangeInput(inputTitle);
         setEditMode(false);
     }
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.currentTarget.value);
+        setInputTitle(event.currentTarget.value);
     }
 
     const enterChangeTitle = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -36,11 +40,11 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
                 label="Измените текст"
                 variant="standard"
                 autoFocus
-                value={title}
+                value={inputTitle}
                 onChange={onChangeInputHandler}
                 onBlur={onClickNotEditSpanHandler}
                 onKeyDown={enterChangeTitle}
             />
-            : <span onDoubleClick={onClickEditSpanHandler}>{props.title}</span>
+            : <span onDoubleClick={onClickEditSpanHandler}>{title}</span>
     );
 })

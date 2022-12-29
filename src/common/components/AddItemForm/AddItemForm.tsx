@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {IconButton, TextField} from '@material-ui/core';
 import {AddComment} from '@material-ui/icons';
 
-export type AddItemFormPropsType = {
+type AddItemFormPropsType = {
     addItem: (titleInput: string) => void
     disabled?: boolean
 }

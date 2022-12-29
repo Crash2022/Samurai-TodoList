@@ -19,7 +19,7 @@ import {AppRootStateType} from '../../state/store';
 import {useSelector} from 'react-redux';
 import {PropTypes} from '@mui/material';
 
-export type TodolistPropsType = {
+type TodolistPropsType = {
     todolist: TodolistDomainType
     demo?: boolean
 }
