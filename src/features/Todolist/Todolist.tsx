@@ -23,13 +23,13 @@ export type TodolistPropsType = {
     demo?: boolean
 }
 
-export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, ...props}) => {
+export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, todolist}) => {
 
     console.log('todolist')
 
     const dispatch = useAppDispatch();
-    // const tasksObj = useAppSelector(selectTasksObj[props.todolist.id]);
-    const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[props.todolist.id]);
+    // const tasksObj = useAppSelector(selectTasksObj[todolist.id]);
+    const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[todolist.id]);
 
     const MESSAGE_TASKS_END = 'Задания выполнены';
 
@@ -37,42 +37,42 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
     const addTaskHandler = useCallback((titleInput: string) => {
         dispatch(createTaskTC({
-            todoListId: props.todolist.id, id: v1(), title: titleInput,
+            todoListId: todolist.id, id: v1(), title: titleInput,
             status: TaskStatuses.New, priority: TaskPriorities.Middle,
             description: '', addedDate: '', startDate: '', deadline: '', order: 0
         }));
-    }, [props.todolist.id])
+    }, [todolist.id])
 
     // const addTaskHandler = useCallback((titleInput: string) => {
-    //     dispatch(addTaskAC(props.todolistId, titleInput));
-    // },[props.todolistId])
+    //     dispatch(addTaskAC(todolistId, titleInput));
+    // },[todolistId])
 
     const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
-        dispatch(updateTodolistTitleTC({todolistId: props.todolist.id, title: newInputValue}));
+        dispatch(updateTodolistTitleTC({todolistId: todolist.id, title: newInputValue}));
         // react-redux
-        // dispatch(updateTodolistTitleTC( props.todolist.id, newInputValue));
-    }, [props.todolist.id])
+        // dispatch(updateTodolistTitleTC( todolist.id, newInputValue));
+    }, [todolist.id])
 
     // const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
-    //     dispatch(changeTodolistTitleAC(props.todolistId, newInputValue));
-    // },[props.todolistId])
+    //     dispatch(changeTodolistTitleAC(todolistId, newInputValue));
+    // },[todolistId])
 
     const removeTodolistHandler = useCallback(() => {
-        dispatch(deleteTodolistTC(props.todolist.id));
-    }, [props.todolist.id])
+        dispatch(deleteTodolistTC(todolist.id));
+    }, [todolist.id])
 
     // const removeTodolistHandler = useCallback(() => {
-    //     dispatch(removeTodolistAC(props.todolistId));
-    // },[props.todolistId])
+    //     dispatch(removeTodolistAC(todolistId));
+    // },[todolistId])
 
     /*------------------------------------------------*/
 
     let filteredTasks = tasksObj;
 
-    if (props.todolist.filter === 'active') {
+    if (todolist.filter === 'active') {
         filteredTasks = filteredTasks.filter(f => f.status === TaskStatuses.New); // !f.status
     }
-    if (props.todolist.filter === 'completed') {
+    if (todolist.filter === 'completed') {
         filteredTasks = filteredTasks.filter(f => f.status === TaskStatuses.Completed); // f.status
     }
 
@@ -80,34 +80,34 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         if (demo) {
             return;
         }
-        dispatch(getTasksTC(props.todolist.id));
+        dispatch(getTasksTC(todolist.id));
     }, [])
 
     return (
         <div>
             <h3>
-                <EditableSpan title={props.todolist.title}
+                <EditableSpan title={todolist.title}
                               onChangeInput={changeTodolistTitleHandler}
                 />
                 <IconButton onClick={removeTodolistHandler} color="secondary"
-                            disabled={props.todolist.entityStatus === 'loading'}>
+                            disabled={todolist.entityStatus === 'loading'}>
                     <Delete/>
                 </IconButton>
             </h3>
 
-            <AddItemForm addItem={addTaskHandler} disabled={props.todolist.entityStatus === 'loading'}/>
+            <AddItemForm addItem={addTaskHandler} disabled={todolist.entityStatus === 'loading'}/>
 
             <div style={{margin: '10px'}}>
-                {/*<ButtonExample todolistId={props.todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
-                <Button onClick={() => dispatch(updateTodolistFilterAC({id: props.todolist.id, filter: 'all'}))}
-                        variant={props.todolist.filter === 'all' ? 'contained' : 'text'}>All
+                {/*<ButtonExample todolistId={todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
+                <Button onClick={() => dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'all'}))}
+                        variant={todolist.filter === 'all' ? 'contained' : 'text'}>All
                 </Button>
-                <Button onClick={() => dispatch(updateTodolistFilterAC({id: props.todolist.id, filter: 'completed'}))}
-                        variant={props.todolist.filter === 'completed' ? 'contained' : 'text'}
+                <Button onClick={() => dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'completed'}))}
+                        variant={todolist.filter === 'completed' ? 'contained' : 'text'}
                         color={'primary'}>Completed
                 </Button>
-                <Button onClick={() => dispatch(updateTodolistFilterAC({id: props.todolist.id, filter: 'active'}))}
-                        variant={props.todolist.filter === 'active' ? 'contained' : 'text'}
+                <Button onClick={() => dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'active'}))}
+                        variant={todolist.filter === 'active' ? 'contained' : 'text'}
                         color={'secondary'}>Active
                 </Button>
             </div>
@@ -116,7 +116,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
                     filteredTasks.map(task => {
                         return (
                             <Task key={task.id}
-                                  todolistId={props.todolist.id}
+                                  todolistId={todolist.id}
                                   task={task}
                             />
                         )
@@ -147,7 +147,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 //     const dispatch = useDispatch();
 //
 //     return (
-//         <Button onClick={() => dispatch(changeTodolistFilterAC(props.todolistId, 'all'))}
+//         <Button onClick={() => dispatch(changeTodolistFilterAC(todolistId, 'all'))}
 //                 variant={props.buttonTitle === props.filter ? 'contained' : 'text'}>
 //         {props.buttonTitle}
 //         </Button>
