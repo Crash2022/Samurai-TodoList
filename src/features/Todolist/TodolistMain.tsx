@@ -3,7 +3,7 @@ import {useAppSelector} from '../../common/hooks/useAppSelector';
 import {selectTodolists} from '../../state/selectors';
 import {Grid, Paper} from '@material-ui/core';
 import {Todolist} from './Todolist';
-import styles from './Todolist.module.css';
+import s from '../../common/styles/Todolist.module.css';
 import React, {useCallback} from 'react';
 import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm';
 import {createTodolistTC} from '../../state/todolists-reducer';
@@ -46,7 +46,7 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
                             todolists.map(todo => {
                                 return (
                                     <Grid item key={todo.id}>
-                                        <Paper style={{padding: '15px'}} elevation={8}>
+                                        <Paper elevation={8} className={s.todolistPaper}>
                                             <Todolist
                                                 todolist={todo}
                                                 demo={demo}
@@ -57,7 +57,7 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
                             })
                         }
                     </Grid>
-                    : <div className={styles.todoEnd}>{MESSAGE_TODOS_END}</div>
+                    : <div className={s.todoEnd}>{MESSAGE_TODOS_END}</div>
             }
         </>
     )

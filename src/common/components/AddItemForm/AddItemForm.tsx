@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {IconButton, TextField} from '@material-ui/core';
 import {AddComment} from '@material-ui/icons';
+import s from './AddItemForm.module.css'
 
 type AddItemFormPropsType = {
     addItem: (titleInput: string) => void
@@ -40,7 +41,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
     }
 
     return (
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div className={s.addItemForm}>
             <div>
                 <TextField variant="outlined"
                            label="Введите текст"
@@ -50,7 +51,6 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
                            error={!!error}
                            helperText={error}
                            disabled={disabled}
-                           // style={{height: '80px'}}
                 />
             </div>
             <div>

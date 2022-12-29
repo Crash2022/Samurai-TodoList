@@ -6,6 +6,8 @@
     display: flex;
     align-items: center;
 }
-.navbarLogout {
 
+.linkStyle {
+    text-decoration: none;
+    color: white;
 }

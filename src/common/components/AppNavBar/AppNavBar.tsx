@@ -4,7 +4,7 @@ import {Menu} from '@material-ui/icons';
 import React, {useCallback, useEffect} from 'react';
 import {logoutTC} from '../../../state/login-reducer';
 import {Link, useNavigate} from 'react-router-dom';
-import style from './AppNavBar.module.css';
+import s from './AppNavBar.module.css';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {selectAppStatus, selectAuthIsLoggedIn} from '../../../state/selectors';
 import {useAppSelector} from '../../hooks/useAppSelector';
@@ -33,7 +33,7 @@ export const AppNavBar = () => {
                     // disableGutters
                     sx={{display: 'flex', justifyContent: 'space-between', margin: '0 120px'}}
                 >
-                    <div className={style.navbarMenu}>
+                    <div className={s.navbarMenu}>
                         <IconButton
                             edge="start"
                             color="inherit"
@@ -41,7 +41,7 @@ export const AppNavBar = () => {
                         >
                             <Menu/>
                         </IconButton>
-                        <Link to="/" style={{textDecoration: 'none', color: 'white'}}>
+                        <Link to="/" className={s.linkStyle}>
                             <Typography variant="h6">
                                 TodoLists
                             </Typography>
@@ -51,10 +51,9 @@ export const AppNavBar = () => {
                     {
                         isLoggedIn
                             ?
-                            <div className={style.navbarLogout}>
+                            <div>
                                 <Button color="inherit"
                                         onClick={logoutHandler}
-                                        style={{fontWeight: 'bold'}}
                                 >
                                     Log Out
                                 </Button>
@@ -63,7 +62,7 @@ export const AppNavBar = () => {
                     }
 
                 </Toolbar>
-                {status === 'loading' && <LinearProgress style={{width: '100%'}}/>}
+                {status === 'loading' && <LinearProgress/>}
             </Container>
         </AppBar>
     )

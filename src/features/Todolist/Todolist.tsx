@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react'
-import styles from './Todolist.module.css'
+import s from '../../common/styles/Todolist.module.css'
 import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm';
 import {EditableSpan} from '../../common/components/EditableSpan/EditableSpan';
 import {Button, IconButton} from '@material-ui/core';
@@ -117,8 +117,8 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     /*------------------------------------------------*/
 
     return (
-        <div>
-            <h3>
+        <div >
+            <h3 className={s.h3}>
                 <EditableSpan title={todolist.title}
                               onChangeInput={changeTodolistTitleHandler}
                 />
@@ -130,7 +130,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
             <AddItemForm addItem={addTaskHandler} disabled={todolist.entityStatus === 'loading'}/>
 
-            <div style={{margin: '10px'}}>
+            <div className={s.filterButtons}>
                 {/*<ButtonExample todolistId={todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
 
                 {renderFilterButton( 'all', 'All', 'default')}
@@ -167,7 +167,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
                 {
                     tasksObj.length === 0
-                        ? <div className={styles.noTasks}>{MESSAGE_TASKS_END}</div>
+                        ? <div className={s.noTasks}>{MESSAGE_TASKS_END}</div>
                         : ''
                 }
             </ul>

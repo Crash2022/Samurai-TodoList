@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useCallback} from 'react'
 import {v1} from 'uuid'
-import styles from '../Todolist/Todolist.module.css'
+import s from '../../common/styles/Todolist.module.css'
 import {EditableSpan} from '../../common/components/EditableSpan/EditableSpan';
 import {Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
@@ -61,17 +61,25 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
     // },[todolistId, task.id])
 
     return (
-        <li key={v1()} className={task.status === TaskStatuses.Completed ? styles.isDoneTask : ''}>
-            <Checkbox checked={task.status === TaskStatuses.Completed}
-                      onChange={changeStatusHandler}
-                      disabled={status === 'loading'}
-            />
-            <EditableSpan title={task.title}
-                          onChangeInput={changeTaskTitleHandler}
-            />
-            <IconButton onClick={removeTaskHandler} disabled={status === 'loading'}>
-                <Delete/>
-            </IconButton>
+        <li key={v1()} className={task.status === TaskStatuses.Completed ? s.isDoneTask : ''}>
+            <div className={s.taskItem}>
+                <div>
+                    <Checkbox checked={task.status === TaskStatuses.Completed}
+                              onChange={changeStatusHandler}
+                              disabled={status === 'loading'}
+                    />
+                </div>
+                <div className={s.taskText}>
+                    <EditableSpan title={task.title}
+                                  onChangeInput={changeTaskTitleHandler}
+                    />
+                </div>
+                <div>
+                    <IconButton onClick={removeTaskHandler} disabled={status === 'loading'}>
+                        <Delete/>
+                    </IconButton>
+                </div>
+            </div>
         </li>
     );
 })

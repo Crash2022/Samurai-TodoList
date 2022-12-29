@@ -1,4 +1,5 @@
-.todolistMain {
+/*мои стили*/
+/*.todolistMain {
     display: flex;
     justify-content: center;
     padding: 30px;
@@ -43,42 +44,68 @@
 }
 .filterNone {
     padding: 5px;
+}*/
+
+/*button {
+    margin: 3px;
+}*/
+/*.inputBox {
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}*/
+
+
+
+/*TodolistMain*/
+.todolistPaper {
+    padding: 15px;
+    max-width: 350px;
+}
+
+/*Todolist*/
+h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.filterButtons {
+    margin: 10px;
+    text-align: center;
+}
+
+/*Task*/
+li {
+    list-style-type: none;
 }
 .isDoneTask {
     opacity: 0.5;
 }
-.noTasksList {
+/*.noTasksList {
     color: red;
     font-size: 50px;
     text-align: center;
     margin-top: 50px;
-}
+}*/
 .noTasks {
     font-size: 16px;
     font-weight: bold;
     color: orange;
 }
-
-ul {
-    /*list-style-position: inside;*/
-}
-li {
-    list-style-type: none;
-}
-button {
-    margin: 3px;
-}
-
-.inputBox {
-    height: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .todoEnd {
     text-align: center;
     font-size: 30px;
     font-weight: bold;
     color: orange;
+}
+
+.taskItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.taskText {
+    word-wrap: break-word;
+    width: 200px;
 }
