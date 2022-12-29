@@ -1,6 +1,6 @@
 import {TodolistAPIType, todolistsAPI} from "../api/todolistsAPI";
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from "./app-reducer";
-import {handleServerNetworkError} from "../utils/errorUtils";
+import {handleServerNetworkError} from "../common/utils/errorUtils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 // redux-toolkit

@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useCallback} from 'react'
 import {v1} from "uuid"
 import styles from '../Todolist/Todolist.module.css'
-import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
+import {EditableSpan} from "../../common/components/EditableSpan/EditableSpan";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {deleteTaskTC, updateTaskTC} from "../../state/tasks-reducer";
 import {TaskAPIType, TaskStatuses} from "../../api/todolistsAPI";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch";
 
 export type TaskPropsType = {
     todolistId: string

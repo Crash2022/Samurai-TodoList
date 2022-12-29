@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react'
 import styles from './Todolist.module.css'
-import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
-import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
+import {AddItemForm} from "../../common/components/AddItemForm/AddItemForm";
+import {EditableSpan} from "../../common/components/EditableSpan/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {createTaskTC, getTasksTC} from "../../state/tasks-reducer";
@@ -12,7 +12,7 @@ import {TodolistDomainType,
     updateTodolistTitleTC} from "../../state/todolists-reducer";
 import {TaskAPIType, TaskPriorities, TaskStatuses} from "../../api/todolistsAPI";
 import {v1} from "uuid";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch";
 import {AppRootStateType} from "../../state/store";
 import {useSelector} from "react-redux";
 

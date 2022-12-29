@@ -2,19 +2,19 @@ import {CircularProgress, Container} from '@material-ui/core';
 import React, {useEffect} from 'react';
 import './App.css';
 import {getTodolistsTC} from "../state/todolists-reducer";
-import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
+import {ErrorSnackBar} from "../common/components/ErrorSnackBar/ErrorSnackBar";
 import {initializeAppTC} from "../state/app-reducer";
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {Login} from "../features/Login/Login";
-import {AppNavBar} from "../components/AppNavBar/AppNavBar";
-import style from '../components/AppNavBar/AppNavBar.module.css'
+import {AppNavBar} from "../common/components/AppNavBar/AppNavBar";
+import style from '../common/components/AppNavBar/AppNavBar.module.css'
 import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from "../state/selectors";
-import {useAppSelector} from "../hooks/useAppSelector";
-import {useAppDispatch} from "../hooks/useAppDispatch";
+import {useAppSelector} from "../common/hooks/useAppSelector";
+import {useAppDispatch} from "../common/hooks/useAppDispatch";
 import {PATH} from "../api/path";
-import {Error404} from "../components/Error404/Error404";
+import {Error404} from "../common/components/Error404/Error404";
 import {TodolistMain} from "../features/Todolist/TodolistMain";
-import {PrivateRoutes} from "../components/PrivateRoutes/PrivateRoutes";
+import {PrivateRoutes} from "../common/components/PrivateRoutes/PrivateRoutes";
 
 /*https://samuraitodo.herokuapp.com/*/
 

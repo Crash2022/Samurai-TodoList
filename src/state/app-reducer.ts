@@ -1,5 +1,5 @@
 import {authAPI} from "../api/todolistsAPI";
-import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
+import {handleServerAppError, handleServerNetworkError} from "../common/utils/errorUtils";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 // redux-toolkit

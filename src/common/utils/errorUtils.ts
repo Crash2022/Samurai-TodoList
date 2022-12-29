@@ -1,8 +1,8 @@
-import {appSetErrorAC, appSetStatusAC} from "../state/app-reducer";
-import {TodolistsResponseType} from "../api/todolistsAPI";
+import {appSetErrorAC, appSetStatusAC} from "../../state/app-reducer";
+import {TodolistsResponseType} from "../../api/todolistsAPI";
 // import {AppDispatch} from "../state/store";
 import {AnyAction, Dispatch, ThunkDispatch} from "@reduxjs/toolkit";
-import {AppRootStateType} from "../state/store";
+import {AppRootStateType} from "../../state/store";
 
 // redux-toolkit
 export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: Dispatch) => {

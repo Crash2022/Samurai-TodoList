@@ -12,8 +12,8 @@ import {
 import {FormikHelpers, FormikValues, useFormik} from "formik";
 import {loginTC} from "../../state/login-reducer";
 import {Navigate} from "react-router-dom";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {useAppSelector} from "../../hooks/useAppSelector";
+import {useAppDispatch} from "../../common/hooks/useAppDispatch";
+import {useAppSelector} from "../../common/hooks/useAppSelector";
 import {selectAuthIsLoggedIn} from "../../state/selectors";
 
 type FormValuesType = {
