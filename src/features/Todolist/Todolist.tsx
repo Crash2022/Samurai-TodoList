@@ -10,13 +10,14 @@ import {
     TodolistDomainType,
     updateTodolistFilterAC,
     deleteTodolistTC,
-    updateTodolistTitleTC
+    updateTodolistTitleTC, FilterType
 } from '../../state/todolists-reducer';
 import {TaskAPIType, TaskPriorities, TaskStatuses} from '../../api/todolistsAPI';
 import {v1} from 'uuid';
 import {useAppDispatch} from '../../common/hooks/useAppDispatch';
 import {AppRootStateType} from '../../state/store';
 import {useSelector} from 'react-redux';
+import {PropTypes} from '@mui/material';
 
 export type TodolistPropsType = {
     todolist: TodolistDomainType
@@ -83,6 +84,31 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         dispatch(getTasksTC(todolist.id));
     }, [])
 
+    /*------------------------------------------------*/
+
+    const updateFilterAll = () => {
+        dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'all'}))
+    }
+    const updateFilterCompleted = () => {
+        dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'completed'}))
+    }
+    const updateFilterActive = () => {
+        dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'active'}))
+    }
+
+    const renderFilterButton = (onClick: () => void, filter: FilterType, buttonName: string, color: PropTypes.Color) => {
+        return (
+            <Button onClick={onClick}
+                    variant={todolist.filter === filter ? 'contained' : 'text'}
+                    color={color}
+            >
+                {buttonName}
+            </Button>
+        )
+    }
+
+    /*------------------------------------------------*/
+
     return (
         <div>
             <h3>
@@ -99,17 +125,26 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
             <div style={{margin: '10px'}}>
                 {/*<ButtonExample todolistId={todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
-                <Button onClick={() => dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'all'}))}
-                        variant={todolist.filter === 'all' ? 'contained' : 'text'}>All
-                </Button>
-                <Button onClick={() => dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'completed'}))}
+
+                {renderFilterButton(updateFilterAll, 'all', 'All', 'inherit')}
+                {/*<Button onClick={updateFilterAll}
+                        variant={todolist.filter === 'all' ? 'contained' : 'text'}>
+                    All
+                </Button>*/}
+
+                {renderFilterButton(updateFilterCompleted, 'all', 'Completed', 'primary')}
+                {/*<Button onClick={updateFilterCompleted}
                         variant={todolist.filter === 'completed' ? 'contained' : 'text'}
-                        color={'primary'}>Completed
-                </Button>
-                <Button onClick={() => dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'active'}))}
+                        color={'primary'}>
+                    Completed
+                </Button>*/}
+
+                {renderFilterButton(updateFilterActive, 'all', 'Active', 'secondary')}
+                {/*<Button onClick={updateFilterActive}
                         variant={todolist.filter === 'active' ? 'contained' : 'text'}
-                        color={'secondary'}>Active
-                </Button>
+                        color={'secondary'}>
+                    Active
+                </Button>*/}
             </div>
             <ul>
                 {
