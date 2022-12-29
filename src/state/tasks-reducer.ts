@@ -99,10 +99,13 @@ export const updateTaskTC = createAsyncThunk('tasks/updateTask', async (param: {
         ...param.domainModel
     }
 
+    dispatch(appSetStatusAC({status: 'loading'}));
+
     try {
         const response = await todolistsAPI.updateTask(param.todolistId, param.taskId, apiModel)
 
         if (response.data.resultCode === 0) {
+            dispatch(appSetStatusAC({status: 'succeeded'}));
             return param;
         } else {
             handleServerAppError(response.data, dispatch);

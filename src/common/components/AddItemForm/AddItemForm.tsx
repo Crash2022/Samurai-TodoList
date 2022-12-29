@@ -40,23 +40,29 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
     }
 
     return (
-        <div>
-            <TextField variant="outlined"
-                       label="Введите текст"
-                       onChange={onChangeInputHandler}
-                       onKeyDown={onKeyDownHandler}
-                       value={inputValue}
-                       error={!!error}
-                       helperText={error}
-                       disabled={disabled}
-            />
-            <IconButton onClick={callBackButtonHandler}
-                        color="primary"
-                        size="medium"
-                        disabled={disabled}
-            >
-                <AddComment/>
-            </IconButton>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <div>
+                <TextField variant="outlined"
+                           label="Введите текст"
+                           onChange={onChangeInputHandler}
+                           onKeyDown={onKeyDownHandler}
+                           value={inputValue}
+                           error={!!error}
+                           helperText={error}
+                           disabled={disabled}
+                           // style={{height: '80px'}}
+                />
+            </div>
+            <div>
+                <IconButton onClick={callBackButtonHandler}
+                            color="primary"
+                            size="medium"
+                            disabled={disabled}
+                            style={{marginLeft: '5px'}}
+                >
+                    <AddComment/>
+                </IconButton>
+            </div>
         </div>
     );
 })

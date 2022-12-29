@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {TextField} from '@material-ui/core';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {selectAppError} from '../../../state/selectors';
+import {selectAppStatus} from '../../../state/selectors';
 
 type EditableSpanPropsType = {
     title: string
@@ -12,7 +12,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title,
 
     console.log('editable span')
 
-    // const error = useAppSelector(selectAppError);
+    const status = useAppSelector(selectAppStatus)
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [inputTitle, setInputTitle] = useState<string>('');
@@ -44,6 +44,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title,
                 onChange={onChangeInputHandler}
                 onBlur={onClickNotEditSpanHandler}
                 onKeyDown={enterChangeTitle}
+                disabled={status === 'loading'}
             />
             : <span onDoubleClick={onClickEditSpanHandler}>{title}</span>
     );

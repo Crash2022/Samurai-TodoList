@@ -69,7 +69,7 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
             <EditableSpan title={task.title}
                           onChangeInput={changeTaskTitleHandler}
             />
-            <IconButton onClick={removeTaskHandler}>
+            <IconButton onClick={removeTaskHandler} disabled={status === 'loading'}>
                 <Delete/>
             </IconButton>
         </li>

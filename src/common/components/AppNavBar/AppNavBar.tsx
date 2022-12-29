@@ -63,7 +63,7 @@ export const AppNavBar = () => {
                     }
 
                 </Toolbar>
-                {status === 'loading' && <LinearProgress/>}
+                {status === 'loading' && <LinearProgress style={{width: '100%'}}/>}
             </Container>
         </AppBar>
     )
