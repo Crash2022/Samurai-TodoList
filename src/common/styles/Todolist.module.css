@@ -125,3 +125,6 @@ li {
     width: 300px;
     /*margin-left: 15px;*/
 }
+.editableSpan {
+    width: 300px;
+}

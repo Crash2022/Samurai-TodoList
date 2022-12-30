@@ -46,6 +46,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title,
                 onBlur={onClickNotEditSpanHandler}
                 onKeyDown={enterChangeTitle}
                 disabled={status === 'loading'}
+                className={s.editableSpan}
             />
             : <span onDoubleClick={onClickEditSpanHandler} className={s.textSpan}>{title}</span>
     );
