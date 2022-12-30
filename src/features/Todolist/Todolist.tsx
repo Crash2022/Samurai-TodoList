@@ -117,7 +117,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     /*------------------------------------------------*/
 
     return (
-        <div >
+        <div>
             <h3 className={s.h3}>
                 <EditableSpan title={todolist.title}
                               onChangeInput={changeTodolistTitleHandler}
