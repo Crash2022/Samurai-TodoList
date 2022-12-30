@@ -164,13 +164,12 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
                         )
                     })
                 }
-
-                {
-                    tasksObj.length === 0
-                        ? <div className={s.noTasks}>{MESSAGE_TASKS_END}</div>
-                        : ''
-                }
             </ul>
+            {
+                tasksObj.length === 0
+                    ? <div className={s.noTasks}>{MESSAGE_TASKS_END}</div>
+                    : ''
+            }
         </div>
     );
 })

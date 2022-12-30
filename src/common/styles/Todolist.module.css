@@ -61,7 +61,7 @@
 /*-----TodolistMain-----*/
 .todolistPaper {
     padding: 15px;
-    max-width: 350px;
+    width: 350px;
 }
 
 /*-----Todolist-----*/
@@ -92,6 +92,8 @@ li {
     font-size: 16px;
     font-weight: bold;
     color: orange;
+    text-align: center;
+    margin: 5px 0;
 }
 .todoEnd {
     text-align: center;
@@ -120,5 +122,6 @@ li {
 /*-----EditableSpan-----*/
 .textSpan {
     word-wrap: break-word;
-    max-width: 300px;
+    width: 300px;
+    /*margin-left: 15px;*/
 }
