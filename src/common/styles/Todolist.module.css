@@ -64,6 +64,18 @@
     width: 350px;
     margin: 20px 0;
 }
+.todolistGridWrapper {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    height: 75vh;
+}
+.todolistAddForm {
+    padding: 20px;
+    text-align: center;
+}
+.todolistAddForm_item {
+    padding: 10px;
+}
 
 /*-----Todolist-----*/
 h3 {

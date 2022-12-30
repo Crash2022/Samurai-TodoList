@@ -29,8 +29,8 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
 
     return (
         <>
-            <Grid container style={{padding: '20px', textAlign: 'center'}} direction={'column'}>
-                <Grid item style={{padding: '10px'}}>
+            <Grid container direction={'column'} className={s.todolistAddForm}>
+                <Grid item className={s.todolistAddForm_item}>
                     Добавить новый список
                 </Grid>
                 <Grid item>
@@ -41,17 +41,19 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
             {
                 todolists.length !== 0 ?
 
-                    <Grid container spacing={5} justifyContent={'center'} /*style={{flexWrap: 'nowrap', overflowX: 'scroll', height: '75vh'}}*/>
+                    <Grid container spacing={5} justifyContent={'center'} className={s.todolistGridWrapper}>
                         {
                             todolists.map(todo => {
                                 return (
                                     <Grid item key={todo.id}>
-                                        <Paper elevation={8} className={s.todolistPaper}>
+                                        {/*<Paper elevation={8} className={s.todolistPaper}>*/}
+                                        <div>
                                             <Todolist
                                                 todolist={todo}
                                                 demo={demo}
                                             />
-                                        </Paper>
+                                        </div>
+                                        {/*</Paper>*/}
                                     </Grid>
                                 )
                             })

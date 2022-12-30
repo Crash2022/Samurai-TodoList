@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react'
 import s from '../../common/styles/Todolist.module.css'
 import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm';
 import {EditableSpan} from '../../common/components/EditableSpan/EditableSpan';
-import {Button, IconButton} from '@material-ui/core';
+import {Button, IconButton, Paper} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 import {createTaskTC, getTasksTC} from '../../state/tasks-reducer';
 import {Task} from '../Task/Task';
@@ -117,7 +117,8 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     /*------------------------------------------------*/
 
     return (
-        <div>
+        // <div>
+        <Paper elevation={8} className={s.todolistPaper}>
             <h3 className={s.h3}>
                 <EditableSpan title={todolist.title}
                               onChangeInput={changeTodolistTitleHandler}
@@ -170,7 +171,8 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
                     ? <div className={s.noTasks}>{MESSAGE_TASKS_END}</div>
                     : ''
             }
-        </div>
+        </Paper>
+        // </div>
     );
 })
 
