@@ -4,7 +4,7 @@ import {Menu} from '@material-ui/icons';
 import React, {useCallback, useEffect} from 'react';
 import {logoutTC} from '../../../state/login-reducer';
 import {Link, useNavigate} from 'react-router-dom';
-import s from './AppNavBar.module.css';
+import s from '../../styles/Todolist.module.css';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {selectAppStatus, selectAuthIsLoggedIn} from '../../../state/selectors';
 import {useAppSelector} from '../../hooks/useAppSelector';

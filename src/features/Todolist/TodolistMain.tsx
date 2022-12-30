@@ -41,7 +41,7 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
             {
                 todolists.length !== 0 ?
 
-                    <Grid container spacing={5} justifyContent={'center'} className={s.todolistGridWrapper}>
+                    <Grid container spacing={5} /*justifyContent={'center'}*/ /*className={s.todolistGridWrapper}*/ style={{flexWrap: 'nowrap', overflowX: 'scroll', height: '75vh'}}>
                         {
                             todolists.map(todo => {
                                 return (

@@ -58,6 +58,24 @@
 
 
 /*-----для Material UI-----*/
+/*-----App-----*/
+.appContainer {
+    max-width: 100%;
+}
+
+/*-----NavBar-----*/
+.appNavBar {
+    height: 70px;
+}
+.navbarMenu {
+    display: flex;
+    align-items: center;
+}
+.linkStyle {
+    text-decoration: none;
+    color: white;
+}
+
 /*-----TodolistMain-----*/
 .todolistPaper {
     padding: 15px;

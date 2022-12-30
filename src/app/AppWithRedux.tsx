@@ -7,7 +7,7 @@ import {initializeAppTC} from '../state/app-reducer';
 import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
 import {AppNavBar} from '../common/components/AppNavBar/AppNavBar';
-import s from '../common/components/AppNavBar/AppNavBar.module.css'
+import s from '../common/styles/Todolist.module.css'
 import {selectAppInitialized, selectAuthIsLoggedIn} from '../state/selectors';
 import {useAppSelector} from '../common/hooks/useAppSelector';
 import {useAppDispatch} from '../common/hooks/useAppDispatch';
@@ -122,7 +122,7 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
                 <ErrorSnackBar/>
             </div>
 
-            <Container fixed>
+            <Container fixed className={s.appContainer}>
 
                 <Routes>
                     <Route element={<PrivateRoutes/>}>
