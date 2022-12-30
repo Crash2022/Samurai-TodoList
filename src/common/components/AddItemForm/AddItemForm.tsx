@@ -15,7 +15,8 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
     const [inputValue, setInputValue] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
 
-    const MESSAGE_INPUT_VALUE_REQUIRED = 'Поле обязательно для заполнения!';
+    // const MESSAGE_INPUT_VALUE_REQUIRED = 'Поле обязательно для заполнения!';
+    const MESSAGE_INPUT_VALUE_REQUIRED = 'Field is required!';
 
     const callBackButtonHandler = () => {
 
@@ -44,7 +45,8 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
         <div className={s.addItemForm}>
             <div>
                 <TextField variant="outlined"
-                           label="Введите текст"
+                           // label="Введите текст"
+                           label="Enter text here..."
                            onChange={onChangeInputHandler}
                            onKeyDown={onKeyDownHandler}
                            value={inputValue}

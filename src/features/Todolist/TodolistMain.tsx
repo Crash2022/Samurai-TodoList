@@ -15,7 +15,8 @@ type TodolistMainType = {
 
 export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
 
-    const MESSAGE_TODOS_END = 'Список задач пуст!';
+    // const MESSAGE_TODOS_END = 'Список задач пуст!';
+    const MESSAGE_TODOS_END = 'No todolists';
 
     const dispatch = useAppDispatch();
     const todolists = useAppSelector(selectTodolists);
@@ -31,7 +32,7 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
         <>
             <Grid container direction={'column'} className={s.todolistAddForm}>
                 <Grid item className={s.todolistAddForm_item}>
-                    Добавить новый список
+                    Add new todolist
                 </Grid>
                 <Grid item>
                     <AddItemForm addItem={addNewTodoList}/>

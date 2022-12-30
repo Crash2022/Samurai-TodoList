@@ -32,7 +32,8 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     // const tasksObj = useAppSelector(selectTasksObj[todolist.id]);
     const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[todolist.id]);
 
-    const MESSAGE_TASKS_END = 'Задания выполнены';
+    // const MESSAGE_TASKS_END = 'Задания выполнены';
+    const MESSAGE_TASKS_END = 'No tasks in this todolist';
 
     /*------------------------------------------------*/
 
