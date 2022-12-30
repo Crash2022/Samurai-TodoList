@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {IconButton, TextField} from '@material-ui/core';
 import {AddComment} from '@material-ui/icons';
-import s from './AddItemForm.module.css'
+import s from '../../styles/Todolist.module.css'
 
 type AddItemFormPropsType = {
     addItem: (titleInput: string) => void

@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {TextField} from '@material-ui/core';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {selectAppStatus} from '../../../state/selectors';
-import s from './EditableSpan.module.css'
+import s from '../../styles/Todolist.module.css'
 
 type EditableSpanPropsType = {
     title: string

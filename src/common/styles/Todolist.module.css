@@ -1,4 +1,4 @@
-/*мои стили*/
+/*-----мои стили-----*/
 /*.todolistMain {
     display: flex;
     justify-content: center;
@@ -57,14 +57,14 @@
 }*/
 
 
-
-/*TodolistMain*/
+/*-----для Material UI-----*/
+/*-----TodolistMain-----*/
 .todolistPaper {
     padding: 15px;
     max-width: 350px;
 }
 
-/*Todolist*/
+/*-----Todolist-----*/
 h3 {
     display: flex;
     justify-content: center;
@@ -75,7 +75,7 @@ h3 {
     text-align: center;
 }
 
-/*Task*/
+/*-----Task-----*/
 li {
     list-style-type: none;
 }
@@ -108,4 +108,17 @@ li {
 .taskText {
     word-wrap: break-word;
     width: 200px;
+}
+
+/*-----AddItemForm-----*/
+.addItemForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*-----EditableSpan-----*/
+.textSpan {
+    word-wrap: break-word;
+    max-width: 300px;
 }
