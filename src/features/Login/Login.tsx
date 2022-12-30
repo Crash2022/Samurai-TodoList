@@ -15,6 +15,7 @@ import {Navigate} from 'react-router-dom';
 import {useAppDispatch} from '../../common/hooks/useAppDispatch';
 import {useAppSelector} from '../../common/hooks/useAppSelector';
 import {selectAuthIsLoggedIn} from '../../state/selectors';
+import s from '../../common/styles/Todolist.module.css'
 
 type FormValuesType = {
     email: string
@@ -75,17 +76,11 @@ export const Login = () => {
     }
 
     return (
-        <Grid container justifyContent={'center'} style={{marginTop: '60px'}}>
+        <Grid container justifyContent={'center'} className={s.loginGrid}>
             <Grid>
-                <form onSubmit={formik.handleSubmit}
-                      style={{
-                          // border: '1px solid #3f51b5',
-                          padding: '30px',
-                          borderRadius: '5px',
-                          boxShadow: '2px 2px 10px 1px gray'
-                      }}>
+                <form onSubmit={formik.handleSubmit} className={s.form}>
                     <FormControl>
-                        <FormLabel style={{textAlign: 'center'}}>
+                        <FormLabel className={s.formLabel}>
                             <p>
                                 To login get registered <a href={'https://social-network.samuraijs.com'}
                                                            target={'_blank'}>here</a>
@@ -102,7 +97,7 @@ export const Login = () => {
                         </FormLabel>
 
                         <FormGroup>
-                            <div style={{height: '90px', width: '100%'}}>
+                            <div className={s.formGroupEmail}>
                                 <TextField label="E-mail"
                                            margin="normal"
                                            style={{width: '252px'}}
@@ -115,7 +110,7 @@ export const Login = () => {
                                 }
                             </div>
 
-                            <div style={{height: '90px', marginBottom: '20px'}}>
+                            <div className={s.formGroupPassword}>
                                 <TextField label="Password"
                                            margin="normal"
                                            style={{width: '252px'}}

@@ -124,8 +124,32 @@ li {
 .textSpan {
     word-wrap: break-word;
     width: 300px;
+    text-align: center;
     /*margin-left: 15px;*/
 }
 .editableSpan {
     width: 300px;
+}
+
+/*-----Login-----*/
+.loginGrid {
+    margin-top: 60px;
+}
+.form {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px 1px gray;
+    width: 300px;
+    text-align: center;
+}
+.formLabel {
+    text-align: center;
+}
+.formGroupEmail {
+    height: 90px;
+    width: 100%;
+}
+.formGroupPassword {
+    height: 90px;
+    margin-bottom: 20px;
 }
