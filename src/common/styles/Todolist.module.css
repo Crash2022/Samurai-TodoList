@@ -85,7 +85,6 @@
 .todolistGridWrapper {
     flex-wrap: nowrap;
     overflow-x: scroll;
-    height: 75vh;
 }
 .todolistAddForm {
     padding: 20px;
