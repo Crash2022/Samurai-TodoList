@@ -1,6 +1,7 @@
 import {authAPI} from '../api/todolistsAPI';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {setIsLoggedInAC} from './login-reducer';
 
 // redux-toolkit
 export type AppInitialStateType = {
@@ -21,6 +22,7 @@ export const initializeAppTC = createAsyncThunk('app/initializeApp',
             const response = await authAPI.authMe();
 
             if (response.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC({isLoggedIn: true}))
                 dispatch(appSetStatusAC({status: 'succeeded'}));
             } else {
                 handleServerAppError(response.data, dispatch);
