@@ -1,6 +1,6 @@
 import {TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
-import {handleServerNetworkError} from '../common/utils/errorUtils';
+import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // redux-toolkit
@@ -50,8 +50,14 @@ export const createTodolistTC = createAsyncThunk('todolists/createTodolist',
 
         try {
             const response = await todolistsAPI.createTodolist(todolist.title);
-            dispatch(appSetStatusAC({status: 'succeeded'}));
-            return {todolist: response.data.data.item};
+
+            if (response.data.resultCode === 0) {
+                dispatch(appSetStatusAC({status: 'succeeded'}));
+                return {todolist: response.data.data.item};
+            } else {
+                handleServerAppError(response.data, dispatch);
+                return rejectWithValue(null);
+            }
         } catch (err) {
             const error: any = err; // AxiosError
             handleServerNetworkError(error, dispatch);

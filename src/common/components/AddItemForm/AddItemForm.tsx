@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from 'react';
 import {IconButton, TextField} from '@material-ui/core';
 import {AddComment} from '@material-ui/icons';
 import s from '../../styles/Todolist.module.css'
@@ -17,8 +17,9 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
 
     // const MESSAGE_INPUT_VALUE_REQUIRED = 'Поле обязательно для заполнения!';
     const MESSAGE_INPUT_VALUE_REQUIRED = 'Field is required!';
+    const MESSAGE_INPUT_VALUE_LENGTH = 'Text length must be 1-100 symbols';
 
-    const callBackButtonHandler = () => {
+    /*const callBackButtonHandler = () => {
 
         const trimValue = inputValue.trim()
 
@@ -27,6 +28,18 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
             setInputValue('');
         } else {
             setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);
+        }
+    }*/
+
+    const callBackButtonHandler = () => {
+
+        const trimValue = inputValue.trim()
+
+        if (trimValue && trimValue.length < 100) {
+            addItem(trimValue);
+            setInputValue('');
+        } else {
+            setError(`${MESSAGE_INPUT_VALUE_LENGTH}`);
         }
     }
 
