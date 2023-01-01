@@ -169,6 +169,10 @@ li {
     justify-content: center;
     align-items: center;
 }
+.addItemForm_length {
+    font-size: 12px;
+    text-align: center;
+}
 
 /*-----EditableSpan-----*/
 .textSpan {

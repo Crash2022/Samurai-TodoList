@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from 'react';
 import {TextField} from '@material-ui/core';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {selectAppStatus} from '../../../state/selectors';
@@ -15,16 +15,31 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title,
 
     const status = useAppSelector(selectAppStatus)
 
+    const MESSAGE_INPUT_VALUE_LENGTH = 'Text length must be 1-100 symbols';
+
     const [editMode, setEditMode] = useState<boolean>(false);
     const [inputTitle, setInputTitle] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
+    const [label, setLabel] = useState<string>('Change text');
 
     const onClickEditSpanHandler = () => {
         setEditMode(true);
         setInputTitle(title);
     }
+    // const onClickNotEditSpanHandler = () => {
+    //     onChangeInput(inputTitle);
+    //     setEditMode(false);
+    // }
+
     const onClickNotEditSpanHandler = () => {
-        onChangeInput(inputTitle);
-        setEditMode(false);
+        if (inputTitle.length > 0 && inputTitle.length < 100) {
+            onChangeInput(inputTitle);
+            setEditMode(false);
+        } else {
+            setError(`${MESSAGE_INPUT_VALUE_LENGTH}`);
+            setLabel(`${MESSAGE_INPUT_VALUE_LENGTH}`);
+        }
+
     }
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,13 +50,22 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = React.memo(({title,
         return event.key === 'Enter' ? onClickNotEditSpanHandler() : '';
     }
 
+    useEffect(() => {
+        if (inputTitle.length < 1 && inputTitle.length > 100) {
+            setError(`${MESSAGE_INPUT_VALUE_LENGTH}`);
+            setLabel(`${MESSAGE_INPUT_VALUE_LENGTH}`);
+        }
+    }, [])
+
     return (
         editMode
             ? <TextField
-                label="Измените текст"
+                // label="Измените текст"
+                label={label}
                 variant="standard"
                 autoFocus
                 value={inputTitle}
+                error={!!error}
                 onChange={onChangeInputHandler}
                 onBlur={onClickNotEditSpanHandler}
                 onKeyDown={enterChangeTitle}

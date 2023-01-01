@@ -35,7 +35,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
 
         const trimValue = inputValue.trim()
 
-        if (trimValue && trimValue.length < 100) {
+        if (trimValue && trimValue.length <= 100) {
             addItem(trimValue);
             setInputValue('');
         } else {
@@ -67,6 +67,9 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
                            helperText={error}
                            disabled={disabled}
                 />
+                <div className={s.addItemForm_length}>
+                    Text length: {inputValue.length} symbols, max - 100
+                </div>
             </div>
             <div>
                 <IconButton onClick={callBackButtonHandler}
