@@ -19,7 +19,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
     const MESSAGE_INPUT_VALUE_REQUIRED = 'Field is required!';
     const MESSAGE_INPUT_VALUE_LENGTH = 'Text length must be 1-100 symbols';
 
-    /*const callBackButtonHandler = () => {
+    const callBackButtonHandler = () => {
 
         const trimValue = inputValue.trim()
 
@@ -29,9 +29,9 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
         } else {
             setError(`${MESSAGE_INPUT_VALUE_REQUIRED}`);
         }
-    }*/
+    }
 
-    const callBackButtonHandler = () => {
+/*    const callBackButtonHandler = () => {
 
         const trimValue = inputValue.trim()
 
@@ -41,7 +41,7 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = React.memo(({addItem,
         } else {
             setError(`${MESSAGE_INPUT_VALUE_LENGTH}`);
         }
-    }
+    }*/
 
     const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.currentTarget.value)

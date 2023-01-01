@@ -95,11 +95,27 @@
 }
 
 /*-----Todolist-----*/
-h3 {
+.todolistTitleBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    margin-bottom: 25px;
+    margin-top: 15px;
+}
+.todolist_title {
+    padding-left: 30px;
+    word-wrap: break-word;
+    width: 250px;
+}
+.todolist_deleteBtn {
+
+}
+/*h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+}*/
 .filterButtons {
     margin: 10px;
     text-align: center;
@@ -157,7 +173,7 @@ li {
 /*-----EditableSpan-----*/
 .textSpan {
     word-wrap: break-word;
-    width: 300px;
+    width: 350px;
     text-align: center;
     /*margin-left: 15px;*/
 }

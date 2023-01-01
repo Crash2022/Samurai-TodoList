@@ -90,7 +90,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     // фильтрация тудулиста в одной функции
     const updateAllFilterButtonHandler = useCallback((filter: FilterType) => {
         dispatch(updateTodolistFilterAC({id: todolist.id, filter: filter}))
-    },[todolist.id])
+    }, [todolist.id])
 
     // фильтрация тудулиста в разнах функциях
     /*const updateFilterAll = () => {
@@ -106,7 +106,9 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     const renderFilterButton = (/*onClick: () => void,*/ filter: FilterType,
                                 buttonName: string, color: PropTypes.Color) => {
         return (
-            <Button onClick={() => {updateAllFilterButtonHandler(filter)}}
+            <Button onClick={() => {
+                updateAllFilterButtonHandler(filter)
+            }}
                     variant={todolist.filter === filter ? 'contained' : 'text'}
                     color={color}
             >
@@ -120,35 +122,42 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     return (
         // <div>
         <Paper elevation={8} className={s.todolistPaper}>
-            <h3 className={s.h3}>
-                <EditableSpan title={todolist.title}
-                              onChangeInput={changeTodolistTitleHandler}
-                />
-                <IconButton onClick={removeTodolistHandler} color="secondary"
-                            disabled={todolist.entityStatus === 'loading'}>
-                    <Delete/>
-                </IconButton>
-            </h3>
+            <div className={s.todolistTitleBlock}>
+                <div className={s.todolist_title}>
+                    <h3 className={s.h3}>
+                        <EditableSpan title={todolist.title}
+                                      onChangeInput={changeTodolistTitleHandler}
+                        />
+                    </h3>
+                </div>
+
+                <div className={s.todolist_deleteBtn}>
+                    <IconButton onClick={removeTodolistHandler} color="secondary"
+                                disabled={todolist.entityStatus === 'loading'}>
+                        <Delete/>
+                    </IconButton>
+                </div>
+            </div>
 
             <AddItemForm addItem={addTaskHandler} disabled={todolist.entityStatus === 'loading'}/>
 
             <div className={s.filterButtons}>
                 {/*<ButtonExample todolistId={todolistId} filter={props.filter} buttonTitle={'all'}/>*/}
 
-                {renderFilterButton( 'all', 'All', 'default')}
+                {renderFilterButton('all', 'All', 'default')}
                 {/*<Button onClick={updateFilterAll}
                         variant={todolist.filter === 'all' ? 'contained' : 'text'}>
                     All
                 </Button>*/}
 
-                {renderFilterButton(  'completed', 'Completed', 'primary')}
+                {renderFilterButton('completed', 'Completed', 'primary')}
                 {/*<Button onClick={updateFilterCompleted}
                         variant={todolist.filter === 'completed' ? 'contained' : 'text'}
                         color={'primary'}>
                     Completed
                 </Button>*/}
 
-                {renderFilterButton(  'active', 'Active', 'secondary')}
+                {renderFilterButton('active', 'Active', 'secondary')}
                 {/*<Button onClick={updateFilterActive}
                         variant={todolist.filter === 'active' ? 'contained' : 'text'}
                         color={'secondary'}>
