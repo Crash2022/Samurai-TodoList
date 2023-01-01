@@ -74,8 +74,11 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
                                   onChangeInput={changeTaskTitleHandler}
                     />
                 </div>
-                <div>
-                    <IconButton onClick={removeTaskHandler} disabled={status === 'loading'}>
+                <div className={s.deleteButton}>
+                    <IconButton onClick={removeTaskHandler}
+                                disabled={status === 'loading'}
+                                size='small'
+                    >
                         <Delete/>
                     </IconButton>
                 </div>
