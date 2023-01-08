@@ -5,6 +5,7 @@ import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {appReducer} from './app-reducer';
 import {loginReducer} from './login-reducer';
 import {configureStore} from '@reduxjs/toolkit';
+import {rootReducer} from './reducers'
 
 // для React Redux DevTools Chrome
 declare global {
@@ -19,12 +20,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // export const store = createStore(rootReducer, composeEnhancers());
 
 
-const rootReducer = combineReducers({
-    todolists: todolistsReducer,
-    tasks: tasksReducer,
-    app: appReducer,
-    auth: loginReducer
-})
+// const rootReducer = combineReducers({
+//     todolists: todolistsReducer,
+//     tasks: tasksReducer,
+//     app: appReducer,
+//     auth: loginReducer
+// })
 
 // react-redux store
 // @ts-ignore // для Chrome Extension
@@ -35,6 +36,13 @@ export const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleware)
 })
+
+// hot reloading-replacement
+if (process.env.NODE_ENV === 'development' && module.hot) {
+    module.hot.accept('./reducers', () => {
+        store.replaceReducer(rootReducer)
+    })
+}
 
 // типизация state
 export type AppRootStateType = ReturnType<typeof rootReducer>;

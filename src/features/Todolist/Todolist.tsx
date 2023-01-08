@@ -10,7 +10,7 @@ import {
     TodolistDomainType,
     updateTodolistFilterAC,
     deleteTodolistTC,
-    updateTodolistTitleTC, FilterType
+    updateTodolistTitleTC, FilterType, getTodolistsTC
 } from '../../state/todolists-reducer';
 import {TaskAPIType, TaskPriorities, TaskStatuses} from '../../api/todolistsAPI';
 import {v1} from 'uuid';
@@ -82,7 +82,10 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         if (demo) {
             return;
         }
-        dispatch(getTasksTC(todolist.id));
+        // добавлена проверка
+        if (!filteredTasks.length) {
+            dispatch(getTodolistsTC());
+        }
     }, [])
 
     /*------------------------------------------------*/
