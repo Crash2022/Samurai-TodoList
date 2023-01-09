@@ -123,7 +123,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     /*------------------------------------------------*/
 
     return (
-        // <div>
         <Paper elevation={8} className={s.todolistPaper}>
             <div className={s.todolistTitleBlock}>
                 <div className={s.todolist_title}>
@@ -185,7 +184,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
                     : ''
             }
         </Paper>
-        // </div>
     );
 })
 

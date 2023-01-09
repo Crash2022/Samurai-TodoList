@@ -8,12 +8,6 @@ import React, {useCallback, useEffect} from 'react';
 import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm';
 import {createTodolistTC, getTodolistsTC} from '../../state/todolists-reducer';
 import {v1} from 'uuid';
-// import {gridStyle} from './TodolistMainStyles'
-
-// const gridStyle = {
-//     flexWrap: 'nowrap',
-//     overflowX: 'scroll'
-// }
 
 type TodolistMainType = {
     demo?: boolean
@@ -56,23 +50,18 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
                 todolists.length !== 0 ?
 
                     <Grid container spacing={5}
-                        /*justifyContent={'center'}*/
-                        /*className={s.todolistGridWrapper}*/
-                          style={{flexWrap: 'nowrap', overflowX: 'scroll'}}
-                          // style={gridStyle}
+                          // style={{flexWrap: 'nowrap', overflowX: 'scroll'}}
                     >
                         {
                             todolists.map(todo => {
                                 return (
                                     <Grid item key={todo.id}>
-                                        {/*<Paper elevation={8} className={s.todolistPaper}>*/}
                                         <div>
                                             <Todolist
                                                 todolist={todo}
                                                 demo={demo}
                                             />
                                         </div>
-                                        {/*</Paper>*/}
                                     </Grid>
                                 )
                             })
