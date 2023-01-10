@@ -11,10 +11,10 @@ beforeEach(() => {
 test('user should be logged in', () => {
 
     // react-redux
-    // const endTasksState = loginReducer(startState, setIsLoggedInAC({isLoggedIn: true}));
+    const endTasksState = loginReducer(startState, setIsLoggedInAC(true));
 
     // redux-toolkit
-    const endTasksState = loginReducer(startState, setIsLoggedInAC({isLoggedIn: true}));
+    // const endTasksState = loginReducer(startState, setIsLoggedInAC({isLoggedIn: true}));
     expect(endTasksState.isLoggedIn).toBeTruthy();
 });
 

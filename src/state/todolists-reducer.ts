@@ -2,9 +2,10 @@ import {TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {AppThunkType} from "./store";
 
 // redux-toolkit
-export type FilterType = 'all' | 'active' | 'completed';
+/*export type FilterType = 'all' | 'active' | 'completed';
 
 export type TodolistDomainType = TodolistAPIType & {
     filter: FilterType
@@ -130,7 +131,7 @@ const slice = createSlice({
 })
 
 export const todolistsReducer = slice.reducer;
-export const {updateTodolistFilterAC, changeTodolistEntityStatusAC} = slice.actions;
+export const {updateTodolistFilterAC, changeTodolistEntityStatusAC} = slice.actions;*/
 
 // вариант thunk из react-redux
 /*export const getTodolistsTC = (): AppThunkType => {
@@ -208,15 +209,15 @@ export const {updateTodolistFilterAC, changeTodolistEntityStatusAC} = slice.acti
 // react-redux
 
 // reducer
-/*export type FilterType = 'all' | 'active' | 'completed';
+export type FilterType = 'all' | 'active' | 'completed';
 
 export type TodolistDomainType = TodolistAPIType & {
     filter: FilterType
     entityStatus: AppInitialStateStatusType
 }
 
-export let todolistId1 = v1();
-export let todolistId2 = v1();*/
+// export let todolistId1 = v1();
+// export let todolistId2 = v1();
 
 // иной метод типизации initialState
 // type StateType = typeof initialState
@@ -226,9 +227,9 @@ export let todolistId2 = v1();*/
 //     {id: todolistId2, title: 'Купить', filter: 'all', addedDate: '', order: 1}
 // ]
 
-// const initialState: Array<TodolistDomainType> = [];
+const initialState: Array<TodolistDomainType> = [];
 
-/*export const todolistsReducer = (state: Array<TodolistDomainType> = initialState,
+export const todolistsReducer = (state: Array<TodolistDomainType> = initialState,
                                  action: TodolistsActionTypes): Array<TodolistDomainType> => {
     switch (action.type) {
         case 'DELETE_TODOLIST': {
@@ -259,12 +260,12 @@ export let todolistId2 = v1();*/
             //throw new Error("I don't know action type!");
             return state;
     }
-}*/
+}
 
 /*-----------------------------------------------------------------------------------*/
 
 // actions
-/*export type TodolistsActionTypes =
+export type TodolistsActionTypes =
     CreateTodolistACType |
     DeleteTodolistACType |
     UpdateTodolistTitleACType |
@@ -279,7 +280,7 @@ export const deleteTodolistAC = (todolistId: string) => ({
 } as const)
 
 export type CreateTodolistACType = ReturnType<typeof createTodolistAC>
-export const createTodolistAC = (todolist: TodolistAPIType /!*title: string*!/) => ({
+export const createTodolistAC = (todolist: TodolistAPIType /*title: string*/) => ({
     type: 'CREATE_NEW_TODOLIST', todolist
     // title,
     // todolistId: v1()
@@ -307,7 +308,7 @@ export type SetTodolistsACType = ReturnType<typeof setTodolistsAC>
 export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
     type: 'SET_TODOLISTS',
     todolists
-} as const)*/
+} as const)
 
 // не нужен
 // export type IsLoadingACType = ReturnType<typeof isLoadingAC>
@@ -330,7 +331,6 @@ export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
 //     }
 // }
 
-/*
 export const getTodolistsTC = (): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
@@ -364,7 +364,7 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => {
     }
 }
 
-export const createTodolistTC = (todolist: TodolistDomainType /!*title: string*!/): AppThunkType => {
+export const createTodolistTC = (todolist: TodolistDomainType /*title: string*/): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.createTodolist(todolist.title)
@@ -408,4 +408,4 @@ export const updateTodolistTitleTC = (todolistId: string, title: string): AppThu
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}*/
+}

@@ -12,13 +12,19 @@ beforeEach(() => {
 
 test('app status should be changed', () => {
 
-    const endTasksState = appReducer(startState, appSetStatusAC({status: 'loading'}));
+    // redux-toolkit
+    // const endTasksState = appReducer(startState, appSetStatusAC({status: 'loading'}));
+    
+    const endTasksState = appReducer(startState, appSetStatusAC('loading'));
     expect(endTasksState.status).toBe('loading');
 });
 
 test('app error message should be set', () => {
 
-    const endTasksState = appReducer(startState, appSetErrorAC({error: 'Some Error'}));
+    // redux-toolkit
+    // const endTasksState = appReducer(startState, appSetErrorAC({error: 'Some Error'}));
+
+    const endTasksState = appReducer(startState, appSetErrorAC('Some Error'));
     expect(endTasksState.error).toBe('Some Error');
 });
 

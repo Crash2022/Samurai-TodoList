@@ -2,9 +2,10 @@ import {authAPI, FieldsErrorsType, LoginParamsType} from '../api/todolistsAPI';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {appSetStatusAC} from './app-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {AppThunkType} from "./store";
 
 // redux-toolkit
-export type LoginInitialStateType = {
+/*export type LoginInitialStateType = {
     isLoggedIn: boolean
 }
 
@@ -82,7 +83,7 @@ export const loginReducer = slice.reducer;
 // const setIsLoggedInAC = slice.actions.setIsLoggedInAC;
 
 // определение экшена через деструктуризацию
-export const {setIsLoggedInAC} = slice.actions;
+export const {setIsLoggedInAC} = slice.actions;*/
 
 // вариант thunk из react-redux
 /*export const loginTC = (data: LoginParamsType) => {
@@ -127,7 +128,7 @@ export const {setIsLoggedInAC} = slice.actions;
 // react-redux
 
 // reducer
-/*export type LoginActionTypes = SetIsLoggedInACType;
+export type LoginActionTypes = SetIsLoggedInACType;
 
 export type LoginInitialStateType = {
     isLoggedIn: boolean
@@ -146,65 +147,65 @@ export const loginReducer = (state: LoginInitialStateType = initialState,
         default:
             return state;
     }
-}*/
+}
 
 /*-----------------------------------------------------------------------------------*/
 
 // actions
-// export type SetIsLoggedInACType = ReturnType<typeof setIsLoggedInAC>
-// export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
-//     type: 'LOGIN/SET_IS_LOGGED_IN', isLoggedIn
-// } as const)
+export type SetIsLoggedInACType = ReturnType<typeof setIsLoggedInAC>
+export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
+    type: 'LOGIN/SET_IS_LOGGED_IN', isLoggedIn
+} as const)
 
 /*-----------------------------------------------------------------------------------*/
 
 // thunks
-// export const loginTC = (data: LoginParamsType): AppThunkType => {
-//     return (dispatch) => {
-//         dispatch(appSetStatusAC('loading'));
-//         authAPI.login(data)
-//             .then(response => {
-//                 if (response.data.resultCode === 0) {
-//                     dispatch(setIsLoggedInAC(true));
-//                     dispatch(appSetStatusAC('succeeded'));
-//                 } else {
-//                     handleServerAppError(response.data, dispatch);
-//                     // if (response.data.messages) {
-//                     //     dispatch(appSetErrorAC(response.data.messages[0]));
-//                     // } else {
-//                     //     dispatch(appSetErrorAC('Some Error'));
-//                     // }
-//                 }
-//             })
-//             .catch(error => {
-//                 handleServerNetworkError(error, dispatch);
-//                 // dispatch(appSetErrorAC(error.message));
-//                 // dispatch(appSetStatusAC('failed'));
-//             })
-//     }
-// }
-//
-// export const logoutTC = (): AppThunkType => {
-//     return (dispatch) => {
-//         dispatch(appSetStatusAC('loading'));
-//         authAPI.logout()
-//             .then(response => {
-//                 if (response.data.resultCode === 0) {
-//                     dispatch(setIsLoggedInAC(false));
-//                     dispatch(appSetStatusAC('succeeded'));
-//                 } else {
-//                     handleServerAppError(response.data, dispatch);
-//                     // if (response.data.messages) {
-//                     //     dispatch(appSetErrorAC(response.data.messages[0]));
-//                     // } else {
-//                     //     dispatch(appSetErrorAC('Some Error'));
-//                     // }
-//                 }
-//             })
-//             .catch(error => {
-//                 handleServerNetworkError(error, dispatch);
-//                 // dispatch(appSetErrorAC(error.message));
-//                 // dispatch(appSetStatusAC('failed'));
-//             })
-//     }
-// }
+export const loginTC = (data: LoginParamsType): AppThunkType => {
+    return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
+        authAPI.login(data)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setIsLoggedInAC(true));
+                    dispatch(appSetStatusAC('succeeded'));
+                } else {
+                    handleServerAppError(response.data, dispatch);
+                    // if (response.data.messages) {
+                    //     dispatch(appSetErrorAC(response.data.messages[0]));
+                    // } else {
+                    //     dispatch(appSetErrorAC('Some Error'));
+                    // }
+                }
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+                // dispatch(appSetErrorAC(error.message));
+                // dispatch(appSetStatusAC('failed'));
+            })
+    }
+}
+
+export const logoutTC = (): AppThunkType => {
+    return (dispatch) => {
+        dispatch(appSetStatusAC('loading'));
+        authAPI.logout()
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setIsLoggedInAC(false));
+                    dispatch(appSetStatusAC('succeeded'));
+                } else {
+                    handleServerAppError(response.data, dispatch);
+                    // if (response.data.messages) {
+                    //     dispatch(appSetErrorAC(response.data.messages[0]));
+                    // } else {
+                    //     dispatch(appSetErrorAC('Some Error'));
+                    // }
+                }
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
+                // dispatch(appSetErrorAC(error.message));
+                // dispatch(appSetStatusAC('failed'));
+            })
+    }
+}

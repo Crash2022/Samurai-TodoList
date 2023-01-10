@@ -30,7 +30,7 @@ export const ErrorSnackBar = () => {
             return;
         }
         // setOpen(false);
-        dispatch(appSetErrorAC({error: null}));
+        dispatch(appSetErrorAC( null));
     };
 
     return (

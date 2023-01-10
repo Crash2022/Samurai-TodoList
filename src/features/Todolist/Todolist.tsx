@@ -50,9 +50,11 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     // },[todolistId])
 
     const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
-        dispatch(updateTodolistTitleTC({todolistId: todolist.id, title: newInputValue}));
+        // redux-toolkit
+        // dispatch(updateTodolistTitleTC({todolistId: todolist.id, title: newInputValue}));
+
         // react-redux
-        // dispatch(updateTodolistTitleTC( todolist.id, newInputValue));
+        dispatch(updateTodolistTitleTC( todolist.id, newInputValue));
     }, [todolist.id])
 
     // const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
@@ -92,7 +94,11 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
     // фильтрация тудулиста в одной функции
     const updateAllFilterButtonHandler = useCallback((filter: FilterType) => {
-        dispatch(updateTodolistFilterAC({id: todolist.id, filter: filter}))
+        // redux-toolkit
+        // dispatch(updateTodolistFilterAC({id: todolist.id, filter: filter}))
+
+        // react-redux
+        dispatch(updateTodolistFilterAC(todolist.id, filter))
     }, [todolist.id])
 
     // фильтрация тудулиста в разнах функциях

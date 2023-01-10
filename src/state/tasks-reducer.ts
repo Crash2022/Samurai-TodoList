@@ -1,12 +1,18 @@
 import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses, UpdateTaskModelType} from '../api/todolistsAPI';
-import {AppRootStateType} from './store';
+import {AppRootStateType, AppThunkType} from './store';
 import {appSetStatusAC} from './app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {createTodolistTC, deleteTodolistTC, getTodolistsTC, TodolistDomainType} from './todolists-reducer';
+import {
+    CreateTodolistACType,
+    createTodolistTC, DeleteTodolistACType,
+    deleteTodolistTC,
+    getTodolistsTC, SetTodolistsACType,
+    TodolistDomainType
+} from './todolists-reducer';
 
 // redux-toolkit
-export type TasksListType = {
+/*export type TasksListType = {
     [todolistId: string]: Array<TaskAPIType>
 }
 
@@ -161,7 +167,7 @@ const slice = createSlice({
     }
 })
 
-export const tasksReducer = slice.reducer;
+export const tasksReducer = slice.reducer;*/
 
 // вариант thunk из react-redux
 /*export const getTasksTC = (todolistId: string): AppThunkType => {
@@ -264,9 +270,9 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
 // react-redux
 
 // reducer
-// export type TasksListType = {
-//     [todolistId: string]: Array<TaskAPIType>
-// }
+export type TasksListType = {
+    [todolistId: string]: Array<TaskAPIType>
+}
 
 // иной метод типизации initialState
 // type StateType = typeof initialState
@@ -290,7 +296,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
 //     ]
 // }
 
-/*const initialState: TasksListType = {};
+const initialState: TasksListType = {};
 
 export const tasksReducer = (state: TasksListType = initialState, action: TasksActionTypes): TasksListType => {
     switch (action.type) {
@@ -298,10 +304,10 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
         }
         case 'CREATE_TASK': {
-            /!*const newTask: TaskAPIType = {todoListId: action.todolistId, id: v1(), title: action.titleInput,
+            /*const newTask: TaskAPIType = {todoListId: action.todolistId, id: v1(), title: action.titleInput,
                 status: TaskStatuses.New, priority: TaskPriorities.Low,
                 description: '', addedDate: '', startDate: '', deadline: '', order: 0};
-            return {...state, [action.todolistId]: [newTask,...state[action.todolistId]]};*!/
+            return {...state, [action.todolistId]: [newTask,...state[action.todolistId]]};*/
 
             const newTask: TaskAPIType = action.task;
             return {...state, [newTask.todoListId]: [newTask, ...state[newTask.todoListId]]};
@@ -351,12 +357,12 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
             //throw new Error("I don't know action type!");
             return state;
     }
-}*/
+}
 
 /*-----------------------------------------------------------------------------------*/
 
 // actions
-/*export type TasksActionTypes =
+export type TasksActionTypes =
     DeleteTaskACType |
     CreateTaskACType |
     //UpdateTaskStatusACType |
@@ -375,11 +381,11 @@ export const deleteTaskAC = (todolistId: string, taskId: string) => ({
 } as const)
 
 export type CreateTaskACType = ReturnType<typeof createTaskAC>
-export const createTaskAC = (task: TaskAPIType /!*todolistId: string, titleInput: string*!/) => ({
+export const createTaskAC = (task: TaskAPIType /*todolistId: string, titleInput: string*/) => ({
     type: 'CREATE_TASK', task
-    /!*todolistId,
-    titleInput*!/
-} as const)*/
+    /*todolistId,
+    titleInput*/
+} as const)
 
 // *версия без объекта model
 // export type UpdateTaskStatusACType = ReturnType<typeof updateTaskStatusAC>
@@ -399,7 +405,7 @@ export const createTaskAC = (task: TaskAPIType /!*todolistId: string, titleInput
 // } as const)
 
 // *версия с объектом model для изменения статуса и тайтла таски
-/*export type UpdateTaskACType = ReturnType<typeof updateTaskAC>
+export type UpdateTaskACType = ReturnType<typeof updateTaskAC>
 export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateDomainTaskModelType) => ({
     type: 'UPDATE_TASK',
     todolistId,
@@ -411,12 +417,12 @@ export type SetTasksACType = ReturnType<typeof setTasksAC>
 export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
     type: 'SET_TASKS',
     todolistId, tasks
-} as const)*/
+} as const)
 
 /*-----------------------------------------------------------------------------------*/
 
 // thunks
-/*export const getTasksTC = (todolistId: string): AppThunkType => {
+export const getTasksTC = (todolistId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.getTasks(todolistId)
@@ -430,9 +436,9 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}*/
+}
 
-/*export const createTaskTC = (task: TaskAPIType): AppThunkType => {
+export const createTaskTC = (task: TaskAPIType): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.createTask(task)
@@ -457,9 +463,9 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}*/
+}
 
-/*export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
+export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.deleteTask(todolistId, taskId)
@@ -473,7 +479,7 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}*/
+}
 
 /*
 // менее правильный и короткий вариант
@@ -516,7 +522,6 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, status: T
     }
 }*/
 
-/*
 // обновление разных свойств таски в одной "санке"
 export type UpdateDomainTaskModelType = {
     description?: string
@@ -569,4 +574,4 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}*/
+}

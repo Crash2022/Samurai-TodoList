@@ -1,9 +1,9 @@
-import {combineReducers, compose} from 'redux';
-import {tasksReducer} from './tasks-reducer';
-import {todolistsReducer} from './todolists-reducer';
+import {applyMiddleware, combineReducers, compose, legacy_createStore} from 'redux';
+import {TasksActionTypes, tasksReducer} from './tasks-reducer';
+import {TodolistsActionTypes, todolistsReducer} from './todolists-reducer';
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {appReducer} from './app-reducer';
-import {loginReducer} from './login-reducer';
+import {ApplicationActionTypes, appReducer} from './app-reducer';
+import {LoginActionTypes, loginReducer} from './login-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 import {rootReducer} from './reducers'
 
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
 // })
 
 // redux-toolkit store
-export const store = configureStore({
+/*export const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleware)
 })
@@ -53,7 +53,7 @@ export type AppRootStateType = ReturnType<typeof rootReducer>; // рабочий
 
 export type AppDispatch = typeof store.dispatch;
 
-export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, any>
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, any>*/
 
 /*------------------------------------------------------------*/
 // REACT REDUX
@@ -68,24 +68,24 @@ export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootSta
 
 // react-redux store
 // @ts-ignore // для Chrome Extension
-// export const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+export const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 // типизация state
-// export type AppRootStateType = ReturnType<typeof rootReducer>; // рабочий вариант
+export type AppRootStateType = ReturnType<typeof rootReducer>; // рабочий вариант
 // export type AppRootStateType = ReturnType<typeof store.getState> // типизация из документации
 
 // типизация Dispatch React-Redux
-// export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any>;
+export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any>;
 
 // типизация Thunk React-Redux
-// export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
 
 // типизация всех экшенов для React-Redux
-// export type AppActionType =
-//     TodolistsActionTypes |
-//     TasksActionTypes |
-//     ApplicationActionTypes |
-//     LoginActionTypes;
+export type AppActionType =
+    TodolistsActionTypes |
+    TasksActionTypes |
+    ApplicationActionTypes |
+    LoginActionTypes;
 
 /*------------------------------------------------------------*/
 

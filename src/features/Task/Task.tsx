@@ -23,7 +23,11 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
     const status = useAppSelector(selectAppStatus)
 
     const removeTaskHandler = useCallback(() => {
-        dispatch(deleteTaskTC({todolistId: todolistId, taskId: task.id}));
+        // redux-toolkit
+        // dispatch(deleteTaskTC({todolistId: todolistId, taskId: task.id}));
+
+        // react-redux
+        dispatch(deleteTaskTC(todolistId, task.id));
     }, [todolistId, task.id])
 
     // const removeTaskHandler = useCallback(() => {
@@ -31,13 +35,16 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
     // },[todolistId, task.id])
 
     const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        dispatch(updateTaskTC({
-            todolistId: todolistId, taskId: task.id,
-            domainModel: {status: event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}
-        }));
+        // redux-toolkit
+        // dispatch(updateTaskTC({
+        //     todolistId: todolistId, taskId: task.id,
+        //     domainModel: {status: event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}
+        // }));
+
         // react-redux
-        // dispatch(updateTaskTC(todolistId, task.id,
-        //     {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}));
+        let newIsDoneValue = event.currentTarget.checked;
+        dispatch(updateTaskTC(todolistId, task.id,
+            {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}));
     }, [todolistId, task.id])
 
     // const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -47,13 +54,15 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
     // },[todolistId, task.id])
 
     const changeTaskTitleHandler = useCallback((newInputValue: string) => {
-        dispatch(updateTaskTC({
-            todolistId: todolistId,
-            taskId: task.id,
-            domainModel: {title: newInputValue}
-        }));
+        // redux-toolkit
+        // dispatch(updateTaskTC({
+        //     todolistId: todolistId,
+        //     taskId: task.id,
+        //     domainModel: {title: newInputValue}
+        // }));
+
         // react-redux
-        // dispatch(updateTaskTC(todolistId, task.id, {title: newInputValue}));
+        dispatch(updateTaskTC(todolistId, task.id, {title: newInputValue}));
     }, [todolistId, task.id])
 
     // const changeTaskTitleHandler = useCallback((newInputValue: string) => {
