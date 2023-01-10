@@ -3,6 +3,7 @@ import {handleServerAppError, handleServerNetworkError} from '../common/utils/er
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setIsLoggedInAC} from './login-reducer';
 import {AppThunkType} from "./store";
+import {put, call} from 'redux-saga/effects'
 
 // redux-toolkit
 /*export type AppInitialStateType = {
@@ -144,7 +145,7 @@ export const appSetInitializedAC = (isInitialized: boolean) => ({
 /*-----------------------------------------------------------------------------------*/
 
 // thunks
-export const initializeAppTC = (): AppThunkType => {
+/*export const initializeAppTC = (): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         authAPI.authMe()
@@ -168,4 +169,30 @@ export const initializeAppTC = (): AppThunkType => {
                 // dispatch(appSetStatusAC('failed'));
             })
     }
+}*/
+
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+// react-redux-saga
+
+export function* initializeAppTC_WorkerSaga() {
+    put(appSetStatusAC('loading'));
+    // @ts-ignore
+    const response = yield call(authAPI.authMe)
+        try {
+            if (response.data.resultCode === 0) {
+                yield put(setIsLoggedInAC(true));
+                yield put(appSetStatusAC('succeeded'));
+            } else {
+                handleServerAppError(response.data, yield put);
+            }
+            yield put(appSetInitializedAC(true));
+        }
+        catch(error) {
+            // @ts-ignore
+            handleServerNetworkError(error, yield put);
+        }
 }
+
+export const initializeAppTC_WorkerSagaAC = () => ({type: 'APP/INITIALIZE_APP'})

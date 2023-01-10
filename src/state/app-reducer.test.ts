@@ -4,7 +4,7 @@ import {
     appSetErrorAC,
     appSetInitializedAC,
     appSetStatusAC,
-    initializeAppTC
+    // initializeAppTC
 } from "./app-reducer";
 
 let startState: AppInitialStateType;

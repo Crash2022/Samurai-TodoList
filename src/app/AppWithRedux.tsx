@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import './App.css';
 import {getTodolistsTC} from '../state/todolists-reducer';
 import {ErrorSnackBar} from '../common/components/ErrorSnackBar/ErrorSnackBar';
-import {initializeAppTC} from '../state/app-reducer';
+import {/*initializeAppTC,*/ initializeAppTC_WorkerSagaAC} from '../state/app-reducer';
 import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
 import {AppNavBar} from '../common/components/AppNavBar/AppNavBar';
@@ -94,7 +94,11 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
 
     // инициализация приложения
     useEffect(() => {
-        dispatch(initializeAppTC());
+        // react-redux, redux-toolkit
+        // dispatch(initializeAppTC());
+
+        // redux-saga
+        dispatch(initializeAppTC_WorkerSagaAC());
     }, [])
 
     // редирект на логин, если не залогинились

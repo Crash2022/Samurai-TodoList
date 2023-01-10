@@ -2,10 +2,12 @@ import {applyMiddleware, combineReducers, compose, legacy_createStore} from 'red
 import {TasksActionTypes, tasksReducer} from './tasks-reducer';
 import {TodolistsActionTypes, todolistsReducer} from './todolists-reducer';
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {ApplicationActionTypes, appReducer} from './app-reducer';
+import {ApplicationActionTypes, appReducer, initializeAppTC_WorkerSaga} from './app-reducer';
 import {LoginActionTypes, loginReducer} from './login-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 import {rootReducer} from './reducers'
+import createSagaMiddleware from 'redux-saga'
+import {takeEvery} from 'redux-saga/effects'
 
 /*------------------------------------------------------------*/
 
@@ -68,7 +70,34 @@ export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootSta
 
 // react-redux store
 // @ts-ignore // для Chrome Extension
-export const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+/*export const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
+
+// типизация state
+export type AppRootStateType = ReturnType<typeof rootReducer>; // рабочий вариант
+// export type AppRootStateType = ReturnType<typeof store.getState> // типизация из документации
+
+// типизация Dispatch React-Redux
+export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any>;
+
+// типизация Thunk React-Redux
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionType>
+
+// типизация всех экшенов для React-Redux
+export type AppActionType =
+    TodolistsActionTypes |
+    TasksActionTypes |
+    ApplicationActionTypes |
+    LoginActionTypes;*/
+
+/*------------------------------------------------------------*/
+
+// REACT REDUX-SAGA
+
+const sagaMiddleware = createSagaMiddleware()
+
+// react-redux-saga store
+// @ts-ignore // для Chrome Extension
+export const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware, sagaMiddleware)));
 
 // типизация state
 export type AppRootStateType = ReturnType<typeof rootReducer>; // рабочий вариант
@@ -86,6 +115,17 @@ export type AppActionType =
     TasksActionTypes |
     ApplicationActionTypes |
     LoginActionTypes;
+
+// saga
+sagaMiddleware.run(rootWatcher)
+
+function* rootWatcher() {
+    yield takeEvery('APP/INITIALIZE_APP', initializeAppTC_WorkerSaga)
+}
+
+// function* rootWorker() {
+//
+// }
 
 /*------------------------------------------------------------*/
 
