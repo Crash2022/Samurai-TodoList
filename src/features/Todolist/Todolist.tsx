@@ -69,12 +69,8 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     }
 
     useEffect(() => {
-        if (demo) {
-            return;
-        }
-        // добавлена проверка
         if (!filteredTasks.length) {
-            dispatch(getTodolistsTC());
+            dispatch(getTasksTC(todolist.id));
         }
     }, [])
 
@@ -112,6 +108,10 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
             </Button>
         )
     }
+
+    useEffect(() => {
+        dispatch(getTasksTC(todolist.id));
+    }, [])
 
     /*------------------------------------------------*/
 
@@ -181,7 +181,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 })
 
 // Чтобы реализовать useMemo для Material UI
-
 // type ButtonPropsType = {
 //     todolistId: string
 //     buttonTitle: FilterType

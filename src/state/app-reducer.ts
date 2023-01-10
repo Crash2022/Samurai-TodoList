@@ -3,7 +3,7 @@ import {handleServerAppError, handleServerNetworkError} from '../common/utils/er
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setIsLoggedInAC} from './login-reducer';
 import {AppThunkType} from "./store";
-import {put, call} from 'redux-saga/effects'
+import {put, call, takeEvery} from 'redux-saga/effects'
 
 // redux-toolkit
 /*export type AppInitialStateType = {
@@ -176,9 +176,25 @@ export const appSetInitializedAC = (isInitialized: boolean) => ({
 /*-----------------------------------------------------------------------------------*/
 // react-redux-saga
 
-export function* initializeAppTC_WorkerSaga() {
-    put(appSetStatusAC('loading'));
-    // @ts-ignore
+// типизация генератора
+/*
+type WhatYouYield="foo"
+type WhatYouReturn="bar"
+type WhatYouAccept="baz"
+
+function* myFun(): Generator<WhatYouYield, WhatYouReturn, WhatYouAccept> {
+    const myYield = "foo" // type of myYield is WhatYouYield
+    const myAccepted = yield myYield; // type of myAccepted is WhatYouAccept
+    return "baz" // type of this value is WhatYouReturn
+}*/
+
+export function* appWatcherSaga() {
+    yield takeEvery('APP/INITIALIZE_APP', initializeAppTC_WorkerSaga)
+}
+
+export const initializeAppTC = () => ({type: 'APP/INITIALIZE_APP'})
+export function* initializeAppTC_WorkerSaga(): any {
+    yield put(appSetStatusAC('loading'));
     const response = yield call(authAPI.authMe)
         try {
             if (response.data.resultCode === 0) {
@@ -194,5 +210,3 @@ export function* initializeAppTC_WorkerSaga() {
             handleServerNetworkError(error, yield put);
         }
 }
-
-export const initializeAppTC_WorkerSagaAC = () => ({type: 'APP/INITIALIZE_APP'})

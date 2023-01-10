@@ -29,11 +29,14 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
     }, [dispatch])
 
     // добавлена проверка
-    useEffect(() => {
-        if (!todolists.length) {
-            dispatch(getTodolistsTC());
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (demo) {
+    //         return;
+    //     }
+    //     if (!todolists.length) {
+    //         dispatch(getTodolistsTC());
+    //     }
+    // }, [])
 
     return (
         <>

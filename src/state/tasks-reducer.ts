@@ -1,4 +1,11 @@
-import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses, UpdateTaskModelType} from '../api/todolistsAPI';
+import {
+    todolistsAPI,
+    TaskAPIType,
+    TaskPriorities,
+    TaskStatuses,
+    UpdateTaskModelType,
+    TasksResponseType, TodolistsResponseType
+} from '../api/todolistsAPI';
 import {AppRootStateType, AppThunkType} from './store';
 import {appSetStatusAC} from './app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
@@ -10,6 +17,8 @@ import {
     getTodolistsTC, SetTodolistsACType,
     TodolistDomainType
 } from './todolists-reducer';
+import {put, call, takeEvery} from 'redux-saga/effects'
+import {AxiosResponse} from "axios";
 
 // redux-toolkit
 /*export type TasksListType = {
@@ -403,7 +412,7 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
 /*-----------------------------------------------------------------------------------*/
 
 // thunks
-export const getTasksTC = (todolistId: string): AppThunkType => {
+/*export const getTasksTC = (todolistId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.getTasks(todolistId)
@@ -415,7 +424,7 @@ export const getTasksTC = (todolistId: string): AppThunkType => {
                 handleServerNetworkError(error, dispatch);
             })
     }
-}
+}*/
 
 export const createTaskTC = (task: TaskAPIType): AppThunkType => {
     return (dispatch) => {
@@ -436,7 +445,7 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
     }
 }
 
-export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
+/*export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.deleteTask(todolistId, taskId)
@@ -448,7 +457,7 @@ export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType =
                 handleServerNetworkError(error, dispatch);
             })
     }
-}
+}*/
 
 // обновление разных свойств таски в одной "санке"
 export type UpdateDomainTaskModelType = {
@@ -494,5 +503,45 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
             .catch(error => {
                 handleServerNetworkError(error, dispatch);
             })
+    }
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+// react-redux-saga
+
+export function* tasksWatcherSaga() {
+    yield takeEvery('TASKS/GET_TASKS', getTasksTC_WorkerSaga)
+    yield takeEvery('TASKS/DELETE_TASK', deleteTaskTC_WorkerSaga)
+}
+
+export const getTasksTC = (todolistId: string) => ({type: 'TASKS/GET_TASKS', todolistId})
+export function* getTasksTC_WorkerSaga(action: ReturnType<typeof getTasksTC>): any {
+    yield put(appSetStatusAC('loading'));
+    const response: AxiosResponse<TasksResponseType> = yield call(todolistsAPI.getTasks, action.todolistId)
+    try {
+        yield put(setTasksAC(action.todolistId, response.data.items));
+        yield put(appSetStatusAC('succeeded'));
+    } catch (error) {
+        // @ts-ignore
+        handleServerNetworkError(error, yield put);
+    }
+
+}
+
+export const deleteTaskTC = (todolistId: string, taskId: string) => ({type: 'TASKS/DELETE_TASK', todolistId, taskId})
+export function* deleteTaskTC_WorkerSaga(action: ReturnType<typeof deleteTaskTC>): any {
+    yield put(appSetStatusAC('loading'));
+    const response: AxiosResponse<TodolistsResponseType> =
+        yield call(todolistsAPI.deleteTask, action.todolistId, action.taskId)
+    try {
+        yield put(deleteTaskAC(action.todolistId, action.taskId));
+        yield put(appSetStatusAC('succeeded'));
+    }
+    catch(error) {
+        // @ts-ignore
+        handleServerNetworkError(error, yield put);
     }
 }

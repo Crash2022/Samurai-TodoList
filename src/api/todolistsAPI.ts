@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -66,7 +66,7 @@ export type FieldsErrorsType = {
 //     data: { }
 // }
 
-type TasksResponseType = {
+export type TasksResponseType = {
     error: string | null
     items: Array<TaskAPIType>
     totalCount: number
@@ -115,7 +115,7 @@ export const todolistsAPI = {
     },
 
 
-    getTasks(todolistId: string) {
+    getTasks(todolistId: string): Promise<AxiosResponse<TasksResponseType>> {
         return (
             instance
                 .get<TasksResponseType>
@@ -131,7 +131,7 @@ export const todolistsAPI = {
             //.then(response => response.data)
         )
     },
-    deleteTask(todolistId: string, taskId: string) {
+    deleteTask(todolistId: string, taskId: string): Promise<AxiosResponse<TodolistsResponseType>> {
         return (
             instance
                 .delete<TodolistsResponseType>

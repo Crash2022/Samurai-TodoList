@@ -3,12 +3,12 @@ import React, {useEffect} from 'react';
 import './App.css';
 import {getTodolistsTC} from '../state/todolists-reducer';
 import {ErrorSnackBar} from '../common/components/ErrorSnackBar/ErrorSnackBar';
-import {/*initializeAppTC,*/ initializeAppTC_WorkerSagaAC} from '../state/app-reducer';
+import {initializeAppTC} from '../state/app-reducer';
 import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
 import {AppNavBar} from '../common/components/AppNavBar/AppNavBar';
 import s from '../common/styles/Todolist.module.css'
-import {selectAppInitialized, selectAuthIsLoggedIn} from '../state/selectors';
+import {selectAppInitialized, selectAuthIsLoggedIn, selectTodolists} from '../state/selectors';
 import {useAppSelector} from '../common/hooks/useAppSelector';
 import {useAppDispatch} from '../common/hooks/useAppDispatch';
 import {PATH} from '../api/path';
@@ -82,6 +82,7 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector(selectAuthIsLoggedIn);
     const isInitialized = useAppSelector(selectAppInitialized);
+    const todolists = useAppSelector(selectTodolists);
 
     /*------------------------------------------------*/
 
@@ -89,16 +90,15 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
         if (demo || !isLoggedIn) {
             return;
         }
-        dispatch(getTodolistsTC());
+        // dispatch(getTodolistsTC());
+        if (!todolists.length) {
+            dispatch(getTodolistsTC());
+        }
     }, [isLoggedIn])
 
     // инициализация приложения
     useEffect(() => {
-        // react-redux, redux-toolkit
-        // dispatch(initializeAppTC());
-
-        // redux-saga
-        dispatch(initializeAppTC_WorkerSagaAC());
+        dispatch(initializeAppTC());
     }, [])
 
     // редирект на логин, если не залогинились

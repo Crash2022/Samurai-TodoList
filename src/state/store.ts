@@ -1,13 +1,16 @@
 import {applyMiddleware, combineReducers, compose, legacy_createStore} from 'redux';
-import {TasksActionTypes, tasksReducer} from './tasks-reducer';
+import {
+    TasksActionTypes,
+    tasksReducer,
+    tasksWatcherSaga
+} from './tasks-reducer';
 import {TodolistsActionTypes, todolistsReducer} from './todolists-reducer';
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {ApplicationActionTypes, appReducer, initializeAppTC_WorkerSaga} from './app-reducer';
+import {ApplicationActionTypes, appReducer, appWatcherSaga} from './app-reducer';
 import {LoginActionTypes, loginReducer} from './login-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 import {rootReducer} from './reducers'
 import createSagaMiddleware from 'redux-saga'
-import {takeEvery} from 'redux-saga/effects'
 
 /*------------------------------------------------------------*/
 
@@ -120,7 +123,8 @@ export type AppActionType =
 sagaMiddleware.run(rootWatcher)
 
 function* rootWatcher() {
-    yield takeEvery('APP/INITIALIZE_APP', initializeAppTC_WorkerSaga)
+    yield appWatcherSaga()
+    yield tasksWatcherSaga()
 }
 
 // function* rootWorker() {
