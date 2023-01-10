@@ -48,7 +48,7 @@ export const store = configureStore({
 })
 
 // типизация state
-export type AppRootStateType = ReturnType<typeof rootReducer>;
+export type AppRootStateType = ReturnType<typeof rootReducer>; // рабочий вариант
 // export type AppRootStateType = ReturnType<typeof store.getState> // типизация из документации
 
 export type AppDispatch = typeof store.dispatch;
@@ -70,6 +70,11 @@ export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootSta
 // @ts-ignore // для Chrome Extension
 // export const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
+// типизация state
+// export type AppRootStateType = ReturnType<typeof rootReducer>; // рабочий вариант
+// export type AppRootStateType = ReturnType<typeof store.getState> // типизация из документации
+
+// типизация Dispatch React-Redux
 // export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, any>;
 
 // типизация Thunk React-Redux
