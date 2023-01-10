@@ -59,7 +59,7 @@ const slice = createSlice({
 export const appReducer = slice.reducer;
 export const {appSetStatusAC, appSetErrorAC} = slice.actions;*/
 
-// вариант thunk из react-redux
+// вариант thunk для RTK из react-redux
 /*export const initializeAppTC = (): AppThunkType => {
     // типизация Dispatch для Redux-Toolkit, для React-Redux другая
     return (dispatch) => {
@@ -86,11 +86,6 @@ export const {appSetStatusAC, appSetErrorAC} = slice.actions;*/
 // react-redux
 
 // reducer
-export type ApplicationActionTypes =
-    AppSetStatusACType |
-    AppSetErrorACType |
-    AppSetInitializedACType;
-
 export type AppInitialStateType = {
     // происходит ли сейчас взаимодействие с сервером
     status: AppInitialStateStatusType
@@ -126,6 +121,11 @@ export const appReducer = (state: AppInitialStateType = initialState,
 /*-----------------------------------------------------------------------------------*/
 
 // actions
+export type ApplicationActionTypes =
+    AppSetStatusACType |
+    AppSetErrorACType |
+    AppSetInitializedACType;
+
 export type AppSetStatusACType = ReturnType<typeof appSetStatusAC>
 export const appSetStatusAC = (status: AppInitialStateStatusType) => ({
     type: 'APP/SET_STATUS', status

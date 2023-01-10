@@ -45,10 +45,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         }));
     }, [todolist.id])
 
-    // const addTaskHandler = useCallback((titleInput: string) => {
-    //     dispatch(addTaskAC(todolistId, titleInput));
-    // },[todolistId])
-
     const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
         // redux-toolkit
         // dispatch(updateTodolistTitleTC({todolistId: todolist.id, title: newInputValue}));
@@ -57,17 +53,9 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         dispatch(updateTodolistTitleTC( todolist.id, newInputValue));
     }, [todolist.id])
 
-    // const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
-    //     dispatch(changeTodolistTitleAC(todolistId, newInputValue));
-    // },[todolistId])
-
     const removeTodolistHandler = useCallback(() => {
         dispatch(deleteTodolistTC(todolist.id));
     }, [todolist.id])
-
-    // const removeTodolistHandler = useCallback(() => {
-    //     dispatch(removeTodolistAC(todolistId));
-    // },[todolistId])
 
     /*------------------------------------------------*/
 
@@ -101,7 +89,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         dispatch(updateTodolistFilterAC(todolist.id, filter))
     }, [todolist.id])
 
-    // фильтрация тудулиста в разнах функциях
+    // фильтрация тудулиста в разных функциях
     /*const updateFilterAll = () => {
         dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'all'}))
     }
@@ -112,8 +100,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         dispatch(updateTodolistFilterAC({id: todolist.id, filter: 'active'}))
     }*/
 
-    const renderFilterButton = (/*onClick: () => void,*/ filter: FilterType,
-                                buttonName: string, color: PropTypes.Color) => {
+    const renderFilterButton = (filter: FilterType, buttonName: string, color: PropTypes.Color) => {
         return (
             <Button onClick={() => {
                 updateAllFilterButtonHandler(filter)

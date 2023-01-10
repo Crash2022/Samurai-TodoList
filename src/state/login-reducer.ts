@@ -85,7 +85,7 @@ export const loginReducer = slice.reducer;
 // определение экшена через деструктуризацию
 export const {setIsLoggedInAC} = slice.actions;*/
 
-// вариант thunk из react-redux
+// вариант thunk для RTK из react-redux
 /*export const loginTC = (data: LoginParamsType) => {
     return (dispatch: Dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
@@ -102,9 +102,9 @@ export const {setIsLoggedInAC} = slice.actions;*/
                 handleServerNetworkError(error, dispatch);
             })
     }
-}*/
+}
 
-/*export const logoutTC = () => {
+export const logoutTC = () => {
     return (dispatch: Dispatch) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         authAPI.logout()
@@ -128,8 +128,6 @@ export const {setIsLoggedInAC} = slice.actions;*/
 // react-redux
 
 // reducer
-export type LoginActionTypes = SetIsLoggedInACType;
-
 export type LoginInitialStateType = {
     isLoggedIn: boolean
 }
@@ -152,6 +150,8 @@ export const loginReducer = (state: LoginInitialStateType = initialState,
 /*-----------------------------------------------------------------------------------*/
 
 // actions
+export type LoginActionTypes = SetIsLoggedInACType;
+
 export type SetIsLoggedInACType = ReturnType<typeof setIsLoggedInAC>
 export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
     type: 'LOGIN/SET_IS_LOGGED_IN', isLoggedIn
@@ -170,17 +170,10 @@ export const loginTC = (data: LoginParamsType): AppThunkType => {
                     dispatch(appSetStatusAC('succeeded'));
                 } else {
                     handleServerAppError(response.data, dispatch);
-                    // if (response.data.messages) {
-                    //     dispatch(appSetErrorAC(response.data.messages[0]));
-                    // } else {
-                    //     dispatch(appSetErrorAC('Some Error'));
-                    // }
                 }
             })
             .catch(error => {
                 handleServerNetworkError(error, dispatch);
-                // dispatch(appSetErrorAC(error.message));
-                // dispatch(appSetStatusAC('failed'));
             })
     }
 }
@@ -195,17 +188,10 @@ export const logoutTC = (): AppThunkType => {
                     dispatch(appSetStatusAC('succeeded'));
                 } else {
                     handleServerAppError(response.data, dispatch);
-                    // if (response.data.messages) {
-                    //     dispatch(appSetErrorAC(response.data.messages[0]));
-                    // } else {
-                    //     dispatch(appSetErrorAC('Some Error'));
-                    // }
                 }
             })
             .catch(error => {
                 handleServerNetworkError(error, dispatch);
-                // dispatch(appSetErrorAC(error.message));
-                // dispatch(appSetStatusAC('failed'));
             })
     }
 }

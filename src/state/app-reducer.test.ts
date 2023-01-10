@@ -1,4 +1,11 @@
-import {AppInitialStateType, appReducer, appSetErrorAC, appSetStatusAC, initializeAppTC} from "./app-reducer";
+import {
+    AppInitialStateType,
+    appReducer,
+    appSetErrorAC,
+    appSetInitializedAC,
+    appSetStatusAC,
+    initializeAppTC
+} from "./app-reducer";
 
 let startState: AppInitialStateType;
 
@@ -14,7 +21,7 @@ test('app status should be changed', () => {
 
     // redux-toolkit
     // const endTasksState = appReducer(startState, appSetStatusAC({status: 'loading'}));
-    
+
     const endTasksState = appReducer(startState, appSetStatusAC('loading'));
     expect(endTasksState.status).toBe('loading');
 });
@@ -31,11 +38,11 @@ test('app error message should be set', () => {
 test('app should initialize', () => {
 
     // react-redux
-    // const endTasksState = appReducer(startState, appSetInitializedAC({isInitialized: true}));
+    const endTasksState = appReducer(startState, appSetInitializedAC(true));
 
     // redux-toolkit
     // const endTasksState = appReducer(startState, initializeAppTC.fulfilled({isInitialized: true}, 'requestId'));
-    // expect(endTasksState.isInitialized).toBeTruthy();
+    expect(endTasksState.isInitialized).toBeTruthy();
 });
 
 // export default {}

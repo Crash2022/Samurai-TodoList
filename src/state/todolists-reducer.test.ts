@@ -1,7 +1,16 @@
 import {
-    TodolistDomainType, FilterType, todolistsReducer,
-    updateTodolistFilterAC, changeTodolistEntityStatusAC,
-    deleteTodolistTC, createTodolistTC, updateTodolistTitleTC, getTodolistsTC
+    TodolistDomainType,
+    FilterType,
+    todolistsReducer,
+    updateTodolistFilterAC,
+    changeTodolistEntityStatusAC,
+    deleteTodolistTC,
+    createTodolistTC,
+    updateTodolistTitleTC,
+    getTodolistsTC,
+    deleteTodolistAC,
+    createTodolistAC,
+    updateTodolistTitleAC, setTodolistsAC
 } from "./todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolistsAPI";
@@ -25,38 +34,38 @@ beforeEach(() => {
 test('correct todolist should be deleted', () => {
 
     // react-redux
-    // const endState = todolistsReducer(startState, deleteTodolistAC({todolistId: todolistId1}));
+    const endState = todolistsReducer(startState, deleteTodolistAC(todolistId1));
 
     // redux-toolkit
     // const endState = todolistsReducer(startState, deleteTodolistTC.fulfilled({todolistId: todolistId1},
     //     'requestId', 'todolistId1'));
     //
-    // expect(endState.length).toBe(1);
-    // expect(endState[0].id).toBe(todolistId2);
+    expect(endState.length).toBe(1);
+    expect(endState[0].id).toBe(todolistId2);
 });
 
 test('correct todolist should be added', () => {
 
     // react-redux
-    // let newTodolist = {
-    //     todoListId: 'todolistId1', id: '1', title: 'New Todolist',
-    //     status: TaskStatuses.New, priority: TaskPriorities.Middle,
-    //     description: '', addedDate: '', startDate: '', deadline: '', order: 0
-    // };
-    // const endState = todolistsReducer(startState, createTodolistAC({todolist: newTodolist}));
-
-    // redux-toolkit
     let newTodolist = {
         todoListId: 'todolistId1', id: '1', title: 'New Todolist',
         status: TaskStatuses.New, priority: TaskPriorities.Middle,
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
     };
+    const endState = todolistsReducer(startState, createTodolistAC( newTodolist));
+
+    // redux-toolkit
+    // let newTodolist = {
+    //     todoListId: 'todolistId1', id: '1', title: 'New Todolist',
+    //     status: TaskStatuses.New, priority: TaskPriorities.Middle,
+    //     description: '', addedDate: '', startDate: '', deadline: '', order: 0
+    // };
     // const endState = todolistsReducer(startState, createTodolistTC.fulfilled({todolist: newTodolist},
     //     'requestId', {id: '1', title: 'New Todolist', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle' }));
     //
-    // expect(endState.length).toBe(3);
-    // expect(endState[0].title).toBe('New Todolist');
-    // expect(endState[0].filter).toBe('all');
+    expect(endState.length).toBe(3);
+    expect(endState[0].title).toBe('New Todolist');
+    expect(endState[0].filter).toBe('all');
 });
 
 test('update todolist title', () => {
@@ -64,17 +73,16 @@ test('update todolist title', () => {
     let updatedTodolistTitle = 'New Todolist';
 
     // react-redux
-    // const action = updateTodolistTitleAC({id: todolistId1, title: updatedTodolistTitle});
-    // const endState = todolistsReducer(startState, action);
+    const action = updateTodolistTitleAC(todolistId1, updatedTodolistTitle);
+    const endState = todolistsReducer(startState, action);
 
     // redux-toolkit
     // const action = updateTodolistTitleTC.fulfilled({id: todolistId1, title: updatedTodolistTitle},
     //     'requestId', {todolistId: 'todolistId1', title: updatedTodolistTitle});
-    // const endState = todolistsReducer(startState, action);
-    //
-    // expect(endState.length).toBe(2);
-    // expect(endState[0].title).toBe(updatedTodolistTitle);
-    // expect(endState[1].title).toBe('Купить');
+
+    expect(endState.length).toBe(2);
+    expect(endState[0].title).toBe(updatedTodolistTitle);
+    expect(endState[1].title).toBe('Купить');
 });
 
 test('update todolist filter', () => {
@@ -88,16 +96,16 @@ test('update todolist filter', () => {
     }*/
 
     // react-redux
-    // const action = updateTodolistFilterAC({id: todolistId1, filter: updatedTodolistFilter});
-    // const endState = todolistsReducer(startState, action);
+    const action = updateTodolistFilterAC(todolistId1, updatedTodolistFilter);
+    const endState = todolistsReducer(startState, action);
 
     // redux-toolkit
     // const action = updateTodolistFilterAC({id: todolistId1, filter: updatedTodolistFilter});
     // const endState = todolistsReducer(startState, action);
-    //
-    // expect(endState.length).toBe(2);
-    // expect(endState[1].filter).toBe('all');
-    // expect(endState[0].filter).toBe(updatedTodolistFilter);
+
+    expect(endState.length).toBe(2);
+    expect(endState[1].filter).toBe('all');
+    expect(endState[0].filter).toBe(updatedTodolistFilter);
 });
 
 test('change todolist entity status', () => {
@@ -105,15 +113,14 @@ test('change todolist entity status', () => {
     const newEntityStatus: AppInitialStateStatusType = 'loading';
 
     // react-redux
-    // const action = changeTodolistEntityStatusAC({id: todolistId1, entityStatus: newEntityStatus});
-    // const endState = todolistsReducer(startState, action);
+    const action = changeTodolistEntityStatusAC(todolistId1, newEntityStatus);
+    const endState = todolistsReducer(startState, action);
 
     // redux-toolkit
     // const action = changeTodolistEntityStatusAC({id: todolistId1, entityStatus: newEntityStatus});
-    // const endState = todolistsReducer(startState, action);
-    //
-    // expect(endState[0].entityStatus).toBe(newEntityStatus);
-    // expect(endState[1].entityStatus).toBe('idle');
+
+    expect(endState[0].entityStatus).toBe(newEntityStatus);
+    expect(endState[1].entityStatus).toBe('idle');
 });
 
 /*-----------------------------------------------------------------------------------*/
@@ -121,13 +128,13 @@ test('change todolist entity status', () => {
 test('todolists should be set to the state', () => {
 
     // react-redux
-    // const endState = todolistsReducer([], setTodolistsAC({todolists: startState}));
+    const endState = todolistsReducer([], setTodolistsAC(startState));
 
     // redux-toolkit
     // const endState = todolistsReducer([], getTodolistsTC.fulfilled({todolists: startState}, 'requestId'));
-    //
-    // expect(endState.length).toBe(2);
-    // expect(endState[0].id).toBe(todolistId1);
+
+    expect(endState.length).toBe(2);
+    expect(endState[0].id).toBe(todolistId1);
 });
 
 // export default {}
