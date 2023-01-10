@@ -11,6 +11,7 @@ import {LoginActionTypes, loginReducer} from './login-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 import {rootReducer} from './reducers'
 import createSagaMiddleware from 'redux-saga'
+import { all } from 'redux-saga/effects';
 
 /*------------------------------------------------------------*/
 
@@ -123,8 +124,11 @@ export type AppActionType =
 sagaMiddleware.run(rootWatcher)
 
 function* rootWatcher() {
-    yield appWatcherSaga()
-    yield tasksWatcherSaga()
+    yield all([
+        appWatcherSaga(),
+        tasksWatcherSaga()
+    ])
+
 }
 
 // function* rootWorker() {

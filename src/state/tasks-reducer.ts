@@ -426,7 +426,7 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
     }
 }*/
 
-export const createTaskTC = (task: TaskAPIType): AppThunkType => {
+/*export const createTaskTC = (task: TaskAPIType): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.createTask(task)
@@ -443,7 +443,7 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
                 handleServerNetworkError(error, dispatch);
             })
     }
-}
+}*/
 
 /*export const deleteTaskTC = (todolistId: string, taskId: string): AppThunkType => {
     return (dispatch) => {
@@ -515,6 +515,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
 export function* tasksWatcherSaga() {
     yield takeEvery('TASKS/GET_TASKS', getTasksTC_WorkerSaga)
     yield takeEvery('TASKS/DELETE_TASK', deleteTaskTC_WorkerSaga)
+    yield takeEvery('TASKS/CREATE_TASK', createTaskTC_WorkerSaga)
 }
 
 export const getTasksTC = (todolistId: string) => ({type: 'TASKS/GET_TASKS', todolistId})
@@ -525,10 +526,8 @@ export function* getTasksTC_WorkerSaga(action: ReturnType<typeof getTasksTC>): a
         yield put(setTasksAC(action.todolistId, response.data.items));
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        // @ts-ignore
-        handleServerNetworkError(error, yield put);
+        handleServerNetworkError(error as {message: string}, yield put);
     }
-
 }
 
 export const deleteTaskTC = (todolistId: string, taskId: string) => ({type: 'TASKS/DELETE_TASK', todolistId, taskId})
@@ -541,7 +540,25 @@ export function* deleteTaskTC_WorkerSaga(action: ReturnType<typeof deleteTaskTC>
         yield put(appSetStatusAC('succeeded'));
     }
     catch(error) {
-        // @ts-ignore
-        handleServerNetworkError(error, yield put);
+        handleServerNetworkError(error as {message: string}, yield put);
+    }
+}
+
+export const createTaskTC = (task: TaskAPIType) => ({type: 'TASKS/CREATE_TASK', task})
+export function* createTaskTC_WorkerSaga(action: ReturnType<typeof createTaskTC>): any {
+    yield put(appSetStatusAC('loading'));
+    const response: any =
+        yield call(todolistsAPI.createTask, action.task)
+    try {
+        if (response.data.resultCode === 0) {
+            yield put(createTaskAC(response.data.data.item));
+            yield put(appSetStatusAC('succeeded'));
+        } else {
+            handleServerAppError(response.data, yield put);
+        }
+        yield put(appSetStatusAC('failed'));
+    }
+    catch(error) {
+        handleServerNetworkError(error as {message: string}, yield put);
     }
 }

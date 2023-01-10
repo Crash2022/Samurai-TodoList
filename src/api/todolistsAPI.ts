@@ -123,7 +123,7 @@ export const todolistsAPI = {
             //.then(response => response.data)
         )
     },
-    createTask(task: TaskAPIType /*todolistId: string, newTask: string*/) {
+    createTask(task: TaskAPIType /*todolistId: string, newTask: string*/): Promise<AxiosResponse<TodolistsResponseType>> {
         return (
             instance
                 .post<TodolistsResponseType<{ item: TaskAPIType }>>

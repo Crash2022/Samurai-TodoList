@@ -68,14 +68,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         filteredTasks = filteredTasks.filter(f => f.status === TaskStatuses.Completed); // f.status
     }
 
-    useEffect(() => {
-        if (!filteredTasks.length) {
-            dispatch(getTasksTC(todolist.id));
-        }
-    }, [])
-
-    /*------------------------------------------------*/
-
     // фильтрация тудулиста в одной функции
     const updateAllFilterButtonHandler = useCallback((filter: FilterType) => {
         // redux-toolkit
@@ -109,7 +101,12 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         )
     }
 
+    /*------------------------------------------------*/
+
     useEffect(() => {
+        if (demo) {
+            return
+        }
         dispatch(getTasksTC(todolist.id));
     }, [])
 
