@@ -261,8 +261,9 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
-
 // react-redux
+
+// reducer
 // export type TasksListType = {
 //     [todolistId: string]: Array<TaskAPIType>
 // }
@@ -354,6 +355,7 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
 
 /*-----------------------------------------------------------------------------------*/
 
+// actions
 /*export type TasksActionTypes =
     DeleteTaskACType |
     CreateTaskACType |
@@ -413,6 +415,7 @@ export const setTasksAC = (todolistId: string, tasks: Array<TaskAPIType>) => ({
 
 /*-----------------------------------------------------------------------------------*/
 
+// thunks
 /*export const getTasksTC = (todolistId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));

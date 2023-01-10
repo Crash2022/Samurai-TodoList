@@ -82,8 +82,9 @@ export const {appSetStatusAC, appSetErrorAC} = slice.actions;
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
-
 // react-redux
+
+// reducer
 // export type ApplicationActionTypes =
 //     AppSetStatusACType |
 //     AppSetErrorACType |
@@ -123,6 +124,7 @@ export const {appSetStatusAC, appSetErrorAC} = slice.actions;
 
 /*-----------------------------------------------------------------------------------*/
 
+// actions
 // export type AppSetStatusACType = ReturnType<typeof appSetStatusAC>
 // export const appSetStatusAC = (status: AppInitialStateStatusType) => ({
 //     type: 'APP/SET_STATUS', status
@@ -140,6 +142,7 @@ export const {appSetStatusAC, appSetErrorAC} = slice.actions;
 
 /*-----------------------------------------------------------------------------------*/
 
+// thunks
 // export const initializeAppTC = (): AppThunkType => {
 //     return (dispatch) => {
 //         dispatch(appSetStatusAC('loading'));

@@ -124,8 +124,9 @@ export const {setIsLoggedInAC} = slice.actions;
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
-
 // react-redux
+
+// reducer
 /*export type LoginActionTypes = SetIsLoggedInACType;
 
 export type LoginInitialStateType = {
@@ -149,6 +150,7 @@ export const loginReducer = (state: LoginInitialStateType = initialState,
 
 /*-----------------------------------------------------------------------------------*/
 
+// actions
 // export type SetIsLoggedInACType = ReturnType<typeof setIsLoggedInAC>
 // export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
 //     type: 'LOGIN/SET_IS_LOGGED_IN', isLoggedIn
@@ -156,6 +158,7 @@ export const loginReducer = (state: LoginInitialStateType = initialState,
 
 /*-----------------------------------------------------------------------------------*/
 
+// thunks
 // export const loginTC = (data: LoginParamsType): AppThunkType => {
 //     return (dispatch) => {
 //         dispatch(appSetStatusAC('loading'));

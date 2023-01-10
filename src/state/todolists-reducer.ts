@@ -205,8 +205,9 @@ export const {updateTodolistFilterAC, changeTodolistEntityStatusAC} = slice.acti
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
-
 // react-redux
+
+// reducer
 /*export type FilterType = 'all' | 'active' | 'completed';
 
 export type TodolistDomainType = TodolistAPIType & {
@@ -262,6 +263,7 @@ export let todolistId2 = v1();*/
 
 /*-----------------------------------------------------------------------------------*/
 
+// actions
 /*export type TodolistsActionTypes =
     CreateTodolistACType |
     DeleteTodolistACType |
@@ -316,6 +318,7 @@ export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
 
 /*-----------------------------------------------------------------------------------*/
 
+// thunks
 // async await version getTodolistsTC
 // export const getTodolistsTC = (): AppThunkType => async (dispatch) => {
 //     try {
