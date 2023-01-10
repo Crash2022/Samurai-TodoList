@@ -1,9 +1,15 @@
 import {authAPI} from '../api/todolistsAPI';
-import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
+import {
+    handleServerAppError,
+    handleServerAppErrorSaga,
+    handleServerNetworkError,
+    handleServerNetworkErrorSaga
+} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setIsLoggedInAC} from './login-reducer';
 import {AppThunkType} from "./store";
 import {put, call, takeEvery} from 'redux-saga/effects'
+import {AxiosError} from 'axios';
 
 // redux-toolkit
 /*export type AppInitialStateType = {
@@ -201,20 +207,11 @@ export function* initializeAppTC_WorkerSaga(): any {
                 yield put(setIsLoggedInAC(true));
                 yield put(appSetStatusAC('succeeded'));
             } else {
-                // handleServerAppError(response.data);
-                if (response.data.messages) {
-                    yield put(appSetErrorAC(response.data.messages[0]));
-                } else {
-                    yield put(appSetErrorAC('Some Error'));
-                }
+                yield handleServerAppErrorSaga(response.data);
             }
             yield put(appSetInitializedAC(true));
-            yield put(appSetStatusAC('succeeded'));
         }
         catch(error) {
-            // handleServerNetworkError(error as {message: string});
-            // @ts-ignore
-            yield put(appSetErrorAC(error.message));
-            yield put(appSetStatusAC('failed'));
+            yield handleServerNetworkErrorSaga(error as AxiosError);
         }
 }

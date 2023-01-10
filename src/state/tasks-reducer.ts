@@ -6,9 +6,14 @@ import {
     UpdateTaskModelType,
     TasksResponseType, TodolistsResponseType
 } from '../api/todolistsAPI';
-import {AppRootStateType, AppThunkType} from './store';
+import {AppRootStateType, AppThunkType, store} from './store';
 import {appSetStatusAC} from './app-reducer';
-import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
+import {
+    handleServerAppError,
+    handleServerAppErrorSaga,
+    handleServerNetworkError,
+    handleServerNetworkErrorSaga
+} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {
     CreateTodolistACType,
@@ -18,7 +23,7 @@ import {
     TodolistDomainType
 } from './todolists-reducer';
 import {put, call, takeEvery} from 'redux-saga/effects'
-import {AxiosResponse} from "axios";
+import {AxiosError, AxiosResponse} from 'axios';
 import {appSelect} from './selectors';
 
 // redux-toolkit
@@ -528,7 +533,7 @@ export function* getTasksTC_WorkerSaga(action: ReturnType<typeof getTasksTC>): a
         yield put(setTasksAC(action.todolistId, response.data.items));
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
@@ -542,7 +547,7 @@ export function* deleteTaskTC_WorkerSaga(action: ReturnType<typeof deleteTaskTC>
         yield put(appSetStatusAC('succeeded'));
     }
     catch(error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
@@ -556,21 +561,23 @@ export function* createTaskTC_WorkerSaga(action: ReturnType<typeof createTaskTC>
             yield put(createTaskAC(response.data.data.item));
             yield put(appSetStatusAC('succeeded'));
         } else {
-            handleServerAppError(response.data);
+            handleServerAppErrorSaga(response.data);
         }
         yield put(appSetStatusAC('failed'));
     }
     catch(error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
 export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType) =>
     ({type: 'TASKS/UPDATE_TASK', todolistId, taskId, domainModel})
 export function* updateTaskTC_WorkerSaga(action: ReturnType<typeof updateTaskTC>): any {
-
-    // const state = getState();
+    // простой способ
+    // const state = store.getState();
     // const task = state.tasks[action.todolistId].find((t:TaskAPIType) => t.id === action.taskId);
+
+    // сложный способ
     const stateTasks = yield* appSelect(state => state.tasks)
     const task = stateTasks[action.todolistId].find((t:TaskAPIType) => t.id === action.taskId);
 
@@ -599,10 +606,10 @@ export function* updateTaskTC_WorkerSaga(action: ReturnType<typeof updateTaskTC>
             yield put(updateTaskAC(action.todolistId, action.taskId, action.domainModel));
             // yield put(appSetStatusAC('succeeded'));
         } else {
-            handleServerAppError(response.data);
+            yield handleServerAppErrorSaga(response.data);
         }
     }
     catch(error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }

@@ -6,12 +6,17 @@ import {
     todolistsAPI,
     TodolistsResponseType
 } from '../api/todolistsAPI';
-import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
+import {
+    handleServerAppError,
+    handleServerAppErrorSaga,
+    handleServerNetworkError,
+    handleServerNetworkErrorSaga
+} from '../common/utils/errorUtils';
 import {appSetStatusAC} from './app-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AppThunkType} from "./store";
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {AxiosResponse} from 'axios';
+import {AxiosError, AxiosResponse} from 'axios';
 import {getTasksTC_WorkerSaga, setTasksAC} from './tasks-reducer';
 
 // redux-toolkit
@@ -226,10 +231,10 @@ export function* loginTC_WorkerSaga(action: ReturnType<typeof loginTC>): any {
             yield put(setIsLoggedInAC(true));
             yield put(appSetStatusAC('succeeded'));
         } else {
-            handleServerAppError(response.data);
+            yield handleServerAppErrorSaga(response.data);
         }
     } catch (error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
@@ -242,9 +247,9 @@ export function* logoutTC_WorkerSaga(action: ReturnType<typeof logoutTC>): any {
             yield put(setIsLoggedInAC(false));
             yield put(appSetStatusAC('succeeded'));
         } else {
-            handleServerAppError(response.data);
+            yield handleServerAppErrorSaga(response.data);
         }
     } catch (error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }

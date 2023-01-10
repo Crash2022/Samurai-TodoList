@@ -1,11 +1,11 @@
 import {authAPI, TodolistAPIType, todolistsAPI, TodolistsResponseType} from '../api/todolistsAPI';
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
-import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
+import {handleServerAppError, handleServerNetworkError, handleServerNetworkErrorSaga} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AppThunkType} from "./store";
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {loginTC_WorkerSaga, logoutTC_WorkerSaga, setIsLoggedInAC} from './login-reducer';
-import {AxiosResponse} from 'axios';
+import {AxiosError, AxiosResponse} from 'axios';
 
 // redux-toolkit
 /*export type FilterType = 'all' | 'active' | 'completed';
@@ -417,7 +417,7 @@ export function* getTodolistsTC_WorkerSaga(action: ReturnType<typeof getTodolist
         yield put(setTodolistsAC(response.data));
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
@@ -430,7 +430,7 @@ export function* deleteTodolistTC_WorkerSaga(action: ReturnType<typeof deleteTod
         yield put(deleteTodolistAC(action.todolistId))
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
@@ -442,7 +442,7 @@ export function* createTodolistTC_WorkerSaga(action: ReturnType<typeof createTod
         yield put(createTodolistAC(response.data.data.item))
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
@@ -466,6 +466,6 @@ export function* updateTodolistTitleTC_WorkerSaga(action: ReturnType<typeof upda
             }
         }
     } catch (error) {
-        handleServerNetworkError(error as {message: string});
+        yield handleServerNetworkErrorSaga(error as AxiosError);
     }
 }

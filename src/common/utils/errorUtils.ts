@@ -21,7 +21,7 @@ export const handleServerNetworkError = (error: { message: string }, dispatch: D
 
 
 // react-redux
-/*export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: AppDispatch) => {
+export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: AppDispatch) => {
     if (data.messages) {
         dispatch(appSetErrorAC(data.messages[0]));
     } else {
@@ -33,10 +33,10 @@ export const handleServerNetworkError = (error: { message: string }, dispatch: D
 export const handleServerNetworkError = (error: {message: string}, dispatch: AppDispatch) => {
     dispatch(appSetErrorAC(error.message ? error.message : 'Some Error Occurred'));
     dispatch(appSetStatusAC('failed'));
-}*/
+}
 
 // react-redux-saga
-export function* handleServerAppError<D>(data: TodolistsResponseType<D>) {
+export function* handleServerAppErrorSaga<D>(data: TodolistsResponseType<D>) {
     if (data.messages) {
         yield put(appSetErrorAC(data.messages[0]));
     } else {
@@ -45,7 +45,7 @@ export function* handleServerAppError<D>(data: TodolistsResponseType<D>) {
     yield put(appSetStatusAC("failed"));
 }
 
-export function* handleServerNetworkError(error: { message: string }) {
+export function* handleServerNetworkErrorSaga(error: { message: string }) {
     yield put(
         appSetErrorAC(error.message ? error.message : "Some error occurred")
     );
