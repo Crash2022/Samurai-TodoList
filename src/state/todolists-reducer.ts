@@ -1,8 +1,11 @@
-import {TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
+import {authAPI, TodolistAPIType, todolistsAPI, TodolistsResponseType} from '../api/todolistsAPI';
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AppThunkType} from "./store";
+import {call, put, takeEvery} from 'redux-saga/effects';
+import {loginTC_WorkerSaga, logoutTC_WorkerSaga, setIsLoggedInAC} from './login-reducer';
+import {AxiosResponse} from 'axios';
 
 // redux-toolkit
 /*export type FilterType = 'all' | 'active' | 'completed';
@@ -324,7 +327,7 @@ export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
 //     }
 // }
 
-export const getTodolistsTC = (): AppThunkType => {
+/*export const getTodolistsTC = (): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.getTodolists()
@@ -334,13 +337,11 @@ export const getTodolistsTC = (): AppThunkType => {
             })
             .catch(error => {
                 handleServerNetworkError(error, dispatch);
-                // dispatch(appSetErrorAC(error.message));
-                // dispatch(appSetStatusAC('failed'));
             })
     }
-}
+}*/
 
-export const deleteTodolistTC = (todolistId: string): AppThunkType => {
+/*export const deleteTodolistTC = (todolistId: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         dispatch(changeTodolistEntityStatusAC(todolistId,'loading'));
@@ -353,9 +354,9 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => {
                 handleServerNetworkError(error, dispatch);
             })
     }
-}
+}*/
 
-export const createTodolistTC = (todolist: TodolistDomainType): AppThunkType => {
+/*export const createTodolistTC = (todolist: TodolistDomainType): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.createTodolist(todolist.title)
@@ -367,9 +368,9 @@ export const createTodolistTC = (todolist: TodolistDomainType): AppThunkType => 
                 handleServerNetworkError(error, dispatch);
             })
     }
-}
+}*/
 
-export const updateTodolistTitleTC = (todolistId: string, title: string): AppThunkType => {
+/*export const updateTodolistTitleTC = (todolistId: string, title: string): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         dispatch(changeTodolistEntityStatusAC(todolistId,'loading'));
@@ -392,5 +393,79 @@ export const updateTodolistTitleTC = (todolistId: string, title: string): AppThu
             .catch(error => {
                 handleServerNetworkError(error, dispatch);
             })
+    }
+}*/
+
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+// react-redux-saga
+
+export function* todolistsWatcherSaga() {
+    yield takeEvery('TODOLISTS/GET_TODOLISTS', getTodolistsTC_WorkerSaga)
+    yield takeEvery('TODOLISTS/DELETE_TODOLIST', deleteTodolistTC_WorkerSaga)
+    yield takeEvery('TODOLISTS/CREATE_TODOLIST', createTodolistTC_WorkerSaga)
+    yield takeEvery('TODOLISTS/UPDATE_TODOLIST_TITLE', updateTodolistTitleTC_WorkerSaga)
+}
+
+export const getTodolistsTC = () => ({type: 'TODOLISTS/GET_TODOLISTS'})
+export function* getTodolistsTC_WorkerSaga(action: ReturnType<typeof getTodolistsTC>): any {
+    yield put(appSetStatusAC('loading'));
+    const response: AxiosResponse<Array<TodolistAPIType>> = yield call(todolistsAPI.getTodolists)
+    try {
+        yield put(setTodolistsAC(response.data));
+        yield put(appSetStatusAC('succeeded'));
+    } catch (error) {
+        handleServerNetworkError(error as {message: string});
+    }
+}
+
+export const deleteTodolistTC = (todolistId: string) => ({type: 'TODOLISTS/DELETE_TODOLIST', todolistId})
+export function* deleteTodolistTC_WorkerSaga(action: ReturnType<typeof deleteTodolistTC>): any {
+    yield put(appSetStatusAC('loading'));
+    yield put(changeTodolistEntityStatusAC(action.todolistId,'loading'));
+    const response: AxiosResponse<TodolistsResponseType> = yield call(todolistsAPI.deleteTodolist, action.todolistId)
+    try {
+        yield put(deleteTodolistAC(action.todolistId))
+        yield put(appSetStatusAC('succeeded'));
+    } catch (error) {
+        handleServerNetworkError(error as {message: string});
+    }
+}
+
+export const createTodolistTC = (todolist: TodolistDomainType) => ({type: 'TODOLISTS/CREATE_TODOLIST', todolist})
+export function* createTodolistTC_WorkerSaga(action: ReturnType<typeof createTodolistTC>): any {
+    yield put(appSetStatusAC('loading'));
+    const response: any = yield call(todolistsAPI.createTodolist, action.todolist.title)
+    try {
+        yield put(createTodolistAC(response.data.data.item))
+        yield put(appSetStatusAC('succeeded'));
+    } catch (error) {
+        handleServerNetworkError(error as {message: string});
+    }
+}
+
+export const updateTodolistTitleTC = (todolistId: string, title: string) => ({type: 'TODOLISTS/UPDATE_TODOLIST_TITLE', todolistId, title})
+export function* updateTodolistTitleTC_WorkerSaga(action: ReturnType<typeof updateTodolistTitleTC>): any {
+    yield put(appSetStatusAC('loading'));
+    yield put(changeTodolistEntityStatusAC(action.todolistId,'loading'));
+    const response: any = yield call(todolistsAPI.updateTodolist, action.todolistId, action.title)
+    try {
+        if (response.data.resultCode === 0) {
+            yield put(updateTodolistTitleAC(action.todolistId, action.title))
+            yield put(appSetStatusAC('succeeded'));
+            yield put(changeTodolistEntityStatusAC(action.todolistId,'succeeded'));
+        } else {
+            if (response.data.messages) {
+                yield put(appSetErrorAC(response.data.messages[0]));
+                yield put(appSetStatusAC('failed'));
+                yield put(changeTodolistEntityStatusAC(action.todolistId,'failed'));
+            } else {
+                yield put(appSetErrorAC('Some Error'));
+            }
+        }
+    } catch (error) {
+        handleServerNetworkError(error as {message: string});
     }
 }

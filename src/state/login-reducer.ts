@@ -1,8 +1,18 @@
-import {authAPI, FieldsErrorsType, LoginParamsType} from '../api/todolistsAPI';
+import {
+    authAPI,
+    FieldsErrorsType,
+    LoginParamsType,
+    TasksResponseType,
+    todolistsAPI,
+    TodolistsResponseType
+} from '../api/todolistsAPI';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {appSetStatusAC} from './app-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AppThunkType} from "./store";
+import {call, put, takeEvery} from 'redux-saga/effects';
+import {AxiosResponse} from 'axios';
+import {getTasksTC_WorkerSaga, setTasksAC} from './tasks-reducer';
 
 // redux-toolkit
 /*export type LoginInitialStateType = {
@@ -160,7 +170,7 @@ export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
 /*-----------------------------------------------------------------------------------*/
 
 // thunks
-export const loginTC = (data: LoginParamsType): AppThunkType => {
+/*export const loginTC = (data: LoginParamsType): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         authAPI.login(data)
@@ -176,9 +186,9 @@ export const loginTC = (data: LoginParamsType): AppThunkType => {
                 handleServerNetworkError(error, dispatch);
             })
     }
-}
+}*/
 
-export const logoutTC = (): AppThunkType => {
+/*export const logoutTC = (): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         authAPI.logout()
@@ -193,5 +203,48 @@ export const logoutTC = (): AppThunkType => {
             .catch(error => {
                 handleServerNetworkError(error, dispatch);
             })
+    }
+}*/
+
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+// react-redux-saga
+
+export function* loginWatcherSaga() {
+    yield takeEvery('LOGIN/LOGIN', loginTC_WorkerSaga)
+    yield takeEvery('LOGIN/LOGOUT', logoutTC_WorkerSaga)
+}
+
+export const loginTC = (data: LoginParamsType) => ({type: 'LOGIN/LOGIN', data})
+export function* loginTC_WorkerSaga(action: ReturnType<typeof loginTC>): any {
+    yield put(appSetStatusAC('loading'));
+    const response: AxiosResponse<TodolistsResponseType> = yield call(authAPI.login, action.data)
+    try {
+        if (response.data.resultCode === 0) {
+            yield put(setIsLoggedInAC(true));
+            yield put(appSetStatusAC('succeeded'));
+        } else {
+            handleServerAppError(response.data);
+        }
+    } catch (error) {
+        handleServerNetworkError(error as {message: string});
+    }
+}
+
+export const logoutTC = () => ({type: 'LOGIN/LOGOUT'})
+export function* logoutTC_WorkerSaga(action: ReturnType<typeof logoutTC>): any {
+    yield put(appSetStatusAC('loading'));
+    const response: AxiosResponse<TodolistsResponseType> = yield call(authAPI.logout)
+    try {
+        if (response.data.resultCode === 0) {
+            yield put(setIsLoggedInAC(false));
+            yield put(appSetStatusAC('succeeded'));
+        } else {
+            handleServerAppError(response.data);
+        }
+    } catch (error) {
+        handleServerNetworkError(error as {message: string});
     }
 }

@@ -19,6 +19,7 @@ import {
 } from './todolists-reducer';
 import {put, call, takeEvery} from 'redux-saga/effects'
 import {AxiosResponse} from "axios";
+import {appSelect} from './selectors';
 
 // redux-toolkit
 /*export type TasksListType = {
@@ -469,7 +470,7 @@ export type UpdateDomainTaskModelType = {
     deadline?: string
 }
 
-export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType): AppThunkType => {
+/*export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType): AppThunkType => {
     return (dispatch, getState: () => AppRootStateType) => {
 
         const state = getState();
@@ -504,7 +505,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
                 handleServerNetworkError(error, dispatch);
             })
     }
-}
+}*/
 
 /*-----------------------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------------------*/
@@ -516,6 +517,7 @@ export function* tasksWatcherSaga() {
     yield takeEvery('TASKS/GET_TASKS', getTasksTC_WorkerSaga)
     yield takeEvery('TASKS/DELETE_TASK', deleteTaskTC_WorkerSaga)
     yield takeEvery('TASKS/CREATE_TASK', createTaskTC_WorkerSaga)
+    yield takeEvery('TASKS/UPDATE_TASK', updateTaskTC_WorkerSaga)
 }
 
 export const getTasksTC = (todolistId: string) => ({type: 'TASKS/GET_TASKS', todolistId})
@@ -526,7 +528,7 @@ export function* getTasksTC_WorkerSaga(action: ReturnType<typeof getTasksTC>): a
         yield put(setTasksAC(action.todolistId, response.data.items));
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        handleServerNetworkError(error as {message: string}, yield put);
+        handleServerNetworkError(error as {message: string});
     }
 }
 
@@ -540,7 +542,7 @@ export function* deleteTaskTC_WorkerSaga(action: ReturnType<typeof deleteTaskTC>
         yield put(appSetStatusAC('succeeded'));
     }
     catch(error) {
-        handleServerNetworkError(error as {message: string}, yield put);
+        handleServerNetworkError(error as {message: string});
     }
 }
 
@@ -554,11 +556,53 @@ export function* createTaskTC_WorkerSaga(action: ReturnType<typeof createTaskTC>
             yield put(createTaskAC(response.data.data.item));
             yield put(appSetStatusAC('succeeded'));
         } else {
-            handleServerAppError(response.data, yield put);
+            handleServerAppError(response.data);
         }
         yield put(appSetStatusAC('failed'));
     }
     catch(error) {
-        handleServerNetworkError(error as {message: string}, yield put);
+        handleServerNetworkError(error as {message: string});
+    }
+}
+
+export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType) =>
+    ({type: 'TASKS/UPDATE_TASK', todolistId, taskId, domainModel})
+export function* updateTaskTC_WorkerSaga(action: ReturnType<typeof updateTaskTC>): any {
+
+    // const state = getState();
+    // const task = state.tasks[action.todolistId].find((t:TaskAPIType) => t.id === action.taskId);
+    const stateTasks = yield* appSelect(state => state.tasks)
+    const task = stateTasks[action.todolistId].find((t:TaskAPIType) => t.id === action.taskId);
+
+    // обработка ошибки
+    if (!task) {
+        // throw new Error('Task Not Found In The State'); // иной вариант предупреждения
+        console.warn('Task Not Found In The State');
+        return;
+    }
+
+    const apiModel: UpdateTaskModelType = {
+        description: task.description,
+        title: task.title,
+        status: task.status,
+        priority: task.priority,
+        startDate: task.startDate,
+        deadline: task.deadline,
+        ...action.domainModel
+    }
+
+    // yield put(appSetStatusAC('loading'));
+    const response: any =
+        yield call(todolistsAPI.updateTask, action.todolistId, action.taskId, apiModel)
+    try {
+        if (response.data.resultCode === 0) {
+            yield put(updateTaskAC(action.todolistId, action.taskId, action.domainModel));
+            // yield put(appSetStatusAC('succeeded'));
+        } else {
+            handleServerAppError(response.data);
+        }
+    }
+    catch(error) {
+        handleServerNetworkError(error as {message: string});
     }
 }

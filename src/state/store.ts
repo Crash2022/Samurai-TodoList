@@ -4,10 +4,10 @@ import {
     tasksReducer,
     tasksWatcherSaga
 } from './tasks-reducer';
-import {TodolistsActionTypes, todolistsReducer} from './todolists-reducer';
+import {TodolistsActionTypes, todolistsReducer, todolistsWatcherSaga} from './todolists-reducer';
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {ApplicationActionTypes, appReducer, appWatcherSaga} from './app-reducer';
-import {LoginActionTypes, loginReducer} from './login-reducer';
+import {LoginActionTypes, loginReducer, loginWatcherSaga} from './login-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 import {rootReducer} from './reducers'
 import createSagaMiddleware from 'redux-saga'
@@ -126,6 +126,8 @@ sagaMiddleware.run(rootWatcher)
 function* rootWatcher() {
     yield all([
         appWatcherSaga(),
+        loginWatcherSaga(),
+        todolistsWatcherSaga(),
         tasksWatcherSaga()
     ])
 
