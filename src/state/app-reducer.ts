@@ -201,11 +201,20 @@ export function* initializeAppTC_WorkerSaga(): any {
                 yield put(setIsLoggedInAC(true));
                 yield put(appSetStatusAC('succeeded'));
             } else {
-                handleServerAppError(response.data);
+                // handleServerAppError(response.data);
+                if (response.data.messages) {
+                    yield put(appSetErrorAC(response.data.messages[0]));
+                } else {
+                    yield put(appSetErrorAC('Some Error'));
+                }
             }
             yield put(appSetInitializedAC(true));
+            yield put(appSetStatusAC('succeeded'));
         }
         catch(error) {
-            handleServerNetworkError(error as {message: string});
+            // handleServerNetworkError(error as {message: string});
+            // @ts-ignore
+            yield put(appSetErrorAC(error.message));
+            yield put(appSetStatusAC('failed'));
         }
 }
