@@ -1,4 +1,4 @@
-import {authAPI} from '../api/todolistsAPI';
+import {authAPI, AuthResponseData, MeResponseType, TodolistsResponseType} from '../api/todolistsAPI';
 import {
     handleServerAppError,
     handleServerAppErrorSaga,
@@ -9,7 +9,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setIsLoggedInAC} from './login-reducer';
 import {AppThunkType} from "./store";
 import {put, call, takeEvery} from 'redux-saga/effects'
-import {AxiosError} from 'axios';
+import {AxiosError, AxiosResponse} from 'axios';
 
 // redux-toolkit
 /*export type AppInitialStateType = {
@@ -200,12 +200,12 @@ export function* appWatcherSaga() {
 
 export const initializeAppTC = () => ({type: 'APP/INITIALIZE_APP'})
 export function* initializeAppTC_WorkerSaga(): any {
-    yield put(appSetStatusAC('loading'));
-    const response = yield call(authAPI.authMe)
+    // yield put(appSetStatusAC('loading'));
+    const response: AxiosResponse<MeResponseType> = yield call(authAPI.authMe)
         try {
             if (response.data.resultCode === 0) {
                 yield put(setIsLoggedInAC(true));
-                yield put(appSetStatusAC('succeeded'));
+                // yield put(appSetStatusAC('succeeded'));
             } else {
                 yield handleServerAppErrorSaga(response.data);
             }

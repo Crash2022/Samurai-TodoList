@@ -154,6 +154,8 @@ export type AuthResponseData = {
     login: string
 }
 
+export type MeResponseType = TodolistsResponseType<AuthResponseData>
+
 export const authAPI = {
     login(data: LoginParamsType): Promise<AxiosResponse<TodolistsResponseType>> {
         return (
@@ -165,9 +167,9 @@ export const authAPI = {
             instance.delete<TodolistsResponseType>('auth/login')
         )
     },
-    authMe(): Promise<AxiosResponse<TodolistsResponseType>> {
+    authMe(): Promise<AxiosResponse<MeResponseType>> {
         return (
-            instance.get<TodolistsResponseType<AuthResponseData>>('auth/me')
+            instance.get<MeResponseType>('auth/me')
         )
     }
 }
