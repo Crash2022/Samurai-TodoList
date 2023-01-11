@@ -12,9 +12,9 @@ test('getTasksTC_WorkerSaga success', () => {
 
     const todolistId = 'todolistId1'
 
-    const gen = getTasksTC_WorkerSaga({type: 'TASKS/GET_TASKS', todolistId: todolistId});
+    const gen = getTasksTC_WorkerSaga({type: 'TASKS/GET_TASKS', todolistId: todolistId})
     expect(gen.next().value).toEqual(put(appSetStatusAC('loading')))
-    expect(gen.next().value).toEqual(call(todolistsAPI.getTasks, todolistId));
+    expect(gen.next().value).toEqual(call(todolistsAPI.getTasks, todolistId))
 
     const fakeResponse: TasksResponseType = {
         error: '',
@@ -37,11 +37,11 @@ test('createTaskTC_WorkerSaga unsuccessful', () => {
         description: '', addedDate: '', startDate: '', deadline: '', order: 0
     }
 
-    const gen = createTaskTC_WorkerSaga({type: 'TASKS/CREATE_TASK', task});
+    const gen = createTaskTC_WorkerSaga({type: 'TASKS/CREATE_TASK', task})
     expect(gen.next().value).toEqual(put(appSetStatusAC('loading')))
-    expect(gen.next().value).toEqual(call(todolistsAPI.createTask, task));
-    expect(gen.throw({ message: 'Some error' }).value).toEqual(put(appSetErrorAC('Some error')));
-    expect(gen.next().value).toEqual(put(appSetStatusAC('failed')));
+    expect(gen.next().value).toEqual(call(todolistsAPI.createTask, task))
+    expect(gen.throw({ message: 'Some error' }).length).toEqual(put(appSetErrorAC('Some error')))
+    expect(gen.next().value).toEqual(put(appSetStatusAC('failed')))
 
 });
 

@@ -19,7 +19,6 @@ export const handleServerNetworkError = (error: { message: string }, dispatch: D
     dispatch(appSetStatusAC({status: 'failed'}));
 }*/
 
-
 // react-redux
 export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: AppDispatch) => {
     if (data.messages) {
@@ -46,8 +45,6 @@ export function* handleServerAppErrorSaga<D>(data: TodolistsResponseType<D>) {
 }
 
 export function* handleServerNetworkErrorSaga(error: { message: string }) {
-    yield put(
-        appSetErrorAC(error.message ? error.message : 'Some error occurred')
-    );
+    yield put(appSetErrorAC(error.message ? error.message : 'Some error occurred'));
     yield put(appSetStatusAC('failed'));
 }
