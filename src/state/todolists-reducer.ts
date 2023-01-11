@@ -437,7 +437,7 @@ export function* deleteTodolistTC_WorkerSaga(action: ReturnType<typeof deleteTod
 export const createTodolistTC = (todolist: TodolistDomainType) => ({type: 'TODOLISTS/CREATE_TODOLIST', todolist})
 export function* createTodolistTC_WorkerSaga(action: ReturnType<typeof createTodolistTC>): any {
     yield put(appSetStatusAC('loading'));
-    const response: any = yield call(todolistsAPI.createTodolist, action.todolist.title)
+    const response: AxiosResponse<TodolistsResponseType<{ item: TodolistAPIType }>> = yield call(todolistsAPI.createTodolist, action.todolist.title)
     try {
         yield put(createTodolistAC(response.data.data.item))
         yield put(appSetStatusAC('succeeded'));
@@ -450,7 +450,7 @@ export const updateTodolistTitleTC = (todolistId: string, title: string) => ({ty
 export function* updateTodolistTitleTC_WorkerSaga(action: ReturnType<typeof updateTodolistTitleTC>): any {
     yield put(appSetStatusAC('loading'));
     yield put(changeTodolistEntityStatusAC(action.todolistId,'loading'));
-    const response: any = yield call(todolistsAPI.updateTodolist, action.todolistId, action.title)
+    const response: AxiosResponse<TodolistsResponseType> = yield call(todolistsAPI.updateTodolist, action.todolistId, action.title)
     try {
         if (response.data.resultCode === 0) {
             yield put(updateTodolistTitleAC(action.todolistId, action.title))

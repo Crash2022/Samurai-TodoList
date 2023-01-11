@@ -599,7 +599,7 @@ export function* updateTaskTC_WorkerSaga(action: ReturnType<typeof updateTaskTC>
     }
 
     // yield put(appSetStatusAC('loading'));
-    const response: any =
+    const response: AxiosResponse<TodolistsResponseType<{ item: UpdateTaskModelType }>> =
         yield call(todolistsAPI.updateTask, action.todolistId, action.taskId, apiModel)
     try {
         if (response.data.resultCode === 0) {

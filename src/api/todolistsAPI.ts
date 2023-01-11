@@ -88,7 +88,7 @@ export const todolistsAPI = {
                 .get<Array<TodolistAPIType>>('todo-lists', {})
         )
     },
-    createTodolist(title: string) {
+    createTodolist(title: string): Promise<AxiosResponse<TodolistsResponseType>> {
         return (
             instance
                 .post<TodolistsResponseType<{ item: TodolistAPIType }>>
@@ -102,7 +102,7 @@ export const todolistsAPI = {
                 (`todo-lists/${todolistId}`, {})
         )
     },
-    updateTodolist(todolistId: string, newTitle: string) {
+    updateTodolist(todolistId: string, newTitle: string): Promise<AxiosResponse<TodolistsResponseType>> {
         return (
             instance
                 .put<TodolistsResponseType>
@@ -132,7 +132,7 @@ export const todolistsAPI = {
                 (`todo-lists/${todolistId}/tasks/${taskId}`, {})
         )
     },
-    updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType): Promise<AxiosResponse<TodolistsResponseType>> {
         return (
             instance
                 .put<TodolistsResponseType<{ item: UpdateTaskModelType }>>
