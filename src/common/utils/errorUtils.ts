@@ -40,14 +40,14 @@ export function* handleServerAppErrorSaga<D>(data: TodolistsResponseType<D>) {
     if (data.messages) {
         yield put(appSetErrorAC(data.messages[0]));
     } else {
-        yield put(appSetErrorAC("Some error occurred"));
+        yield put(appSetErrorAC('Some error occurred'));
     }
-    yield put(appSetStatusAC("failed"));
+    yield put(appSetStatusAC('failed'));
 }
 
 export function* handleServerNetworkErrorSaga(error: { message: string }) {
     yield put(
-        appSetErrorAC(error.message ? error.message : "Some error occurred")
+        appSetErrorAC(error.message ? error.message : 'Some error occurred')
     );
-    yield put(appSetStatusAC("failed"));
+    yield put(appSetStatusAC('failed'));
 }

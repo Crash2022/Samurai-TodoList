@@ -525,7 +525,7 @@ export function* tasksWatcherSaga() {
     yield takeEvery('TASKS/UPDATE_TASK', updateTaskTC_WorkerSaga)
 }
 
-export const getTasksTC = (todolistId: string) => ({type: 'TASKS/GET_TASKS', todolistId})
+export const getTasksTC = (todolistId: string) => ({type: 'TASKS/GET_TASKS', todolistId} as const)
 export function* getTasksTC_WorkerSaga(action: ReturnType<typeof getTasksTC>): any {
     yield put(appSetStatusAC('loading'));
     const data: TasksResponseType = yield call(todolistsAPI.getTasks, action.todolistId)
@@ -533,11 +533,11 @@ export function* getTasksTC_WorkerSaga(action: ReturnType<typeof getTasksTC>): a
         yield put(setTasksAC(action.todolistId, data.items));
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
-export const deleteTaskTC = (todolistId: string, taskId: string) => ({type: 'TASKS/DELETE_TASK', todolistId, taskId})
+export const deleteTaskTC = (todolistId: string, taskId: string) => ({type: 'TASKS/DELETE_TASK', todolistId, taskId} as const)
 export function* deleteTaskTC_WorkerSaga(action: ReturnType<typeof deleteTaskTC>): any {
     yield put(appSetStatusAC('loading'));
     const response: AxiosResponse<TodolistsResponseType> =
@@ -547,11 +547,11 @@ export function* deleteTaskTC_WorkerSaga(action: ReturnType<typeof deleteTaskTC>
         yield put(appSetStatusAC('succeeded'));
     }
     catch(error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
-export const createTaskTC = (task: TaskAPIType) => ({type: 'TASKS/CREATE_TASK', task})
+export const createTaskTC = (task: TaskAPIType) => ({type: 'TASKS/CREATE_TASK', task} as const)
 export function* createTaskTC_WorkerSaga(action: ReturnType<typeof createTaskTC>): any {
     yield put(appSetStatusAC('loading'));
     const response: any =
@@ -561,17 +561,17 @@ export function* createTaskTC_WorkerSaga(action: ReturnType<typeof createTaskTC>
             yield put(createTaskAC(response.data.data.item));
             yield put(appSetStatusAC('succeeded'));
         } else {
-            handleServerAppErrorSaga(response.data);
+            yield* handleServerAppErrorSaga(response.data);
         }
         yield put(appSetStatusAC('failed'));
     }
     catch(error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
 export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType) =>
-    ({type: 'TASKS/UPDATE_TASK', todolistId, taskId, domainModel})
+    ({type: 'TASKS/UPDATE_TASK', todolistId, taskId, domainModel} as const)
 export function* updateTaskTC_WorkerSaga(action: ReturnType<typeof updateTaskTC>): any {
     // простой способ
     // const state = store.getState();
@@ -606,10 +606,10 @@ export function* updateTaskTC_WorkerSaga(action: ReturnType<typeof updateTaskTC>
             yield put(updateTaskAC(action.todolistId, action.taskId, action.domainModel));
             // yield put(appSetStatusAC('succeeded'));
         } else {
-            yield handleServerAppErrorSaga(response.data);
+            yield* handleServerAppErrorSaga(response.data);
         }
     }
     catch(error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }

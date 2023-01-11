@@ -222,7 +222,7 @@ export function* loginWatcherSaga() {
     yield takeEvery('LOGIN/LOGOUT', logoutTC_WorkerSaga)
 }
 
-export const loginTC = (data: LoginParamsType) => ({type: 'LOGIN/LOGIN', data})
+export const loginTC = (data: LoginParamsType) => ({type: 'LOGIN/LOGIN', data} as const)
 export function* loginTC_WorkerSaga(action: ReturnType<typeof loginTC>): any {
     yield put(appSetStatusAC('loading'));
     const response: AxiosResponse<TodolistsResponseType> = yield call(authAPI.login, action.data)
@@ -231,14 +231,14 @@ export function* loginTC_WorkerSaga(action: ReturnType<typeof loginTC>): any {
             yield put(setIsLoggedInAC(true));
             yield put(appSetStatusAC('succeeded'));
         } else {
-            yield handleServerAppErrorSaga(response.data);
+            yield* handleServerAppErrorSaga(response.data);
         }
     } catch (error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
-export const logoutTC = () => ({type: 'LOGIN/LOGOUT'})
+export const logoutTC = () => ({type: 'LOGIN/LOGOUT'} as const)
 export function* logoutTC_WorkerSaga(action: ReturnType<typeof logoutTC>): any {
     yield put(appSetStatusAC('loading'));
     const response: AxiosResponse<TodolistsResponseType> = yield call(authAPI.logout)
@@ -247,9 +247,9 @@ export function* logoutTC_WorkerSaga(action: ReturnType<typeof logoutTC>): any {
             yield put(setIsLoggedInAC(false));
             yield put(appSetStatusAC('succeeded'));
         } else {
-            yield handleServerAppErrorSaga(response.data);
+            yield* handleServerAppErrorSaga(response.data);
         }
     } catch (error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }

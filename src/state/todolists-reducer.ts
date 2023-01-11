@@ -409,7 +409,7 @@ export function* todolistsWatcherSaga() {
     yield takeEvery('TODOLISTS/UPDATE_TODOLIST_TITLE', updateTodolistTitleTC_WorkerSaga)
 }
 
-export const getTodolistsTC = () => ({type: 'TODOLISTS/GET_TODOLISTS'})
+export const getTodolistsTC = () => ({type: 'TODOLISTS/GET_TODOLISTS'} as const)
 export function* getTodolistsTC_WorkerSaga(action: ReturnType<typeof getTodolistsTC>): any {
     yield put(appSetStatusAC('loading'));
     const response: AxiosResponse<Array<TodolistAPIType>> = yield call(todolistsAPI.getTodolists)
@@ -417,11 +417,11 @@ export function* getTodolistsTC_WorkerSaga(action: ReturnType<typeof getTodolist
         yield put(setTodolistsAC(response.data));
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
-export const deleteTodolistTC = (todolistId: string) => ({type: 'TODOLISTS/DELETE_TODOLIST', todolistId})
+export const deleteTodolistTC = (todolistId: string) => ({type: 'TODOLISTS/DELETE_TODOLIST', todolistId} as const)
 export function* deleteTodolistTC_WorkerSaga(action: ReturnType<typeof deleteTodolistTC>): any {
     yield put(appSetStatusAC('loading'));
     yield put(changeTodolistEntityStatusAC(action.todolistId,'loading'));
@@ -430,11 +430,11 @@ export function* deleteTodolistTC_WorkerSaga(action: ReturnType<typeof deleteTod
         yield put(deleteTodolistAC(action.todolistId))
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
-export const createTodolistTC = (todolist: TodolistDomainType) => ({type: 'TODOLISTS/CREATE_TODOLIST', todolist})
+export const createTodolistTC = (todolist: TodolistDomainType) => ({type: 'TODOLISTS/CREATE_TODOLIST', todolist} as const)
 export function* createTodolistTC_WorkerSaga(action: ReturnType<typeof createTodolistTC>): any {
     yield put(appSetStatusAC('loading'));
     const response: AxiosResponse<TodolistsResponseType<{ item: TodolistAPIType }>> = yield call(todolistsAPI.createTodolist, action.todolist.title)
@@ -442,11 +442,11 @@ export function* createTodolistTC_WorkerSaga(action: ReturnType<typeof createTod
         yield put(createTodolistAC(response.data.data.item))
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }
 
-export const updateTodolistTitleTC = (todolistId: string, title: string) => ({type: 'TODOLISTS/UPDATE_TODOLIST_TITLE', todolistId, title})
+export const updateTodolistTitleTC = (todolistId: string, title: string) => ({type: 'TODOLISTS/UPDATE_TODOLIST_TITLE', todolistId, title} as const)
 export function* updateTodolistTitleTC_WorkerSaga(action: ReturnType<typeof updateTodolistTitleTC>): any {
     yield put(appSetStatusAC('loading'));
     yield put(changeTodolistEntityStatusAC(action.todolistId,'loading'));
@@ -466,6 +466,6 @@ export function* updateTodolistTitleTC_WorkerSaga(action: ReturnType<typeof upda
             }
         }
     } catch (error) {
-        yield handleServerNetworkErrorSaga(error as AxiosError);
+        yield* handleServerNetworkErrorSaga(error as AxiosError);
     }
 }

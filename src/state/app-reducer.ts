@@ -198,7 +198,7 @@ export function* appWatcherSaga() {
     yield takeEvery('APP/INITIALIZE_APP', initializeAppTC_WorkerSaga)
 }
 
-export const initializeAppTC = () => ({type: 'APP/INITIALIZE_APP'})
+export const initializeAppTC = () => ({type: 'APP/INITIALIZE_APP'} as const)
 export function* initializeAppTC_WorkerSaga(): any {
     // yield put(appSetStatusAC('loading'));
     const response: AxiosResponse<MeResponseType> = yield call(authAPI.authMe)
@@ -207,11 +207,11 @@ export function* initializeAppTC_WorkerSaga(): any {
                 yield put(setIsLoggedInAC(true));
                 // yield put(appSetStatusAC('succeeded'));
             } else {
-                yield handleServerAppErrorSaga(response.data);
+                yield* handleServerAppErrorSaga(response.data);
             }
             yield put(appSetInitializedAC(true));
         }
         catch(error) {
-            yield handleServerNetworkErrorSaga(error as AxiosError);
+            yield* handleServerNetworkErrorSaga(error as AxiosError);
         }
 }
