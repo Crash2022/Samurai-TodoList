@@ -23,28 +23,21 @@ beforeEach(() => {
 test('initializeAppTC_WorkerSaga login success', () => {
 
     const gen = initializeAppTC_WorkerSaga();
-    let result = gen.next();
-    expect(result.value).toEqual(call(authAPI.authMe));
 
-    result = gen.next(meResponse);
-    expect(result.value).toEqual(put(setIsLoggedInAC(true)))
-    // result = gen.next(meResponse);
-    // expect(result.value).toEqual(put(appSetStatusAC('succeeded')))
-    result = gen.next();
-    expect(result.value).toEqual(put(appSetInitializedAC(true)))
+    expect(gen.next().value).toEqual(call(authAPI.authMe));
+    expect(gen.next(meResponse).value).toEqual(put(setIsLoggedInAC(true)))
+    // expect(gen.next(meResponse).value).toEqual(put(appSetStatusAC('succeeded')))
+    expect(gen.next().value).toEqual(put(appSetInitializedAC(true)))
 });
 
 test('initializeAppTC_WorkerSaga login unsuccessful', () => {
 
     const gen = initializeAppTC_WorkerSaga();
-    let result = gen.next();
-    expect(result.value).toEqual(call(authAPI.authMe));
+    expect(gen.next().value).toEqual(call(authAPI.authMe));
 
     meResponse.data.resultCode = 1;
-    result = gen.next(meResponse);
-    expect(result.value).toEqual(handleServerAppErrorSaga(meResponse.data))
-    result = gen.next(meResponse);
-    expect(result.value).toEqual(put(appSetInitializedAC(true)))
+    expect(gen.next(meResponse).value).toEqual(handleServerAppErrorSaga(meResponse.data))
+    expect(gen.next(meResponse).value).toEqual(put(appSetInitializedAC(true)))
 });
 
 // export default {}

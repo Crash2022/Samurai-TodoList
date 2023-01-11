@@ -528,9 +528,9 @@ export function* tasksWatcherSaga() {
 export const getTasksTC = (todolistId: string) => ({type: 'TASKS/GET_TASKS', todolistId})
 export function* getTasksTC_WorkerSaga(action: ReturnType<typeof getTasksTC>): any {
     yield put(appSetStatusAC('loading'));
-    const response: AxiosResponse<TasksResponseType> = yield call(todolistsAPI.getTasks, action.todolistId)
+    const data: TasksResponseType = yield call(todolistsAPI.getTasks, action.todolistId)
     try {
-        yield put(setTasksAC(action.todolistId, response.data.items));
+        yield put(setTasksAC(action.todolistId, data.items));
         yield put(appSetStatusAC('succeeded'));
     } catch (error) {
         yield handleServerNetworkErrorSaga(error as AxiosError);

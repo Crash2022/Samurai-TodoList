@@ -98,7 +98,7 @@ export const GetTasks = () => {
 
     useEffect(() => {
         todolistsAPI.getTasks(todolistId)
-            .then(response => setState(response.data.items))
+            .then(response => setState(response.items))
             .catch(error => console.log(error))
     }, [])
 

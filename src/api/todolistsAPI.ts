@@ -111,11 +111,12 @@ export const todolistsAPI = {
     },
 
 
-    getTasks(todolistId: string): Promise<AxiosResponse<TasksResponseType>> {
+    getTasks(todolistId: string): Promise<TasksResponseType> {
         return (
             instance
                 .get<TasksResponseType>
                 (`todo-lists/${todolistId}/tasks`, {})
+                .then(res => res.data)
         )
     },
     createTask(task: TaskAPIType /*todolistId: string, newTask: string*/): Promise<AxiosResponse<TodolistsResponseType>> {
