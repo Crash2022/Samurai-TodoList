@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Samurai-Todolist/static/css/main.63a90f6e.css",
+    "main.js": "/Samurai-Todolist/static/js/main.6388024d.js",
+    "static/media/error404.svg": "/Samurai-Todolist/static/media/error404.f26b506f65343dfc245b0e141dbfbcc1.svg",
+    "index.html": "/Samurai-Todolist/index.html",
+    "main.63a90f6e.css.map": "/Samurai-Todolist/static/css/main.63a90f6e.css.map",
+    "main.6388024d.js.map": "/Samurai-Todolist/static/js/main.6388024d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.63a90f6e.css",
+    "static/js/main.6388024d.js"
+  ]
+}
