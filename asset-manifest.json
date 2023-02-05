@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/Samurai-Todolist/static/css/main.63a90f6e.css",
-    "main.js": "/Samurai-Todolist/static/js/main.179460b3.js",
-    "static/media/error404.svg": "/Samurai-Todolist/static/media/error404.f26b506f65343dfc245b0e141dbfbcc1.svg",
-    "index.html": "/Samurai-Todolist/index.html",
-    "main.63a90f6e.css.map": "/Samurai-Todolist/static/css/main.63a90f6e.css.map",
-    "main.179460b3.js.map": "/Samurai-Todolist/static/js/main.179460b3.js.map"
+    "main.css": "/Samurai-TodoList/static/css/main.63a90f6e.css",
+    "main.js": "/Samurai-TodoList/static/js/main.6632f0e3.js",
+    "static/media/error404.svg": "/Samurai-TodoList/static/media/error404.f26b506f65343dfc245b0e141dbfbcc1.svg",
+    "index.html": "/Samurai-TodoList/index.html",
+    "main.63a90f6e.css.map": "/Samurai-TodoList/static/css/main.63a90f6e.css.map",
+    "main.6632f0e3.js.map": "/Samurai-TodoList/static/js/main.6632f0e3.js.map"
   },
   "entrypoints": [
     "static/css/main.63a90f6e.css",
-    "static/js/main.179460b3.js"
+    "static/js/main.6632f0e3.js"
   ]
 }
