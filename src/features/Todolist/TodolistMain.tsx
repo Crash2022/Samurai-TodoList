@@ -16,7 +16,7 @@ type TodolistMainType = {
 export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
 
     // const MESSAGE_TODOS_END = 'Список задач пуст!';
-    const MESSAGE_TODOS_END = 'No todolists now';
+    const MESSAGE_TODOS_END = 'No todolists';
 
     const dispatch = useAppDispatch();
     const todolists = useAppSelector(selectTodolists);
