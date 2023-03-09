@@ -20,56 +20,6 @@ import {PrivateRoutes} from '../common/components/PrivateRoutes/PrivateRoutes';
 
 /*------------------------------------------------*/
 
-// типизация для локальных тудулистов
-// export type TasksListType = {
-//     [todolistId: string]: Array<TaskType>
-// }
-
-// export type TodoListType = {
-//     id: string
-//     title: string
-//     filter: FilterType
-// }
-//
-// export type TaskType = {
-//     id: string
-//     title: string
-//     isDone: boolean
-// }
-
-/*------------------------------------------------*/
-
-// памятка по типизации для тудулистов с сервера
-// startState: Array<TodolistDomainType> = ([
-//     {id: todolistId1, title: 'Выучить', filter: 'all', addedDate: '', order: 0},
-//     {id: todolistId2, title: 'Купить', filter: 'all', addedDate: '', order: 0}
-// ])
-//
-// type TasksListType = {
-//     [todolistId: string]: Array<TaskAPIType>
-// }
-//
-// startState: TasksListType = ({
-//     'todolistId1': [
-//         {todoListId: 'todolistId1', id: v1(), title: 'HTML&CSS',
-//             status: TaskStatuses.Completed, priority: TaskPriorities.Middle,
-//             description: '', addedDate: '', startDate: '', deadline: '', order: 0},
-//         {todoListId: 'todolistId1', id: v1(), title: 'React',
-//             status: TaskStatuses.New, priority: TaskPriorities.Hi,
-//             description: '', addedDate: '', startDate: '', deadline: '', order: 0}
-//     ],
-//     'todolistId2': [
-//         {todoListId: 'todolistId2', id: v1(), title: 'Notebook',
-//             status: TaskStatuses.New, priority: TaskPriorities.Low,
-//             description: '', addedDate: '', startDate: '', deadline: '', order: 0},
-//         {todoListId: 'todolistId2', id: v1(), title: 'New Bike',
-//             status: TaskStatuses.Completed, priority: TaskPriorities.Later,
-//             description: '', addedDate: '', startDate: '', deadline: '', order: 0}
-//     ]
-// })
-
-/*------------------------------------------------*/
-
 type AppWithReduxType = {
     demo?: boolean
 }
@@ -90,7 +40,6 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
         if (demo || !isLoggedIn) {
             return;
         }
-        // dispatch(getTodolistsTC());
         if (!todolists.length) {
             dispatch(getTodolistsTC());
         }

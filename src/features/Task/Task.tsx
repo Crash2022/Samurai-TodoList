@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useEffect} from 'react'
+import React, {ChangeEvent, useCallback} from 'react'
 import {v1} from 'uuid'
 import s from '../../common/styles/Todolist.module.css'
 import {EditableSpan} from '../../common/components/EditableSpan/EditableSpan';
@@ -17,42 +17,26 @@ type TaskPropsType = {
 
 export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => {
 
-    console.log('task')
-
     const dispatch = useAppDispatch();
     const status = useAppSelector(selectAppStatus)
 
     const removeTaskHandler = useCallback(() => {
-        // redux-toolkit
-        // dispatch(deleteTaskTC({todolistId: todolistId, taskId: task.id}));
-
-        // react-redux
-        dispatch(deleteTaskTC(todolistId, task.id));
+        dispatch(deleteTaskTC({todolistId: todolistId, taskId: task.id}));
     }, [todolistId, task.id])
 
     const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        // redux-toolkit
-        // dispatch(updateTaskTC({
-        //     todolistId: todolistId, taskId: task.id,
-        //     domainModel: {status: event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}
-        // }));
-
-        // react-redux
-        let newIsDoneValue = event.currentTarget.checked;
-        dispatch(updateTaskTC(todolistId, task.id,
-            {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}));
+        dispatch(updateTaskTC({
+            todolistId: todolistId, taskId: task.id,
+            domainModel: {status: event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}
+        }));
     }, [todolistId, task.id])
 
     const changeTaskTitleHandler = useCallback((newInputValue: string) => {
-        // redux-toolkit
-        // dispatch(updateTaskTC({
-        //     todolistId: todolistId,
-        //     taskId: task.id,
-        //     domainModel: {title: newInputValue}
-        // }));
-
-        // react-redux
-        dispatch(updateTaskTC(todolistId, task.id, {title: newInputValue}));
+        dispatch(updateTaskTC({
+            todolistId: todolistId,
+            taskId: task.id,
+            domainModel: {title: newInputValue}
+        }));
     }, [todolistId, task.id])
 
     return (

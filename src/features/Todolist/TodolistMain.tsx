@@ -4,9 +4,9 @@ import {selectTodolists} from '../../state/selectors';
 import {Grid, Paper} from '@material-ui/core';
 import {Todolist} from './Todolist';
 import s from '../../common/styles/Todolist.module.css';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm';
-import {createTodolistTC, getTodolistsTC} from '../../state/todolists-reducer';
+import {createTodolistTC} from '../../state/todolists-reducer';
 import {v1} from 'uuid';
 
 type TodolistMainType = {
@@ -27,16 +27,6 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
             entityStatus: 'idle', addedDate: '', order: 0
         }));
     }, [dispatch])
-
-    // добавлена проверка
-    // useEffect(() => {
-    //     if (demo) {
-    //         return;
-    //     }
-    //     if (!todolists.length) {
-    //         dispatch(getTodolistsTC());
-    //     }
-    // }, [])
 
     return (
         <>
