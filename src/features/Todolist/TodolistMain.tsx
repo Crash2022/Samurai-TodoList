@@ -28,7 +28,7 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
         }));
     }, [dispatch])
 
-    // добавлена проверка
+    // добавлена проверка (не помню зачем)
     // useEffect(() => {
     //     if (demo) {
     //         return;
