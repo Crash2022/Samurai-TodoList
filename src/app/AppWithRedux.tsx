@@ -74,6 +74,8 @@ type AppWithReduxType = {
     demo?: boolean
 }
 
+// COPY OF MAIN BRANCH BASED ON SAGA
+
 export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = false}) => {
 
     console.log('app')
