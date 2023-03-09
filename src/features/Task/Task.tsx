@@ -23,35 +23,16 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
     const status = useAppSelector(selectAppStatus)
 
     const removeTaskHandler = useCallback(() => {
-        // redux-toolkit
-        // dispatch(deleteTaskTC({todolistId: todolistId, taskId: task.id}));
-
-        // react-redux
         dispatch(deleteTaskTC(todolistId, task.id));
     }, [todolistId, task.id])
 
     const changeStatusHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        // redux-toolkit
-        // dispatch(updateTaskTC({
-        //     todolistId: todolistId, taskId: task.id,
-        //     domainModel: {status: event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New}
-        // }));
-
-        // react-redux
         let newIsDoneValue = event.currentTarget.checked;
         dispatch(updateTaskTC(todolistId, task.id,
             {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}));
     }, [todolistId, task.id])
 
     const changeTaskTitleHandler = useCallback((newInputValue: string) => {
-        // redux-toolkit
-        // dispatch(updateTaskTC({
-        //     todolistId: todolistId,
-        //     taskId: task.id,
-        //     domainModel: {title: newInputValue}
-        // }));
-
-        // react-redux
         dispatch(updateTaskTC(todolistId, task.id, {title: newInputValue}));
     }, [todolistId, task.id])
 

@@ -46,10 +46,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     }, [todolist.id])
 
     const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
-        // redux-toolkit
-        // dispatch(updateTodolistTitleTC({todolistId: todolist.id, title: newInputValue}));
-
-        // react-redux
         dispatch(updateTodolistTitleTC( todolist.id, newInputValue));
     }, [todolist.id])
 
@@ -70,10 +66,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
     // фильтрация тудулиста в одной функции
     const updateAllFilterButtonHandler = useCallback((filter: FilterType) => {
-        // redux-toolkit
-        // dispatch(updateTodolistFilterAC({id: todolist.id, filter: filter}))
-
-        // react-redux
         dispatch(updateTodolistFilterAC(todolist.id, filter))
     }, [todolist.id])
 
@@ -176,23 +168,3 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         </Paper>
     );
 })
-
-// Чтобы реализовать useMemo для Material UI
-// type ButtonPropsType = {
-//     todolistId: string
-//     buttonTitle: FilterType
-//     filter: string
-//     //color: 'primary' | 'inherit' | 'secondary'
-// }
-//
-// const ButtonExample = React.memo((props: ButtonPropsType) => {
-//     console.log('buttonExample')
-//     const dispatch = useDispatch();
-//
-//     return (
-//         <Button onClick={() => dispatch(changeTodolistFilterAC(todolistId, 'all'))}
-//                 variant={props.buttonTitle === props.filter ? 'contained' : 'text'}>
-//         {props.buttonTitle}
-//         </Button>
-//     )
-// })

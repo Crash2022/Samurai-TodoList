@@ -11,87 +11,6 @@ import {AppThunkType} from "./store";
 import {put, call, takeEvery} from 'redux-saga/effects'
 import {AxiosError, AxiosResponse} from 'axios';
 
-// redux-toolkit
-/*export type AppInitialStateType = {
-    // происходит ли сейчас взаимодействие с сервером
-    status: AppInitialStateStatusType
-    // текст ошибки запишем сюда
-    error: string | null
-    isInitialized: boolean
-}
-
-export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
-
-export const initializeAppTC = createAsyncThunk('app/initializeApp',
-    async (param, {dispatch}) => {
-        dispatch(appSetStatusAC({status: 'loading'}));
-
-        try {
-            const response = await authAPI.authMe();
-
-            if (response.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC({isLoggedIn: true}))
-                dispatch(appSetStatusAC({status: 'succeeded'}));
-            } else {
-                handleServerAppError(response.data, dispatch);
-            }
-        } catch (err) {
-            const error: any = err; // AxiosError
-            handleServerNetworkError(error, dispatch);
-        }
-    })
-
-const slice = createSlice({
-    name: 'app',
-    initialState: {
-        status: 'idle',
-        error: null,
-        isInitialized: false
-    } as AppInitialStateType,
-    reducers: {
-        appSetStatusAC(state, action: PayloadAction<{ status: AppInitialStateStatusType }>) {
-            state.status = action.payload.status;
-        },
-        appSetErrorAC(state, action: PayloadAction<{ error: string | null }>) {
-            state.error = action.payload.error;
-        }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(initializeAppTC.fulfilled, (state) => {
-            state.isInitialized = true;
-        })
-    }
-})
-
-export const appReducer = slice.reducer;
-export const {appSetStatusAC, appSetErrorAC} = slice.actions;*/
-
-// вариант thunk для RTK из react-redux
-/*export const initializeAppTC = (): AppThunkType => {
-    // типизация Dispatch для Redux-Toolkit, для React-Redux другая
-    return (dispatch) => {
-        dispatch(appSetStatusAC({status: 'loading'}));
-        authAPI.authMe()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC({isLoggedIn: true}));
-                    dispatch(appSetStatusAC({status: 'succeeded'}));
-                } else {
-                    handleServerAppError(response.data, dispatch);
-                }
-                dispatch(appSetInitializedAC({isInitialized: true}));
-            })
-            .catch(error => {
-                handleServerNetworkError(error, dispatch);
-            })
-    }
-}*/
-
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-// react-redux
-
 // reducer
 export type AppInitialStateType = {
     // происходит ли сейчас взаимодействие с сервером
@@ -151,7 +70,7 @@ export const appSetInitializedAC = (isInitialized: boolean) => ({
 /*-----------------------------------------------------------------------------------*/
 
 // thunks
-/*export const initializeAppTC = (): AppThunkType => {
+export const initializeAppTC = (): AppThunkType => {
     return (dispatch) => {
         dispatch(appSetStatusAC('loading'));
         authAPI.authMe()
@@ -175,43 +94,4 @@ export const appSetInitializedAC = (isInitialized: boolean) => ({
                 // dispatch(appSetStatusAC('failed'));
             })
     }
-}*/
-
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-// react-redux-saga
-
-// типизация генератора
-/*
-type WhatYouYield="foo"
-type WhatYouReturn="bar"
-type WhatYouAccept="baz"
-
-function* myFun(): Generator<WhatYouYield, WhatYouReturn, WhatYouAccept> {
-    const myYield = "foo" // type of myYield is WhatYouYield
-    const myAccepted = yield myYield; // type of myAccepted is WhatYouAccept
-    return "baz" // type of this value is WhatYouReturn
-}*/
-
-export function* appWatcherSaga() {
-    yield takeEvery('APP/INITIALIZE_APP', initializeAppTC_WorkerSaga)
-}
-
-export const initializeAppTC = () => ({type: 'APP/INITIALIZE_APP'} as const)
-export function* initializeAppTC_WorkerSaga(): any {
-    // yield put(appSetStatusAC('loading'));
-    const response: AxiosResponse<MeResponseType> = yield call(authAPI.authMe)
-        try {
-            if (response.data.resultCode === 0) {
-                yield put(setIsLoggedInAC(true));
-                // yield put(appSetStatusAC('succeeded'));
-            } else {
-                yield* handleServerAppErrorSaga(response.data);
-            }
-            yield put(appSetInitializedAC(true));
-        }
-        catch(error) {
-            yield* handleServerNetworkErrorSaga(error as AxiosError);
-        }
 }
