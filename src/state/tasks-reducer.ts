@@ -4,8 +4,6 @@ import {appSetStatusAC} from './app-reducer';
 import {handleServerAppError, handleServerNetworkError,} from '../common/utils/errorUtils';
 import {CreateTodolistACType, DeleteTodolistACType, SetTodolistsACType,} from './todolists-reducer';
 
-// react-redux
-
 // reducer
 export type TasksListType = {
     [todolistId: string]: Array<TaskAPIType>
@@ -69,7 +67,7 @@ export const tasksReducer = (state: TasksListType = initialState, action: TasksA
         }
 
         case 'DELETE_TODOLIST': {
-            // const {[action.todolistId]: [], ...rest} = {...state} //другой способ через деструктуризацию
+            // const {[action.todolistId]: [], ...rest} = {...state} // другой способ через деструктуризацию
             const stateCopy = {...state};
             delete stateCopy[action.id];
             return stateCopy;
@@ -145,7 +143,8 @@ export const getTasksTC = (todolistId: string): AppThunkType => {
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.getTasks(todolistId)
             .then(response => {
-                dispatch(setTasksAC(todolistId, response.data.items));
+                // dispatch(setTasksAC(todolistId, response.data.items)); // ? response
+                dispatch(setTasksAC(todolistId, response.items));
                 dispatch(appSetStatusAC('succeeded'));
             })
             .catch(error => {
@@ -160,6 +159,7 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
         todolistsAPI.createTask(task)
             .then(response => {
                 if (response.data.resultCode === 0) {
+                    // dispatch(createTaskAC(response.data.data.item)); // ? response
                     dispatch(createTaskAC(response.data.data.item));
                     dispatch(appSetStatusAC('succeeded'));
                 } else {

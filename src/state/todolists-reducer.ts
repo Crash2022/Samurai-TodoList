@@ -1,4 +1,4 @@
-import {TodolistAPIType, todolistsAPI, TodolistsResponseType} from '../api/todolistsAPI';
+import {TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
 import {AppThunkType} from "./store";
 import {handleServerNetworkError} from '../common/utils/errorUtils';
@@ -108,6 +108,7 @@ export const setTodolistsAC = (todolists: Array<TodolistAPIType>) => ({
 /*-----------------------------------------------------------------------------------*/
 
 // thunks
+
 // async await version getTodolistsTC
 // export const getTodolistsTC = (): AppThunkType => async (dispatch) => {
 //     try {
@@ -153,6 +154,7 @@ export const createTodolistTC = (todolist: TodolistDomainType): AppThunkType => 
         dispatch(appSetStatusAC('loading'));
         todolistsAPI.createTodolist(todolist.title)
             .then(response => {
+                // dispatch(createTodolistAC(response.data.data.item))
                 dispatch(createTodolistAC(response.data.data.item))
                 dispatch(appSetStatusAC('succeeded'));
             })
