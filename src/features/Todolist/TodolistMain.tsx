@@ -1,7 +1,7 @@
 import {useAppDispatch} from '../../common/hooks/useAppDispatch';
 import {useAppSelector} from '../../common/hooks/useAppSelector';
 import {selectTodolists} from '../../state/selectors';
-import {Grid, Paper} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import {Todolist} from './Todolist';
 import s from '../../common/styles/Todolist.module.css';
 import React, {useCallback} from 'react';

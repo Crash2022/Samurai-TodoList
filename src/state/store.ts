@@ -24,11 +24,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 /*------------------------------------------------------------*/
 
 // hot reloading-replacement
-if (process.env.NODE_ENV === 'development' && module.hot) {
+/*if (process.env.NODE_ENV === 'development' && module.hot) {
     module.hot.accept('./reducers', () => {
         store.replaceReducer(rootReducer)
     })
-}
+}*/
 
 /*------------------------------------------------------------*/
 // REDUX TOOLKIT

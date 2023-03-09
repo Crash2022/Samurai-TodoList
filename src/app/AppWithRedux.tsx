@@ -1,6 +1,6 @@
-import {CircularProgress, Container} from '@material-ui/core';
 import React, {useEffect} from 'react';
 import './App.css';
+import {CircularProgress, Container} from '@material-ui/core';
 import {getTodolistsTC} from '../state/todolists-reducer';
 import {ErrorSnackBar} from '../common/components/ErrorSnackBar/ErrorSnackBar';
 import {initializeAppTC} from '../state/app-reducer';

@@ -1,26 +1,10 @@
-import {
-    authAPI,
-    FieldsErrorsType,
-    LoginParamsType,
-    TasksResponseType,
-    todolistsAPI,
-    TodolistsResponseType
-} from '../api/todolistsAPI';
-import {
-    handleServerAppError,
-    handleServerAppErrorSaga,
-    handleServerNetworkError,
-    handleServerNetworkErrorSaga
-} from '../common/utils/errorUtils';
+import {authAPI, FieldsErrorsType, LoginParamsType,} from '../api/todolistsAPI';
+import {handleServerAppError, handleServerNetworkError,} from '../common/utils/errorUtils';
 import {appSetStatusAC} from './app-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {AppThunkType} from "./store";
-import {call, put, takeEvery} from 'redux-saga/effects';
-import {AxiosError, AxiosResponse} from 'axios';
-import {getTasksTC_WorkerSaga, setTasksAC} from './tasks-reducer';
 
 // redux-toolkit
-/*export type LoginInitialStateType = {
+export type LoginInitialStateType = {
     isLoggedIn: boolean
 }
 
@@ -98,7 +82,7 @@ export const loginReducer = slice.reducer;
 // const setIsLoggedInAC = slice.actions.setIsLoggedInAC;
 
 // определение экшена через деструктуризацию
-export const {setIsLoggedInAC} = slice.actions;*/
+export const {setIsLoggedInAC} = slice.actions;
 
 // вариант thunk для RTK из react-redux
 /*export const loginTC = (data: LoginParamsType) => {
@@ -136,120 +120,3 @@ export const logoutTC = () => {
             })
     }
 }*/
-
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-// react-redux
-
-// reducer
-export type LoginInitialStateType = {
-    isLoggedIn: boolean
-}
-
-const initialState: LoginInitialStateType = {
-    isLoggedIn: false
-}
-
-export const loginReducer = (state: LoginInitialStateType = initialState,
-                             action: LoginActionTypes): LoginInitialStateType => {
-    switch (action.type) {
-        case 'LOGIN/SET_IS_LOGGED_IN': {
-            return {...state, isLoggedIn: action.isLoggedIn};
-        }
-        default:
-            return state;
-    }
-}
-
-/*-----------------------------------------------------------------------------------*/
-
-// actions
-export type LoginActionTypes = SetIsLoggedInACType;
-
-export type SetIsLoggedInACType = ReturnType<typeof setIsLoggedInAC>
-export const setIsLoggedInAC = (isLoggedIn: boolean) => ({
-    type: 'LOGIN/SET_IS_LOGGED_IN', isLoggedIn
-} as const)
-
-/*-----------------------------------------------------------------------------------*/
-
-// thunks
-/*export const loginTC = (data: LoginParamsType): AppThunkType => {
-    return (dispatch) => {
-        dispatch(appSetStatusAC('loading'));
-        authAPI.login(data)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(true));
-                    dispatch(appSetStatusAC('succeeded'));
-                } else {
-                    handleServerAppError(response.data, dispatch);
-                }
-            })
-            .catch(error => {
-                handleServerNetworkError(error, dispatch);
-            })
-    }
-}*/
-
-/*export const logoutTC = (): AppThunkType => {
-    return (dispatch) => {
-        dispatch(appSetStatusAC('loading'));
-        authAPI.logout()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(false));
-                    dispatch(appSetStatusAC('succeeded'));
-                } else {
-                    handleServerAppError(response.data, dispatch);
-                }
-            })
-            .catch(error => {
-                handleServerNetworkError(error, dispatch);
-            })
-    }
-}*/
-
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-
-// react-redux-saga
-
-export function* loginWatcherSaga() {
-    yield takeEvery('LOGIN/LOGIN', loginTC_WorkerSaga)
-    yield takeEvery('LOGIN/LOGOUT', logoutTC_WorkerSaga)
-}
-
-export const loginTC = (data: LoginParamsType) => ({type: 'LOGIN/LOGIN', data} as const)
-export function* loginTC_WorkerSaga(action: ReturnType<typeof loginTC>): any {
-    yield put(appSetStatusAC('loading'));
-    const response: AxiosResponse<TodolistsResponseType> = yield call(authAPI.login, action.data)
-    try {
-        if (response.data.resultCode === 0) {
-            yield put(setIsLoggedInAC(true));
-            yield put(appSetStatusAC('succeeded'));
-        } else {
-            yield* handleServerAppErrorSaga(response.data);
-        }
-    } catch (error) {
-        yield* handleServerNetworkErrorSaga(error as AxiosError);
-    }
-}
-
-export const logoutTC = () => ({type: 'LOGIN/LOGOUT'} as const)
-export function* logoutTC_WorkerSaga(action: ReturnType<typeof logoutTC>): any {
-    yield put(appSetStatusAC('loading'));
-    const response: AxiosResponse<TodolistsResponseType> = yield call(authAPI.logout)
-    try {
-        if (response.data.resultCode === 0) {
-            yield put(setIsLoggedInAC(false));
-            yield put(appSetStatusAC('succeeded'));
-        } else {
-            yield* handleServerAppErrorSaga(response.data);
-        }
-    } catch (error) {
-        yield* handleServerNetworkErrorSaga(error as AxiosError);
-    }
-}
