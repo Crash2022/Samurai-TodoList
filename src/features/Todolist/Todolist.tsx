@@ -29,7 +29,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     console.log('todolist')
 
     const dispatch = useAppDispatch();
-    // const tasksObj = useAppSelector(selectTasksObj[todolist.id]);
     const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[todolist.id]);
 
     // const MESSAGE_TASKS_END = 'Задания выполнены';
@@ -46,11 +45,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     }, [todolist.id])
 
     const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
-        // redux-toolkit
-        // dispatch(updateTodolistTitleTC({todolistId: todolist.id, title: newInputValue}));
-
-        // react-redux
-        dispatch(updateTodolistTitleTC( todolist.id, newInputValue));
+        dispatch(updateTodolistTitleTC(todolist.id, newInputValue));
     }, [todolist.id])
 
     const removeTodolistHandler = useCallback(() => {
@@ -70,10 +65,6 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
 
     // фильтрация тудулиста в одной функции
     const updateAllFilterButtonHandler = useCallback((filter: FilterType) => {
-        // redux-toolkit
-        // dispatch(updateTodolistFilterAC({id: todolist.id, filter: filter}))
-
-        // react-redux
         dispatch(updateTodolistFilterAC(todolist.id, filter))
     }, [todolist.id])
 
@@ -176,23 +167,3 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         </Paper>
     );
 })
-
-// Чтобы реализовать useMemo для Material UI
-// type ButtonPropsType = {
-//     todolistId: string
-//     buttonTitle: FilterType
-//     filter: string
-//     //color: 'primary' | 'inherit' | 'secondary'
-// }
-//
-// const ButtonExample = React.memo((props: ButtonPropsType) => {
-//     console.log('buttonExample')
-//     const dispatch = useDispatch();
-//
-//     return (
-//         <Button onClick={() => dispatch(changeTodolistFilterAC(todolistId, 'all'))}
-//                 variant={props.buttonTitle === props.filter ? 'contained' : 'text'}>
-//         {props.buttonTitle}
-//         </Button>
-//     )
-// })

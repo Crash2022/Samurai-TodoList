@@ -1,95 +1,9 @@
-import {authAPI, AuthResponseData, MeResponseType, TodolistsResponseType} from '../api/todolistsAPI';
-import {
-    handleServerAppError,
-    handleServerAppErrorSaga,
-    handleServerNetworkError,
-    handleServerNetworkErrorSaga
-} from '../common/utils/errorUtils';
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {authAPI, MeResponseType} from '../api/todolistsAPI';
+import {handleServerAppErrorSaga, handleServerNetworkErrorSaga} from '../common/utils/errorUtils';
 import {setIsLoggedInAC} from './login-reducer';
-import {AppThunkType} from "./store";
 import {put, call, takeEvery} from 'redux-saga/effects'
 import {AxiosError, AxiosResponse} from 'axios';
 
-// redux-toolkit
-/*export type AppInitialStateType = {
-    // происходит ли сейчас взаимодействие с сервером
-    status: AppInitialStateStatusType
-    // текст ошибки запишем сюда
-    error: string | null
-    isInitialized: boolean
-}
-
-export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
-
-export const initializeAppTC = createAsyncThunk('app/initializeApp',
-    async (param, {dispatch}) => {
-        dispatch(appSetStatusAC({status: 'loading'}));
-
-        try {
-            const response = await authAPI.authMe();
-
-            if (response.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC({isLoggedIn: true}))
-                dispatch(appSetStatusAC({status: 'succeeded'}));
-            } else {
-                handleServerAppError(response.data, dispatch);
-            }
-        } catch (err) {
-            const error: any = err; // AxiosError
-            handleServerNetworkError(error, dispatch);
-        }
-    })
-
-const slice = createSlice({
-    name: 'app',
-    initialState: {
-        status: 'idle',
-        error: null,
-        isInitialized: false
-    } as AppInitialStateType,
-    reducers: {
-        appSetStatusAC(state, action: PayloadAction<{ status: AppInitialStateStatusType }>) {
-            state.status = action.payload.status;
-        },
-        appSetErrorAC(state, action: PayloadAction<{ error: string | null }>) {
-            state.error = action.payload.error;
-        }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(initializeAppTC.fulfilled, (state) => {
-            state.isInitialized = true;
-        })
-    }
-})
-
-export const appReducer = slice.reducer;
-export const {appSetStatusAC, appSetErrorAC} = slice.actions;*/
-
-// вариант thunk для RTK из react-redux
-/*export const initializeAppTC = (): AppThunkType => {
-    // типизация Dispatch для Redux-Toolkit, для React-Redux другая
-    return (dispatch) => {
-        dispatch(appSetStatusAC({status: 'loading'}));
-        authAPI.authMe()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC({isLoggedIn: true}));
-                    dispatch(appSetStatusAC({status: 'succeeded'}));
-                } else {
-                    handleServerAppError(response.data, dispatch);
-                }
-                dispatch(appSetInitializedAC({isInitialized: true}));
-            })
-            .catch(error => {
-                handleServerNetworkError(error, dispatch);
-            })
-    }
-}*/
-
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
 // react-redux
 
 // reducer
@@ -150,36 +64,6 @@ export const appSetInitializedAC = (isInitialized: boolean) => ({
 
 /*-----------------------------------------------------------------------------------*/
 
-// thunks
-/*export const initializeAppTC = (): AppThunkType => {
-    return (dispatch) => {
-        dispatch(appSetStatusAC('loading'));
-        authAPI.authMe()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(true));
-                    dispatch(appSetStatusAC('succeeded'));
-                } else {
-                    handleServerAppError(response.data, dispatch);
-                    // if (response.data.messages) {
-                    //     dispatch(appSetErrorAC(response.data.messages[0]));
-                    // } else {
-                    //     dispatch(appSetErrorAC('Some Error'));
-                    // }
-                }
-                dispatch(appSetInitializedAC(true));
-            })
-            .catch(error => {
-                handleServerNetworkError(error, dispatch);
-                // dispatch(appSetErrorAC(error.message));
-                // dispatch(appSetStatusAC('failed'));
-            })
-    }
-}*/
-
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------*/
 // react-redux-saga
 
 // типизация генератора
@@ -200,12 +84,10 @@ export function* appWatcherSaga() {
 
 export const initializeAppTC = () => ({type: 'APP/INITIALIZE_APP'} as const)
 export function* initializeAppTC_WorkerSaga(): any {
-    // yield put(appSetStatusAC('loading'));
     const response: AxiosResponse<MeResponseType> = yield call(authAPI.authMe)
         try {
             if (response.data.resultCode === 0) {
                 yield put(setIsLoggedInAC(true));
-                // yield put(appSetStatusAC('succeeded'));
             } else {
                 yield* handleServerAppErrorSaga(response.data);
             }
