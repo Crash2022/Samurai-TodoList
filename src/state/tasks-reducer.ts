@@ -19,7 +19,8 @@ export const getTasksTC = createAsyncThunk('tasks/getTasks',
         try {
             const response = await todolistsAPI.getTasks(todolistId);
             dispatch(appSetStatusAC({status: 'succeeded'}));
-            return {todolistId, tasks: response.data.items};
+            return {todolistId, tasks: response.items};
+            // return {todolistId, tasks: response.data.items};
         } catch (err) {
             const error: any = err; // AxiosError
             handleServerNetworkError(error, dispatch);

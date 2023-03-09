@@ -7,11 +7,8 @@ import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {selectAppError} from '../../../state/selectors';
 import {useAppSelector} from '../../hooks/useAppSelector';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref,
-) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref,) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 });
 
 export const ErrorSnackBar = () => {
@@ -30,7 +27,7 @@ export const ErrorSnackBar = () => {
             return;
         }
         // setOpen(false);
-        dispatch(appSetErrorAC( null));
+        // dispatch(appSetErrorAC( null)); // ? type
     };
 
     return (
