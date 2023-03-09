@@ -155,6 +155,7 @@ export const createTodolistTC = (todolist: TodolistDomainType): AppThunkType => 
         todolistsAPI.createTodolist(todolist.title)
             .then(response => {
                 // dispatch(createTodolistAC(response.data.data.item))
+                // @ts-ignore
                 dispatch(createTodolistAC(response.data.data.item))
                 dispatch(appSetStatusAC('succeeded'));
             })

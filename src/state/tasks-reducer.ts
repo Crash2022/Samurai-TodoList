@@ -160,6 +160,7 @@ export const createTaskTC = (task: TaskAPIType): AppThunkType => {
             .then(response => {
                 if (response.data.resultCode === 0) {
                     // dispatch(createTaskAC(response.data.data.item)); // ? response
+                    // @ts-ignore
                     dispatch(createTaskAC(response.data.data.item));
                     dispatch(appSetStatusAC('succeeded'));
                 } else {
