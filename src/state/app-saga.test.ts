@@ -2,7 +2,6 @@ import {appSetErrorAC, appSetInitializedAC, appSetStatusAC, initializeAppTC_Work
 import {call, put} from "redux-saga/effects";
 import {authAPI, MeResponseType} from "../api/todolistsAPI";
 import {setIsLoggedInAC} from "./login-reducer";
-import {handleServerAppErrorSaga} from "../common/utils/errorUtils";
 
 let meResponse: {data:MeResponseType}
 

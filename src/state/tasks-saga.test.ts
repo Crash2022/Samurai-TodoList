@@ -1,11 +1,6 @@
 import {appSetErrorAC, appSetStatusAC} from "./app-reducer";
 import {call, put} from "redux-saga/effects";
-import {
-    TaskPriorities,
-    TasksResponseType,
-    TaskStatuses,
-    todolistsAPI
-} from "../api/todolistsAPI";
+import {TaskPriorities, TasksResponseType, TaskStatuses, todolistsAPI} from "../api/todolistsAPI";
 import {createTaskTC_WorkerSaga, getTasksTC_WorkerSaga, setTasksAC} from "./tasks-reducer";
 
 test('getTasksTC_WorkerSaga success', () => {
