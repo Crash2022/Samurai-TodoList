@@ -46,6 +46,8 @@ test('correct todolist should be added', () => {
 
 test('update todolist title', () => {
 
+    let updatedTodolistTitle = 'New Todolist';
+
     const action = updateTodolistTitleTC.fulfilled({id: todolistId1, title: updatedTodolistTitle},
         'requestId', {todolistId: 'todolistId1', title: updatedTodolistTitle});
     const endState = todolistsReducer(startState, action);

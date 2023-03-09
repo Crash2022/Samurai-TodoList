@@ -5,7 +5,6 @@ import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {appReducer} from './app-reducer';
 import {loginReducer} from './login-reducer';
 import {configureStore} from '@reduxjs/toolkit';
-import {rootReducer} from './reducers'
 
 /*------------------------------------------------------------*/
 

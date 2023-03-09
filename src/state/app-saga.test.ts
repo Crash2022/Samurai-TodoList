@@ -40,4 +40,4 @@
 //     expect(gen.next(meResponse).value).toEqual(put(appSetInitializedAC(true)))
 // });
 
-// export default {}
+export default {}
