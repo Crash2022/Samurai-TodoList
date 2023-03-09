@@ -1,8 +1,7 @@
 import {TodolistAPIType, todolistsAPI, TodolistsResponseType} from '../api/todolistsAPI';
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
-import {handleServerNetworkErrorSaga} from '../common/utils/errorUtils';
-import {call, put, takeEvery} from 'redux-saga/effects';
-import {AxiosError, AxiosResponse} from 'axios';
+import {AppThunkType} from "./store";
+import {handleServerNetworkError} from '../common/utils/errorUtils';
 
 // reducer
 export type FilterType = 'all' | 'active' | 'completed';

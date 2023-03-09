@@ -1,15 +1,7 @@
-import {authAPI, AuthResponseData, MeResponseType, TodolistsResponseType} from '../api/todolistsAPI';
-import {
-    handleServerAppError,
-    handleServerAppErrorSaga,
-    handleServerNetworkError,
-    handleServerNetworkErrorSaga
-} from '../common/utils/errorUtils';
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {authAPI} from '../api/todolistsAPI';
+import {handleServerAppError, handleServerNetworkError,} from '../common/utils/errorUtils';
 import {setIsLoggedInAC} from './login-reducer';
 import {AppThunkType} from "./store";
-import {put, call, takeEvery} from 'redux-saga/effects'
-import {AxiosError, AxiosResponse} from 'axios';
 
 // reducer
 export type AppInitialStateType = {
