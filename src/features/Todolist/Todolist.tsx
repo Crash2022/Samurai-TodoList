@@ -15,9 +15,9 @@ import {
 import {TaskAPIType, TaskPriorities, TaskStatuses} from '../../api/todolistsAPI';
 import {v1} from 'uuid';
 import {useAppDispatch} from '../../common/hooks/useAppDispatch';
-import {AppRootStateType} from '../../state/store';
-import {useSelector} from 'react-redux';
 import {PropTypes} from '@mui/material';
+import {useAppSelector} from '../../common/hooks/useAppSelector';
+import {selectTasksObj} from '../../state/selectors';
 
 type TodolistPropsType = {
     todolist: TodolistDomainType
@@ -26,11 +26,11 @@ type TodolistPropsType = {
 
 export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, todolist}) => {
 
-    console.log('todolist')
+    // console.log('todolist')
 
     const dispatch = useAppDispatch();
-    // const tasksObj = useAppSelector(selectTasksObj[todolist.id]);
-    const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[todolist.id]);
+    const tasksObj = useAppSelector(selectTasksObj)[todolist.id];
+    // const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[todolist.id]);
 
     // const MESSAGE_TASKS_END = 'Задания выполнены';
     const MESSAGE_TASKS_END = 'No tasks in this todolist';

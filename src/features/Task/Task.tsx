@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useEffect} from 'react'
+import React, {ChangeEvent, useCallback} from 'react'
 import {v1} from 'uuid'
 import s from '../../common/styles/Todolist.module.css'
 import {EditableSpan} from '../../common/components/EditableSpan/EditableSpan';
@@ -17,10 +17,10 @@ type TaskPropsType = {
 
 export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => {
 
-    console.log('task')
+    // console.log('task')
 
     const dispatch = useAppDispatch();
-    const status = useAppSelector(selectAppStatus)
+    const status = useAppSelector(selectAppStatus);
 
     const removeTaskHandler = useCallback(() => {
         dispatch(deleteTaskTC(todolistId, task.id));
