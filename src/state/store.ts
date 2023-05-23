@@ -8,9 +8,8 @@ import {TodolistsActionTypes, todolistsReducer, todolistsWatcherSaga} from './to
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {ApplicationActionTypes, appReducer, appWatcherSaga} from './app-reducer';
 import {LoginActionTypes, loginReducer, loginWatcherSaga} from './login-reducer';
-import {configureStore} from '@reduxjs/toolkit';
-import {rootReducer} from './reducers'
-import createSagaMiddleware from 'redux-saga'
+import {rootReducer} from './reducers';
+import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
 
 /*------------------------------------------------------------*/
