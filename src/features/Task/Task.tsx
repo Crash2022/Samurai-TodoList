@@ -17,8 +17,6 @@ type TaskPropsType = {
 
 export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => {
 
-    // console.log('task')
-
     const dispatch = useAppDispatch();
     const status = useAppSelector(selectAppStatus)
 
@@ -60,5 +58,5 @@ export const Task: React.FC<TaskPropsType> = React.memo(({todolistId, task}) => 
                 </div>
             </div>
         </li>
-    );
+    )
 })
