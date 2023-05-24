@@ -7,10 +7,10 @@ import {Delete} from '@material-ui/icons';
 import {createTaskTC, getTasksTC} from '../../state/tasks-reducer';
 import {Task} from '../Task/Task';
 import {
-    TodolistDomainType,
+    TodolistDomainType, FilterType,
     updateTodolistFilterAC,
     deleteTodolistTC,
-    updateTodolistTitleTC, FilterType, getTodolistsTC
+    updateTodolistTitleTC
 } from '../../state/todolists-reducer';
 import {TaskAPIType, TaskPriorities, TaskStatuses} from '../../api/todolistsAPI';
 import {v1} from 'uuid';
