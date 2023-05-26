@@ -78,7 +78,6 @@ test('task title should be updated', () => {
     expect(endState['todolistId1'].length).toBe(2);
     expect(endState['todolistId1'][0].title).toBe('New Title');
     expect(endState['todolistId1'][1].title).toBe('React');
-
 });
 
 /*-----------------------------------------------------------------------------------*/
