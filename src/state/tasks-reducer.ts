@@ -40,7 +40,8 @@ export const createTaskTC = createAsyncThunk('tasks/createTask',
 
             if (response.data.resultCode === 0) {
                 dispatch(appSetStatusAC({status: 'succeeded'}));
-                return {task: response.data.data.item};
+                // @ts-ignore
+                return {task: response.data.data.item}; // NEED TO FIX!
             } else {
                 handleServerAppError(response.data, dispatch);
                 return rejectWithValue(null);

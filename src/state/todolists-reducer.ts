@@ -50,12 +50,12 @@ export const createTodolistTC = createAsyncThunk('todolists/createTodolist',
 
         try {
             const response = await todolistsAPI.createTodolist(todolist.title);
-            // dispatch(appSetStatusAC({status: 'succeeded'}));
-            // return {todolist: response.data.data.item};
 
             if (response.data.resultCode === 0) {
                 dispatch(appSetStatusAC({status: 'succeeded'}));
-                return {todolist: response.data.data.item};
+
+                // @ts-ignore
+                return {todolist: response.data.data.item}; // NEED TO FIX!
             } else {
                 handleServerAppError(response.data, dispatch);
                 return rejectWithValue(null);
