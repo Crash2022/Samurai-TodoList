@@ -1,4 +1,4 @@
-import {AppInitialStateType, appReducer, appSetErrorAC, appSetStatusAC} from './app-reducer';
+import {AppInitialStateType, appReducer, appThunks, appSetErrorAC, appSetStatusAC} from './app-reducer';
 
 let startState: AppInitialStateType;
 
@@ -21,6 +21,6 @@ test('app error message should be set', () => {
 });
 
 test('app should initialize', () => {
-    // const endTasksState = appReducer(startState, appThunks.initializeAppTC.fulfilled({isInitialized: true}, 'requestId'));
-    // expect(endTasksState.isInitialized).toBeTruthy();
+    const endTasksState = appReducer(startState, appThunks.initializeAppTC.fulfilled({isInitialized: true}, 'requestId'));
+    expect(endTasksState.isInitialized).toBeTruthy();
 });

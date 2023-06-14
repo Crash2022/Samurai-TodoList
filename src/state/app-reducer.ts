@@ -24,6 +24,7 @@ const initializeAppTC = createAsyncThunk('app/initializeApp',
             if (response.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC({isLoggedIn: true}))
                 dispatch(appSetStatusAC({status: 'succeeded'}));
+                return { } // NEED TO FIX (for test)?
             } else {
                 handleServerAppError(response.data, dispatch);
             }
