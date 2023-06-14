@@ -57,6 +57,7 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer
 export const {appSetStatusAC, appSetErrorAC} = slice.actions
+// export const appActions = slice.actions // экспорт без деструктуризации
 export const appThunks = {initializeAppTC}
 
 // вариант thunk для RTK из react-redux

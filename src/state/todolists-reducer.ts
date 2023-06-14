@@ -131,6 +131,7 @@ const slice = createSlice({
 
 export const todolistsReducer = slice.reducer
 export const {updateTodolistFilterAC, changeTodolistEntityStatusAC} = slice.actions
+// export const todolistsActions = slice.actions // экспорт без деструктуризации
 export const todolistsThunks = {getTodolistsTC, createTodolistTC, deleteTodolistTC, updateTodolistTitleTC}
 
 // вариант thunk для RTK из react-redux
