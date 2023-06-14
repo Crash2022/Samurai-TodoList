@@ -18,6 +18,7 @@ const getTasksTC = createAsyncThunk('tasks/getTasks',
 
         try {
             const response = await todolistsAPI.getTasks(todolistId);
+            const tasks = response.items // можно заменить на 23-ей строке в tasks
             dispatch(appSetStatusAC({status: 'succeeded'}));
             return {todolistId, tasks: response.items};
             // return {todolistId, tasks: response.data.items};
