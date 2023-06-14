@@ -1,21 +1,13 @@
 import React from 'react';
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormGroup,
-    FormLabel,
-    Grid,
-    TextField,
-} from '@material-ui/core';
+import s from '../../common/styles/Todolist.module.css'
+import {Button, Checkbox, FormControl, FormControlLabel, FormGroup,
+    FormLabel, Grid, TextField,} from '@material-ui/core';
 import {FormikHelpers, FormikValues, useFormik} from 'formik';
-import {loginTC} from '../../state/login-reducer';
+import {loginThunks} from '../../state/login-reducer';
 import {Navigate} from 'react-router-dom';
 import {useAppDispatch} from '../../common/hooks/useAppDispatch';
 import {useAppSelector} from '../../common/hooks/useAppSelector';
 import {selectAuthIsLoggedIn} from '../../state/selectors';
-import s from '../../common/styles/Todolist.module.css'
 
 type FormValuesType = {
     email: string
@@ -37,7 +29,7 @@ export const Login = () => {
         // первая версия
         onSubmit: (values) => {
             // alert(JSON.stringify(values));
-            dispatch(loginTC(values));
+            dispatch(loginThunks.loginTC(values));
         },
 
         // версия с подсветкой отдельного поля

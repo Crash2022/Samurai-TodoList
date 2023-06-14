@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {CircularProgress, Container} from '@material-ui/core';
-import {getTodolistsTC} from '../state/todolists-reducer';
+import {todolistsThunks} from '../state/todolists-reducer';
 import {ErrorSnackBar} from '../common/components/ErrorSnackBar/ErrorSnackBar';
-import {initializeAppTC} from '../state/app-reducer';
 import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import {Login} from '../features/Login/Login';
 import {AppNavBar} from '../common/components/AppNavBar/AppNavBar';
@@ -15,6 +14,7 @@ import {PATH} from '../api/path';
 import {Error404} from '../common/components/Error404/Error404';
 import {TodolistMain} from '../features/Todolist/TodolistMain';
 import {PrivateRoutes} from '../common/components/PrivateRoutes/PrivateRoutes';
+import {appThunks} from '../state/app-reducer';
 
 /*https://samuraitodo.herokuapp.com/*/
 
@@ -41,13 +41,13 @@ export const AppWithRedux: React.FC<AppWithReduxType> = React.memo(({demo = fals
             return;
         }
         if (!todolists.length) {
-            dispatch(getTodolistsTC());
+            dispatch(todolistsThunks.getTodolistsTC());
         }
     }, [isLoggedIn])
 
     // инициализация приложения
     useEffect(() => {
-        dispatch(initializeAppTC());
+        dispatch(appThunks.initializeAppTC());
     }, [])
 
     // редирект на логин, если не залогинились

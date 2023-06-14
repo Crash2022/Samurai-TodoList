@@ -15,7 +15,7 @@ type loginRejectValue = {
     }
 }
 
-export const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
+const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
 ('login/login', async (data: LoginParamsType, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
 
@@ -36,7 +36,7 @@ export const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectV
     }
 })
 
-export const logoutTC = createAsyncThunk('login/logout',
+const logoutTC = createAsyncThunk('login/logout',
     async (param, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         try {
@@ -76,7 +76,8 @@ const slice = createSlice({
 
 })
 
-export const loginReducer = slice.reducer;
+export const loginReducer = slice.reducer
+export const loginThunks = {loginTC, logoutTC}
 
 // определение экшена через константу
 // const setIsLoggedInAC = slice.actions.setIsLoggedInAC;

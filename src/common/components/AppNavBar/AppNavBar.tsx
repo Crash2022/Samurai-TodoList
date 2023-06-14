@@ -2,7 +2,7 @@ import {AppBar, Button, Container, IconButton, LinearProgress, Typography} from 
 import Toolbar from '@mui/material/Toolbar'
 import {Menu} from '@material-ui/icons';
 import React, {useCallback, useEffect} from 'react';
-import {logoutTC} from '../../../state/login-reducer';
+import {loginThunks} from '../../../state/login-reducer';
 import {Link, useNavigate} from 'react-router-dom';
 import s from '../../styles/Todolist.module.css';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
@@ -23,7 +23,7 @@ export const AppNavBar = () => {
     }, [isLoggedIn])
 
     const logoutHandler = useCallback(() => {
-        dispatch(logoutTC());
+        dispatch(loginThunks.logoutTC());
     }, [])
 
     return (

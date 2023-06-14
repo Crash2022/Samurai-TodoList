@@ -13,7 +13,7 @@ export type TodolistDomainType = TodolistAPIType & {
 
 let initialState: Array<TodolistDomainType> = [];
 
-export const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
+const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
     async (param, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
@@ -28,7 +28,7 @@ export const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
         }
     })
 
-export const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
+const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
     async (todolistId: string, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         dispatch(changeTodolistEntityStatusAC({id: todolistId, entityStatus: 'loading'}));
@@ -44,7 +44,7 @@ export const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
         }
     })
 
-export const createTodolistTC = createAsyncThunk('todolists/createTodolist',
+const createTodolistTC = createAsyncThunk('todolists/createTodolist',
     async (todolist: TodolistDomainType, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
@@ -68,7 +68,7 @@ export const createTodolistTC = createAsyncThunk('todolists/createTodolist',
     }
 )
 
-export const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist',
+const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist',
     async (param: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         dispatch(changeTodolistEntityStatusAC({id: param.todolistId, entityStatus: 'loading'}));
@@ -129,8 +129,9 @@ const slice = createSlice({
             })
 })
 
-export const todolistsReducer = slice.reducer;
-export const {updateTodolistFilterAC, changeTodolistEntityStatusAC} = slice.actions;
+export const todolistsReducer = slice.reducer
+export const {updateTodolistFilterAC, changeTodolistEntityStatusAC} = slice.actions
+export const todolistsThunks = {getTodolistsTC, createTodolistTC, deleteTodolistTC, updateTodolistTitleTC}
 
 // вариант thunk для RTK из react-redux
 /*export const getTodolistsTC = (): AppThunkType => {

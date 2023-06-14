@@ -14,7 +14,7 @@ export type AppInitialStateType = {
 
 export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-export const initializeAppTC = createAsyncThunk('app/initializeApp',
+const initializeAppTC = createAsyncThunk('app/initializeApp',
     async (param, {dispatch}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
@@ -55,8 +55,9 @@ const slice = createSlice({
     }
 })
 
-export const appReducer = slice.reducer;
-export const {appSetStatusAC, appSetErrorAC} = slice.actions;
+export const appReducer = slice.reducer
+export const {appSetStatusAC, appSetErrorAC} = slice.actions
+export const appThunks = {initializeAppTC}
 
 // вариант thunk для RTK из react-redux
 /*export const initializeAppTC = (): AppThunkType => {

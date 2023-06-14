@@ -4,10 +4,9 @@ import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm';
 import {EditableSpan} from '../../common/components/EditableSpan/EditableSpan';
 import {Button, IconButton, Paper} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
-import {createTaskTC, getTasksTC} from '../../state/tasks-reducer';
+import {tasksThunks} from '../../state/tasks-reducer';
 import {Task} from '../Task/Task';
-import {TodolistDomainType, FilterType,
-    updateTodolistFilterAC, deleteTodolistTC, updateTodolistTitleTC,} from '../../state/todolists-reducer';
+import {TodolistDomainType, FilterType, updateTodolistFilterAC, todolistsThunks} from '../../state/todolists-reducer';
 import {TaskAPIType, TaskPriorities, TaskStatuses} from '../../api/todolistsAPI';
 import {v1} from 'uuid';
 import {useAppDispatch} from '../../common/hooks/useAppDispatch';
@@ -22,7 +21,7 @@ type TodolistPropsType = {
 
 export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, todolist}) => {
 
-    console.log('todolist')
+    // console.log('todolist')
 
     const dispatch = useAppDispatch();
     const tasksObj = useSelector<AppRootStateType, Array<TaskAPIType>>(state => state.tasks[todolist.id]);
@@ -33,7 +32,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     /*------------------------------------------------*/
 
     const addTaskHandler = useCallback((titleInput: string) => {
-        dispatch(createTaskTC({
+        dispatch(tasksThunks.createTaskTC({
             todoListId: todolist.id, id: v1(), title: titleInput,
             status: TaskStatuses.New, priority: TaskPriorities.Middle,
             description: '', addedDate: '', startDate: '', deadline: '', order: 0
@@ -41,11 +40,11 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
     }, [todolist.id])
 
     const changeTodolistTitleHandler = useCallback((newInputValue: string) => {
-        dispatch(updateTodolistTitleTC({todolistId: todolist.id, title: newInputValue}));
+        dispatch(todolistsThunks.updateTodolistTitleTC({todolistId: todolist.id, title: newInputValue}));
     }, [todolist.id])
 
     const removeTodolistHandler = useCallback(() => {
-        dispatch(deleteTodolistTC(todolist.id));
+        dispatch(todolistsThunks.deleteTodolistTC(todolist.id));
     }, [todolist.id])
 
     /*------------------------------------------------*/
@@ -94,7 +93,7 @@ export const Todolist: React.FC<TodolistPropsType> = React.memo(({demo = false, 
         if (demo) {
             return
         }
-        dispatch(getTasksTC(todolist.id));
+        dispatch(tasksThunks.getTasksTC(todolist.id));
     }, [])
 
     /*------------------------------------------------*/

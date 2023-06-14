@@ -6,7 +6,7 @@ import {Todolist} from './Todolist';
 import s from '../../common/styles/Todolist.module.css';
 import React, {useCallback} from 'react';
 import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm';
-import {createTodolistTC} from '../../state/todolists-reducer';
+import {todolistsThunks} from '../../state/todolists-reducer';
 import {v1} from 'uuid';
 
 type TodolistMainType = {
@@ -22,7 +22,7 @@ export const TodolistMain: React.FC<TodolistMainType> = ({demo = false}) => {
     const todolists = useAppSelector(selectTodolists);
 
     const addNewTodoList = useCallback((title: string) => {
-        dispatch(createTodolistTC({
+        dispatch(todolistsThunks.createTodolistTC({
             id: v1(), title: title, filter: 'all',
             entityStatus: 'idle', addedDate: '', order: 0
         }));
