@@ -1,24 +1,10 @@
-import {combineReducers, compose} from 'redux';
+import {combineReducers} from 'redux';
 import {tasksReducer,} from './tasks-reducer';
 import {todolistsReducer} from './todolists-reducer';
-import thunkMiddleware, {ThunkAction} from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
 import {appReducer} from './app-reducer';
 import {loginReducer} from './login-reducer';
 import {configureStore} from '@reduxjs/toolkit';
-
-/*------------------------------------------------------------*/
-
-// для React Redux DevTools Chrome
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
-}
-
-// для React Redux DevTools Chrome
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// добавляем composeEnhancers() для React Redux DevTools Chrome
-// export const store = createStore(rootReducer, composeEnhancers());
 
 /*------------------------------------------------------------*/
 
@@ -47,12 +33,23 @@ export const store = configureStore({
 })
 
 // типизация state
-export type AppRootStateType = ReturnType<typeof rootReducer>; // рабочий вариант
+export type AppRootStateType = ReturnType<typeof rootReducer> // рабочий вариант
 // export type AppRootStateType = ReturnType<typeof store.getState> // типизация из документации
 
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = typeof store.dispatch
 
-export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, any>
+// используется в утилите
+// export type AsyncThunkType<RV = unknown> = {
+//     state: AppRootStateType
+//     dispatch: AppDispatch
+//     rejectValue?: RV
+//     serializedErrorType?: unknown
+//     pendingMeta?: unknown
+//     fulfilledMeta?: unknown
+//     rejectedMeta?: unknown
+//     extra?: unknown
+//     // extra?: { s: string; n: number }
+// }
 
 /*------------------------------------------------------------*/
 

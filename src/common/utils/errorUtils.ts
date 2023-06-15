@@ -1,6 +1,7 @@
 import {appSetErrorAC, appSetStatusAC} from '../../state/app-reducer';
 import {TodolistsResponseType} from '../../api/todolistsAPI';
 import {Dispatch} from '@reduxjs/toolkit';
+import axios, {AxiosError} from "axios";
 
 // redux-toolkit
 export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: Dispatch) => {
@@ -12,7 +13,13 @@ export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch
     dispatch(appSetStatusAC({status: 'failed'}));
 }
 
-export const handleServerNetworkError = (error: { message: string }, dispatch: Dispatch) => {
-    dispatch(appSetErrorAC({error: error.message ? error.message : 'Some Error Occurred'}));
+export const handleServerNetworkError = (e: unknown, dispatch: Dispatch) => {
+    const err = e as Error | AxiosError<{ error: string }>
+    if (axios.isAxiosError(err)) {
+        const error = err.message ? err.message : 'Some error occurred';
+        dispatch(appSetErrorAC({error}));
+    } else {
+        dispatch(appSetErrorAC({error: `Native error ${err.message}`}));
+    }
     dispatch(appSetStatusAC({status: 'failed'}));
 }

@@ -1,7 +1,8 @@
-import {TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
+import {TaskAPIType, TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAppAsyncThunk} from "../common/utils/createAppAsyncThunk";
 
 // redux-toolkit
 export type FilterType = 'all' | 'active' | 'completed';
@@ -22,13 +23,12 @@ const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
             dispatch(appSetStatusAC({status: 'succeeded'}));
             return {todolists: response.data};
         } catch (err) {
-            const error: any = err; // AxiosError
-            handleServerNetworkError(error, dispatch);
+            handleServerNetworkError(err, dispatch);
             return rejectWithValue(null);
         }
     })
 
-const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
+const deleteTodolistTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: string}, string>*/('todolists/deleteTodolist',
     async (todolistId: string, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         dispatch(changeTodolistEntityStatusAC({id: todolistId, entityStatus: 'loading'}));
@@ -38,13 +38,12 @@ const deleteTodolistTC = createAsyncThunk('todolists/deleteTodolist',
             dispatch(appSetStatusAC({status: 'succeeded'}));
             return {todolistId};
         } catch (err) {
-            const error: any = err; // AxiosError
-            handleServerNetworkError(error, dispatch);
+            handleServerNetworkError(err, dispatch);
             return rejectWithValue(null);
         }
     })
 
-const createTodolistTC = createAsyncThunk('todolists/createTodolist',
+const createTodolistTC = createAsyncThunk /*createAppAsyncThunk<{todolist: TodolistDomainType}, string>*/('todolists/createTodolist',
     async (todolist: TodolistDomainType, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
@@ -61,8 +60,7 @@ const createTodolistTC = createAsyncThunk('todolists/createTodolist',
                 return rejectWithValue(null);
             }
         } catch (err) {
-            const error: any = err; // AxiosError
-            handleServerNetworkError(error, dispatch);
+            handleServerNetworkError(err, dispatch);
             return rejectWithValue(null);
         }
     }
@@ -91,8 +89,7 @@ const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist',
                 }
             }
         } catch (err) {
-            const error: any = err; // AxiosError
-            handleServerNetworkError(error, dispatch);
+            handleServerNetworkError(err, dispatch);
             return rejectWithValue(null);
         }
     })

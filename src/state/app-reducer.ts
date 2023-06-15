@@ -5,10 +5,8 @@ import {setIsLoggedInAC} from './login-reducer';
 
 // redux-toolkit
 export type AppInitialStateType = {
-    // происходит ли сейчас взаимодействие с сервером
-    status: AppInitialStateStatusType
-    // текст ошибки запишем сюда
-    error: string | null
+    status: AppInitialStateStatusType // происходит ли сейчас взаимодействие с сервером
+    error: string | null // текст ошибки
     isInitialized: boolean
 }
 
