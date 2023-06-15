@@ -1,10 +1,10 @@
 import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses, UpdateTaskModelType,} from '../api/todolistsAPI';
 import {AppRootStateType} from './store';
 import {appSetStatusAC} from './app-reducer';
-import {handleServerAppError, handleServerNetworkError,} from '../common/utils/errorUtils';
+import {handleServerAppError, handleServerNetworkError,} from '../common/utils/error-utils';
 import {createSlice} from '@reduxjs/toolkit';
 import {TodolistDomainType, todolistsThunks} from './todolists-reducer';
-import {createAppAsyncThunk} from "../common/utils/createAppAsyncThunk";
+import {createAppAsyncThunk} from "../common/utils/create-app-async-thunk";
 import {DeleteTaskArgType, UpdateTaskArgType} from "../common/types/thunkArgTypes";
 
 // redux-toolkit
