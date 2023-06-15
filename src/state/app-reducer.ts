@@ -15,7 +15,7 @@ export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'fail
 
 // thunks
 const initializeAppTC = createAsyncThunk /*createAppAsyncThunk<{isInitialized: boolean}, void>*/('app/initializeApp',
-    async (arg, {dispatch}) => {
+    async (arg, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
         try {
@@ -26,7 +26,8 @@ const initializeAppTC = createAsyncThunk /*createAppAsyncThunk<{isInitialized: b
                 dispatch(appSetStatusAC({status: 'succeeded'}));
                 return { } // NEED TO FIX (for test)?
             } else {
-                handleServerAppError(response.data, dispatch);
+                // handleServerAppError(response.data, dispatch);
+                return rejectWithValue(null)
             }
         } catch (err) {
             const error: any = err; // AxiosError
