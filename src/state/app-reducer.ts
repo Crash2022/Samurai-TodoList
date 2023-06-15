@@ -13,7 +13,7 @@ export type AppInitialStateType = {
 export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 const initializeAppTC = createAsyncThunk('app/initializeApp',
-    async (param, {dispatch}) => {
+    async (arg, {dispatch}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
         try {

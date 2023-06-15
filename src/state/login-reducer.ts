@@ -16,7 +16,7 @@ type loginRejectValue = {
 }
 
 const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
-('login/login', async (data: LoginParamsType, {dispatch, rejectWithValue}) => {
+('login/login', async (data, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
 
     try {

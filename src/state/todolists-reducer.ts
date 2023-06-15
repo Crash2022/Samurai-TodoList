@@ -1,4 +1,4 @@
-import {TaskAPIType, TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
+import {TodolistAPIType, todolistsAPI} from '../api/todolistsAPI';
 import {AppInitialStateStatusType, appSetErrorAC, appSetStatusAC} from './app-reducer';
 import {handleServerAppError, handleServerNetworkError} from '../common/utils/errorUtils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
@@ -14,8 +14,8 @@ export type TodolistDomainType = TodolistAPIType & {
 
 let initialState: Array<TodolistDomainType> = [];
 
-const getTodolistsTC = createAsyncThunk('todolists/getTodolists',
-    async (param, {dispatch, rejectWithValue}) => {
+const getTodolistsTC = createAsyncThunk /*createAppAsyncThunk<undefined, undefined>*/('todolists/getTodolists',
+    async (arg, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
         try {
@@ -67,23 +67,23 @@ const createTodolistTC = createAsyncThunk /*createAppAsyncThunk<{todolist: Todol
 )
 
 const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist',
-    async (param: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
+    async (arg: { todolistId: string, title: string }, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
-        dispatch(changeTodolistEntityStatusAC({id: param.todolistId, entityStatus: 'loading'}));
+        dispatch(changeTodolistEntityStatusAC({id: arg.todolistId, entityStatus: 'loading'}));
 
         try {
-            const response = await todolistsAPI.updateTodolist(param.todolistId, param.title);
+            const response = await todolistsAPI.updateTodolist(arg.todolistId, arg.title);
 
             if (response.data.resultCode === 0) {
                 dispatch(appSetStatusAC({status: 'succeeded'}));
-                dispatch(changeTodolistEntityStatusAC({id: param.todolistId, entityStatus: 'succeeded'}));
-                return {id: param.todolistId, title: param.title};
+                dispatch(changeTodolistEntityStatusAC({id: arg.todolistId, entityStatus: 'succeeded'}));
+                return {id: arg.todolistId, title: arg.title};
             } else {
                 if (response.data.messages) {
                     dispatch(appSetErrorAC({error: response.data.messages[0]}));
                     dispatch(appSetStatusAC({status: 'failed'}));
-                    dispatch(changeTodolistEntityStatusAC({id: param.todolistId, entityStatus: 'failed'}));
-                    return {id: param.todolistId, entityStatus: 'failed'};
+                    dispatch(changeTodolistEntityStatusAC({id: arg.todolistId, entityStatus: 'failed'}));
+                    return {id: arg.todolistId, entityStatus: 'failed'};
                 } else {
                     return {error: 'Some Error'};
                 }

@@ -52,13 +52,13 @@ const createTaskTC = createAsyncThunk /*createAppAsyncThunk<{task: TaskAPIType},
     })
 
 const deleteTaskTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: string, taskId: string}, { todolistId: string, taskId: string }>*/('tasks/deleteTask',
-    async (param: { todolistId: string, taskId: string }, {dispatch, rejectWithValue}) => {
+    async (arg: { todolistId: string, taskId: string }, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
         try {
-            const response = await todolistsAPI.deleteTask(param.todolistId, param.taskId);
+            const response = await todolistsAPI.deleteTask(arg.todolistId, arg.taskId);
             dispatch(appSetStatusAC({status: 'succeeded'}));
-            return {todolistId: param.todolistId, taskId: param.taskId}
+            return {todolistId: arg.todolistId, taskId: arg.taskId}
         } catch (err) {
             const error: any = err; // AxiosError
             return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
@@ -76,11 +76,11 @@ export type UpdateDomainTaskModelType = {
 
 export const updateTaskTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType},
     { todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType }>*/('tasks/updateTask',
-    async (param: { todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType },
+    async (arg: { todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType },
            {dispatch, rejectWithValue, getState}) => {
 
     const state = getState() as AppRootStateType;
-    const task = state.tasks[param.todolistId].find(t => t.id === param.taskId);
+    const task = state.tasks[arg.todolistId].find(t => t.id === arg.taskId);
 
     // обработка ошибки
     if (!task) {
@@ -94,17 +94,17 @@ export const updateTaskTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: 
         priority: task.priority,
         startDate: task.startDate,
         deadline: task.deadline,
-        ...param.domainModel
+        ...arg.domainModel
     }
 
     dispatch(appSetStatusAC({status: 'loading'}));
 
     try {
-        const response = await todolistsAPI.updateTask(param.todolistId, param.taskId, apiModel)
+        const response = await todolistsAPI.updateTask(arg.todolistId, arg.taskId, apiModel)
 
         if (response.data.resultCode === 0) {
             dispatch(appSetStatusAC({status: 'succeeded'}));
-            return param;
+            return arg;
         } else {
             handleServerAppError(response.data, dispatch);
             return rejectWithValue(null);
