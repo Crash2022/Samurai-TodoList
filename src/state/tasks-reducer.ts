@@ -2,9 +2,10 @@ import {todolistsAPI, TaskAPIType, TaskPriorities, TaskStatuses, UpdateTaskModel
 import {AppRootStateType} from './store';
 import {appSetStatusAC} from './app-reducer';
 import {handleServerAppError, handleServerNetworkError,} from '../common/utils/errorUtils';
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {TodolistDomainType, todolistsThunks} from './todolists-reducer';
 import {createAppAsyncThunk} from "../common/utils/createAppAsyncThunk";
+import {DeleteTaskArgType, UpdateTaskArgType} from "../common/types/thunkArgTypes";
 
 // redux-toolkit
 export type TasksListType = {
@@ -13,8 +14,8 @@ export type TasksListType = {
 
 const initialState: TasksListType = {};
 
-const getTasksTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: string, tasks: TaskAPIType[]}, string>*/('tasks/getTasks',
-    async (todolistId: string, {dispatch, rejectWithValue}) => {
+const getTasksTC = createAppAsyncThunk<{todolistId: string, tasks: TaskAPIType[]}, string>('tasks/getTasks',
+    async (todolistId, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
         try {
@@ -29,17 +30,18 @@ const getTasksTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: string, t
         }
     })
 
-const createTaskTC = createAsyncThunk /*createAppAsyncThunk<{task: TaskAPIType}, TaskAPIType>*/('tasks/createTask',
-    async (task: TaskAPIType, {dispatch, rejectWithValue}) => {
+const createTaskTC = createAppAsyncThunk<{task: TaskAPIType}, TaskAPIType>('tasks/createTask',
+    async (task, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
         try {
             const response = await todolistsAPI.createTask(task);
 
             if (response.data.resultCode === 0) {
-                dispatch(appSetStatusAC({status: 'succeeded'}));
                 // @ts-ignore
-                return {task: response.data.data.item}; // NEED TO FIX!
+                const task = response.data.data.item // NEED TO FIX!
+                dispatch(appSetStatusAC({status: 'succeeded'}));
+                return {task};
             } else {
                 handleServerAppError(response.data, dispatch);
                 return rejectWithValue(null);
@@ -51,8 +53,8 @@ const createTaskTC = createAsyncThunk /*createAppAsyncThunk<{task: TaskAPIType},
 
     })
 
-const deleteTaskTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: string, taskId: string}, { todolistId: string, taskId: string }>*/('tasks/deleteTask',
-    async (arg: { todolistId: string, taskId: string }, {dispatch, rejectWithValue}) => {
+const deleteTaskTC = createAppAsyncThunk<DeleteTaskArgType, DeleteTaskArgType>('tasks/deleteTask',
+    async (arg, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
         try {
@@ -74,10 +76,8 @@ export type UpdateDomainTaskModelType = {
     deadline?: string
 }
 
-export const updateTaskTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType},
-    { todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType }>*/('tasks/updateTask',
-    async (arg: { todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType },
-           {dispatch, rejectWithValue, getState}) => {
+export const updateTaskTC = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>('tasks/updateTask',
+    async (arg, {dispatch, rejectWithValue, getState}) => {
 
     const state = getState() as AppRootStateType;
     const task = state.tasks[arg.todolistId].find(t => t.id === arg.taskId);
@@ -110,8 +110,7 @@ export const updateTaskTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: 
             return rejectWithValue(null);
         }
     } catch (err) {
-        const error: any = err; // AxiosError
-        handleServerNetworkError(error, dispatch);
+        handleServerNetworkError(err, dispatch);
         return rejectWithValue(null);
     }
 })
