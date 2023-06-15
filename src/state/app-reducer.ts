@@ -48,9 +48,9 @@ const slice = createSlice({
         appSetErrorAC(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error;
         },
-        initializeAppAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
-            state.isInitialized = action.payload.isInitialized;
-        }
+        // initializeAppAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
+        //     state.isInitialized = action.payload.isInitialized;
+        // }
     },
     extraReducers: (builder) => {
         builder.addCase(initializeAppTC.fulfilled, (state) => {
@@ -60,7 +60,7 @@ const slice = createSlice({
 })
 
 export const appReducer = slice.reducer
-export const {appSetStatusAC, appSetErrorAC, initializeAppAC} = slice.actions
+export const {appSetStatusAC, appSetErrorAC} = slice.actions
 // export const appActions = slice.actions // экспорт без деструктуризации
 export const appThunks = {initializeAppTC}
 
