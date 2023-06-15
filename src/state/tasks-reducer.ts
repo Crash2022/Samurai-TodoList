@@ -14,6 +14,7 @@ export type TasksListType = {
 
 const initialState: TasksListType = {};
 
+// thunks
 const getTasksTC = createAppAsyncThunk<{todolistId: string, tasks: TaskAPIType[]}, string>('tasks/getTasks',
     async (todolistId, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));

@@ -14,6 +14,7 @@ export type TodolistDomainType = TodolistAPIType & {
 
 let initialState: Array<TodolistDomainType> = [];
 
+// thunks
 const getTodolistsTC = createAsyncThunk /*createAppAsyncThunk<undefined, undefined>*/('todolists/getTodolists',
     async (arg, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
@@ -43,7 +44,7 @@ const deleteTodolistTC = createAsyncThunk /*createAppAsyncThunk<{todolistId: str
         }
     })
 
-const createTodolistTC = createAsyncThunk /*createAppAsyncThunk<{todolist: TodolistDomainType}, string>*/('todolists/createTodolist',
+const createTodolistTC = createAsyncThunk /*createAppAsyncThunk<{todolist: TodolistDomainType}, TodolistDomainType>*/('todolists/createTodolist',
     async (todolist: TodolistDomainType, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
@@ -51,10 +52,10 @@ const createTodolistTC = createAsyncThunk /*createAppAsyncThunk<{todolist: Todol
             const response = await todolistsAPI.createTodolist(todolist.title);
 
             if (response.data.resultCode === 0) {
-                dispatch(appSetStatusAC({status: 'succeeded'}));
-
                 // @ts-ignore
-                return {todolist: response.data.data.item}; // NEED TO FIX!
+                const todolist = response.data.data.item
+                dispatch(appSetStatusAC({status: 'succeeded'}));
+                return {todolist}; // NEED TO FIX!
             } else {
                 handleServerAppError(response.data, dispatch);
                 return rejectWithValue(null);
@@ -94,6 +95,7 @@ const updateTodolistTitleTC = createAsyncThunk('todolists/updateTodolist',
         }
     })
 
+// slice
 const slice = createSlice({
     name: 'todolists',
     initialState,

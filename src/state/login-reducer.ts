@@ -15,6 +15,7 @@ type loginRejectValue = {
     }
 }
 
+// thunks
 const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
 ('login/login', async (data, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
@@ -56,6 +57,7 @@ const logoutTC = createAsyncThunk('login/logout',
         }
     })
 
+// slice
 const slice = createSlice({
     name: 'login',
     initialState: {

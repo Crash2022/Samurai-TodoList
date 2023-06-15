@@ -12,6 +12,7 @@ export type AppInitialStateType = {
 
 export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
+// thunks
 const initializeAppTC = createAsyncThunk('app/initializeApp',
     async (arg, {dispatch}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
@@ -32,6 +33,7 @@ const initializeAppTC = createAsyncThunk('app/initializeApp',
         }
     })
 
+// slice
 const slice = createSlice({
     name: 'app',
     initialState: {
