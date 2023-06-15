@@ -2,6 +2,7 @@ import {authAPI, FieldsErrorsType, LoginParamsType,} from '../api/todolistsAPI';
 import {handleServerAppError, handleServerNetworkError,} from '../common/utils/error-utils';
 import {appSetStatusAC} from './app-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAppAsyncThunk} from "../common/utils/create-app-async-thunk";
 
 // redux-toolkit
 export type LoginInitialStateType = {
@@ -16,44 +17,49 @@ type loginRejectValue = {
 }
 
 // thunks
-const loginTC = createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
-('login/login', async (data, {dispatch, rejectWithValue}) => {
+const loginTC = /*createAppAsyncThunk<{isLoggedIn: boolean}, LoginParamsType>*/ createAsyncThunk<undefined, LoginParamsType, loginRejectValue>
+('login/login', async (arg, {dispatch, rejectWithValue}) => {
     dispatch(appSetStatusAC({status: 'loading'}));
 
     try {
-        const response = await authAPI.login(data);
+        const response = await authAPI.login(arg);
 
         if (response.data.resultCode === 0) {
             dispatch(appSetStatusAC({status: 'succeeded'}));
+            // return {isLoggedIn: true};
             return;
         } else {
             handleServerAppError(response.data, dispatch);
+            // return rejectWithValue(null)
             return rejectWithValue({errors: response.data.messages, fieldsErrors: response.data.fieldsErrors})
         }
     } catch (err) {
         const error: any = err; // AxiosError
-        handleServerNetworkError(error, dispatch);
+        handleServerNetworkError(err, dispatch);
+        // return rejectWithValue(null)
         return rejectWithValue({errors: [error.message], fieldsErrors: undefined})
     }
 })
 
-const logoutTC = createAsyncThunk('login/logout',
-    async (param, {dispatch, rejectWithValue}) => {
+const logoutTC = createAsyncThunk /*createAppAsyncThunk<{isLoggedIn: boolean}, void>*/('login/logout',
+    async (arg, {dispatch, rejectWithValue}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
         try {
             const response = await authAPI.logout();
 
             if (response.data.resultCode === 0) {
                 dispatch(appSetStatusAC({status: 'succeeded'}));
-                return;
+                return {isLoggedIn: false};
+                // return;
             } else {
                 handleServerAppError(response.data, dispatch);
-                return rejectWithValue({});
+                return rejectWithValue(null);
+                // return rejectWithValue({});
             }
         } catch (err) {
-            const error: any = err; // AxiosError
-            handleServerNetworkError(error, dispatch);
-            return rejectWithValue({});
+            handleServerNetworkError(err, dispatch);
+            return rejectWithValue(null);
+            // return rejectWithValue({});
         }
     })
 
@@ -69,11 +75,14 @@ const slice = createSlice({
         }
     },
     extraReducers: builder =>
-        builder.addCase(loginTC.fulfilled, (state) => {
-            state.isLoggedIn = true;
-        })
-            .addCase(logoutTC.fulfilled, (state) => {
-                state.isLoggedIn = false;
+        builder
+            .addCase(loginTC.fulfilled, (state, action) => {
+                state.isLoggedIn = true;
+                // state.isLoggedIn = action.payload.isLoggedIn;
+            })
+            .addCase(logoutTC.fulfilled, (state, action) => {
+                // state.isLoggedIn = false;
+                state.isLoggedIn = action.payload.isLoggedIn;
             })
 
 })
