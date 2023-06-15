@@ -1,6 +1,6 @@
 import {authAPI, FieldsErrorsType, LoginParamsType,} from '../api/todolistsAPI';
 import {handleServerAppError, handleServerNetworkError,} from '../common/utils/error-utils';
-import {appSetStatusAC} from './app-reducer';
+import {appSetStatusAC, initializeAppAC} from './app-reducer';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {createAppAsyncThunk} from "../common/utils/create-app-async-thunk";
 
@@ -60,6 +60,8 @@ const logoutTC = createAsyncThunk /*createAppAsyncThunk<{isLoggedIn: boolean}, v
             handleServerNetworkError(err, dispatch);
             return rejectWithValue(null);
             // return rejectWithValue({});
+        } finally {
+            dispatch(initializeAppAC({isInitialized: true}))
         }
     })
 
