@@ -2,6 +2,7 @@ import {authAPI} from '../api/todolistsAPI';
 import {handleServerAppError, handleServerNetworkError,} from '../common/utils/error-utils';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {setIsLoggedInAC} from './login-reducer';
+import {createAppAsyncThunk} from "../common/utils/create-app-async-thunk";
 
 // redux-toolkit
 export type AppInitialStateType = {
@@ -13,7 +14,7 @@ export type AppInitialStateType = {
 export type AppInitialStateStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 // thunks
-const initializeAppTC = createAsyncThunk('app/initializeApp',
+const initializeAppTC = createAsyncThunk /*createAppAsyncThunk<{isInitialized: boolean}, void>*/('app/initializeApp',
     async (arg, {dispatch}) => {
         dispatch(appSetStatusAC({status: 'loading'}));
 
