@@ -26,7 +26,8 @@ const initializeAppTC = createAsyncThunk /*createAppAsyncThunk<{isInitialized: b
                 dispatch(appSetStatusAC({status: 'succeeded'}));
                 return { } // NEED TO FIX (for test)?
             } else {
-                handleServerAppError(response.data, dispatch);
+                dispatch(appSetStatusAC({status: 'failed'}));
+                // handleServerAppError(response.data, dispatch);
                 // return rejectWithValue(null) // лоадер не отключится!?
             }
         } catch (err) {
