@@ -6,11 +6,7 @@ import axios, {AxiosError} from "axios";
 // redux-toolkit
 export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: Dispatch, showError: boolean = true) => {
     if (showError) {
-        if (data.messages) {
-            dispatch(appSetErrorAC({error: data.messages[0]}));
-        } else {
-            dispatch(appSetErrorAC({error: 'Some Error'}));
-        }
+        dispatch(appSetErrorAC({error: data.messages.length ? data.messages[0] : 'Some Error Occurred'}));
     }
     dispatch(appSetStatusAC({status: 'failed'}));
 }
