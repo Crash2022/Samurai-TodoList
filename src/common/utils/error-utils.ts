@@ -4,11 +4,13 @@ import {Dispatch} from '@reduxjs/toolkit';
 import axios, {AxiosError} from "axios";
 
 // redux-toolkit
-export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: Dispatch) => {
-    if (data.messages) {
-        dispatch(appSetErrorAC({error: data.messages[0]}));
-    } else {
-        dispatch(appSetErrorAC({error: 'Some Error'}));
+export const handleServerAppError = <D>(data: TodolistsResponseType<D>, dispatch: Dispatch, showError: boolean = true) => {
+    if (showError) {
+        if (data.messages) {
+            dispatch(appSetErrorAC({error: data.messages[0]}));
+        } else {
+            dispatch(appSetErrorAC({error: 'Some Error'}));
+        }
     }
     dispatch(appSetStatusAC({status: 'failed'}));
 }
