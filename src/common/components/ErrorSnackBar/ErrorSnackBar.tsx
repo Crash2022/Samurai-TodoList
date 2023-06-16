@@ -12,22 +12,17 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 });
 
 export const ErrorSnackBar = () => {
-    // const [open, setOpen] = React.useState(false);
-    const error = useAppSelector(selectAppError);
+
     const dispatch = useAppDispatch();
-
+    const error = useAppSelector(selectAppError);
     const isOpen = error !== null;
-
-    // const handleClick = () => {
-    //     setOpen(true);
-    // };
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-        // setOpen(false);
-        // dispatch(appSetErrorAC( null)); // ? type
+        // не работает закрытие по крестику
+        // dispatch(appSetErrorAC(null)); // ??? type
     };
 
     return (

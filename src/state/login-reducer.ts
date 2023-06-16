@@ -84,7 +84,6 @@ const slice = createSlice({
                 // state.isLoggedIn = false;
                 state.isLoggedIn = action.payload.isLoggedIn;
             })
-
 })
 
 export const loginReducer = slice.reducer
