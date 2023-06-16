@@ -149,6 +149,8 @@ export type LoginParamsType = {
     captcha?: string
 }
 
+export type LoginFormValuesType = Omit<LoginParamsType, 'captcha'>
+
 export type AuthResponseData = {
     id: number
     email: string

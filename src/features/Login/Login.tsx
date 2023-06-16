@@ -8,12 +8,7 @@ import {Navigate} from 'react-router-dom';
 import {useAppDispatch} from '../../common/hooks/useAppDispatch';
 import {useAppSelector} from '../../common/hooks/useAppSelector';
 import {selectAuthIsLoggedIn} from '../../state/selectors';
-
-type FormValuesType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
+import {LoginFormValuesType, LoginParamsType, TodolistsResponseType} from "../../api/todolistsAPI";
 
 export const Login = () => {
 
@@ -27,13 +22,21 @@ export const Login = () => {
             rememberMe: false
         },
         // первая версия
-        onSubmit: (values) => {
+        onSubmit: (values: LoginFormValuesType, formikHelpers: FormikHelpers<LoginParamsType>) => {
             // alert(JSON.stringify(values));
-            dispatch(loginThunks.loginTC(values));
+            // dispatch(loginThunks.loginTC(values))
+
+            dispatch(loginThunks.loginTC(values))
+                .unwrap()
+                .catch((reason: TodolistsResponseType) => {
+                    reason.fieldsErrors?.forEach(fieldError => {
+                        formikHelpers.setFieldError(fieldError.field, fieldError.error)
+                    })
+                })
         },
 
         // версия с подсветкой отдельного поля
-        // onSubmit: async (values: FormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
+        // onSubmit: async (values: LoginFormValuesType, formikHelpers: FormikHelpers<FormValuesType>) => {
         //     // alert(JSON.stringify(values));
         //     const response = await dispatch(loginTC(values));
         //
@@ -97,7 +100,7 @@ export const Login = () => {
                                 />
                                 {
                                     formik.errors.email && formik.touched.email
-                                        ? <div>{formik.errors.email}</div>
+                                        ? <div style={{color: 'red'}}>{formik.errors.email}</div>
                                         : null
                                 }
                             </div>
@@ -111,7 +114,7 @@ export const Login = () => {
                                 />
                                 {
                                     formik.errors.password && formik.touched.password
-                                        ? <div>{formik.errors.password}</div>
+                                        ? <div style={{color: 'red'}}>{formik.errors.password}</div>
                                         : null
                                 }
                             </div>
