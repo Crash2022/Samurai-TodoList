@@ -24,15 +24,16 @@ export const Login = () => {
         // первая версия
         onSubmit: (values: LoginFormValuesType, formikHelpers: FormikHelpers<LoginParamsType>) => {
             // alert(JSON.stringify(values));
-            // dispatch(loginThunks.loginTC(values))
-
             dispatch(loginThunks.loginTC(values))
-                .unwrap()
-                .catch((reason: TodolistsResponseType) => {
-                    reason.fieldsErrors?.forEach(fieldError => {
-                        formikHelpers.setFieldError(fieldError.field, fieldError.error)
-                    })
-                })
+
+            // улучшенная версия обработки ошибок
+            // dispatch(loginThunks.loginTC(values))
+            //     .unwrap()
+            //     .catch((reason: TodolistsResponseType) => {
+            //         reason.fieldsErrors?.forEach(fieldError => {
+            //             formikHelpers.setFieldError(fieldError.field, fieldError.error)
+            //         })
+            //     })
         },
 
         // версия с подсветкой отдельного поля
